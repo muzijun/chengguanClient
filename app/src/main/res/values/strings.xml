@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Chengguan</string>
+    <string name="tip_double_click_exit">再次点击退出新区城管</string>
+
+    <!--登陆-->
+    <string name="login_account_hit">请输入登录名</string>
+    <string name="login_password_hit">请输入密码</string>
+    <string name="login_upassword">更改密码</string>
+
+   <!--主界面tab-->
+    <string name="tab_one">养护管理</string>
+    <string name="tab_two">巡查监控</string>
+    <string name="tab_three">基础数据</string>
+    <string name="tab_four">更多</string>
+
+    <!--案件巡查-->
+    <string name="Pager_one_title">巡查案件</string>
+    <string name="Pager_two_tile">巡查打卡</string>
+    <string name="Pager_three_title">特殊通知</string>
+
+
+    <!-- 更多 -->
+    <string name="title_more">更多</string>
+    <string name="item_approval">审批</string>
+    <string name="item_assess">考核</string>
+    <string name="item_myinfo">我的信息</string>
+
+
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+    <string name="net_error">网络异常</string>
+
+</resources>

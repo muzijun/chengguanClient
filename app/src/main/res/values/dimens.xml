@@ -1,0 +1,27 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="toolbar_elevation">8dp</dimen>
+
+    <dimen name="hero_avatar_size">120dp</dimen>
+    <dimen name="hero_avatar_border">3dp</dimen>
+    <dimen name="viewpager_height">240dp</dimen>
+    <dimen name="indicator_size">6dp</dimen>
+    <dimen name="indicator_margin">6dp</dimen>
+
+    <dimen name="load_more_footer_height_classic">60dp</dimen>
+
+    <dimen name="refresh_header_height_twitter">80dp</dimen>
+    <dimen name="load_more_footer_height_twitter">60dp</dimen>
+    <!-- textview size -->
+    <dimen name="text_size_huge">25dp</dimen>
+    <dimen name="text_size_micro">12dp</dimen>
+    <dimen name="text_size_small">15dp</dimen>
+    <dimen name="text_size_medium">18dp</dimen>
+    <dimen name="text_size_large">21dp</dimen>
+
+    <!-- titlebar height -->
+    <dimen name="titlebar_height">40dp</dimen>
+
+</resources>
