@@ -23,6 +23,9 @@ import java.util.ArrayList;
 public class ApprovalActivity extends BaseActivity {
 
 
+
+
+
     private AQuery mAq ;
     private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
