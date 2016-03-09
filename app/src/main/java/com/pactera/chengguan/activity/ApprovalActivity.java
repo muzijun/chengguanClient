@@ -21,11 +21,6 @@ import java.util.ArrayList;
  * Created by lijun on 2015/12/3.
  */
 public class ApprovalActivity extends BaseActivity {
-
-
-
-
-
     private AQuery mAq ;
     private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
