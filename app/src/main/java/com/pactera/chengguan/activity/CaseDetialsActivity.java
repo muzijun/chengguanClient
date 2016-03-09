@@ -2,6 +2,7 @@ package com.pactera.chengguan.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -9,19 +10,13 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
-import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
 
 import java.util.ArrayList;
 
-/**
- *
- *
- * Created by lijun on 2015/12/3.
- */
-public class ApprovalActivity extends BaseActivity {
-    private AQuery mAq ;
+public class CaseDetialsActivity extends AppCompatActivity {
+    private AQuery mAq;
     private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
@@ -33,13 +28,13 @@ public class ApprovalActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.approval);
+        setContentView(R.layout.activity_case_detials);
         init();
     }
 
     protected void init() {
-        mAq = new AQuery(mContext);
-        mAq.id(R.id.title).text("行政审批");
+        mAq = new AQuery(CaseDetialsActivity.this);
+        mAq.id(R.id.title).text("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
             ADInfo info = new ADInfo();
             info.setUrl(imageUrls[i]);
@@ -54,21 +49,21 @@ public class ApprovalActivity extends BaseActivity {
 
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
-            Intent intent=new Intent(mContext,ImagePagerActivity.class);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,imageUrls);
+            Intent intent = new Intent(CaseDetialsActivity.this, ImagePagerActivity.class);
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
             startActivity(intent);
-            Toast.makeText(mContext, "content->" + info.getContent(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(CaseDetialsActivity.this, "content->" + info.getContent(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void displayImage(String imageURL, ImageView imageView) {
-            Glide.with(mContext).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
+            Glide.with(CaseDetialsActivity.this).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
         }
     };
 
 
     public void check(View view) {
-        startActivity(new Intent(mContext, CheckActivity.class));
+        startActivity(new Intent(CaseDetialsActivity.this, CheckActivity.class));
     }
 }
