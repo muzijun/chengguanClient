@@ -37,6 +37,7 @@
     <!--  浅色 -->
     <color name="color999999">#999999</color>
 
+    <color name="colorFFFFFF">#FFFFFF</color>
     <!-- 标题字体颜色 -->
     <color name="title_font">#a4a4a4</color>
     <!-- 背景颜色 -->

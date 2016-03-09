@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
+import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
-public class CaseDetialsActivity extends AppCompatActivity {
+public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
+    private PopMenu popMenu;
     private AQuery mAq;
     private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
@@ -33,6 +38,11 @@ public class CaseDetialsActivity extends AppCompatActivity {
     }
 
     protected void init() {
+        LinearLayout menu = (LinearLayout) findViewById(R.id.lin);               // 初始化弹出菜单
+        popMenu = new PopMenu(this);
+        popMenu.addItems(new String[]{"菜单一", "菜单二", "菜单三", "菜单四"});
+        popMenu.setOnItemClickListener(this);
+        addView(menu);
         mAq = new AQuery(CaseDetialsActivity.this);
         mAq.id(R.id.title).text("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
@@ -43,6 +53,19 @@ public class CaseDetialsActivity extends AppCompatActivity {
         }
         imageCycleView = (ImageCycleView) findViewById(R.id.imagecycle);
         imageCycleView.setImageResources(infos, mCycleViewListener);
+    }
+
+
+    private void addView(LinearLayout linearLayout) {
+        ImageView imageView = new ImageView(mContext);
+        imageView.setId(R.id.top);
+        imageView.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        imageView.setImageResource(R.mipmap.icon_menu);
+        imageView.setOnClickListener(this);
+        linearLayout.addView(imageView);
+
     }
 
     private ImageCycleView.ImageCycleViewListener mCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
@@ -65,5 +88,21 @@ public class CaseDetialsActivity extends AppCompatActivity {
 
     public void check(View view) {
         startActivity(new Intent(CaseDetialsActivity.this, CheckActivity.class));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.top:
+
+                popMenu.showAsDropDown(v);
+                break;
+        }
+
+    }
+
+    @Override
+    public void onItemClick(int index) {
+
     }
 }
