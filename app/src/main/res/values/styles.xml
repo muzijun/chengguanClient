@@ -8,16 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorControlNormal</item>
     </style>
+
     <style name="horizontal_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.4dp</item>
         <item name="android:background">@color/colorD7d7d7</item>
     </style>
+
     <style name="more_horizontal_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.4dp</item>
         <item name="android:background">@color/bg_line</item>
     </style>
+
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
@@ -26,6 +29,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
     <style name="LightSpinnerItem" parent="Material.Drawable.Ripple.Wave">
         <item name="rd_rippleColor">@color/colorPrimaryHalf</item>
         <item name="rd_rippleAnimDuration">200</item>
@@ -51,4 +55,8 @@
         <item name="spn_popupItemAnimOffset">120</item>
 
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

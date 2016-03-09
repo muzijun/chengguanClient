@@ -23,5 +23,6 @@
 
     <!-- titlebar height -->
     <dimen name="titlebar_height">40dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
