@@ -10,7 +10,6 @@ import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
-import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
 
@@ -22,6 +21,8 @@ import java.util.ArrayList;
  * Created by lijun on 2015/12/3.
  */
 public class ApprovalActivity extends BaseActivity {
+
+
     private AQuery mAq ;
     private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
