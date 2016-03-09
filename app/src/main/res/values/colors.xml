@@ -28,6 +28,8 @@
     <!--tab灰色-->
     <color name="color82858b">#82858b</color>
 
+    <color name="colorFF0000">#FF0000</color>
+    <color name="coloraeaeae">#aeaeae</color>
    <!--透明-->
     <color name="colorTransparent">#00000000</color>
     <!--   深色 -->

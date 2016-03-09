@@ -27,6 +27,8 @@
         <activity
             android:name=".activity.CheckActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.CaseListActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />

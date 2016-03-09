@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/case_list"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
@@ -27,28 +28,119 @@
             <View style="@style/horizontal_line" />
             <LinearLayout
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@mipmap/icon_location"/>
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
                     android:text="无锡新区震泽路"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
                     android:src="@mipmap/icon_next"/>
-                <View style="@style/horizontal_line" />
+
             </LinearLayout>
+            <View style="@style/horizontal_line" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:text="图片添加"/>
+            <com.pactera.chengguan.view.NoScrollGridView
+                android:id="@+id/gridview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:horizontalSpacing="3dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="5dp">
+            </com.pactera.chengguan.view.NoScrollGridView>
+            <View style="@style/horizontal_line" />
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/horizontal_line" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/colorFF0000"
+                    android:layout_gravity="center"
+                    android:text="*"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="作业单位"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_size_micro"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="无锡市政府"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/coloraeaeae"
+                    android:textSize="@dimen/text_size_micro"/>
+            </LinearLayout>
+            <View
+                style="@style/horizontal_line" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/colorFF0000"
+                    android:layout_gravity="center"
+                    android:text="*"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="考核类型"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_size_micro"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="日常"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/coloraeaeae"
+                    android:textSize="@dimen/text_size_micro"/>
+            </LinearLayout>
+            <View
+                style="@style/horizontal_line" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

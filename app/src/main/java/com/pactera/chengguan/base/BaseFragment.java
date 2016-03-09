@@ -73,7 +73,19 @@ public abstract class BaseFragment extends Fragment {
 
 
     }
+    /**
+     * 得到根Fragment
+     *
+     * @return
+     */
+    protected Fragment getRootFragment() {
+        Fragment fragment = getParentFragment();
+        while (fragment.getParentFragment() != null) {
+            fragment = fragment.getParentFragment();
+        }
+        return fragment;
 
+    }
     /**
      * 延迟加载
      * 子类必须重写此方法

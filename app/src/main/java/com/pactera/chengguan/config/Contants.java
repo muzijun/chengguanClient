@@ -13,7 +13,7 @@ public class Contants {
 
     /******************** 添加图片的参数配置 *****************/
     //单次最多发送图片数
-    public static final int MAX_IMAGE_SIZE = 9;
+    public static final int MAX_IMAGE_SIZE = 8;
     //首选项:临时图片
     public static final String PREF_TEMP_IMAGES = "pref_temp_images";
     //当前选择的照片位置
