@@ -2,7 +2,6 @@ package com.pactera.chengguan.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.pactera.chengguan.R;
-import com.pactera.chengguan.adapter.ApprovalAdapter;
 import com.pactera.chengguan.adapter.CaseListAdapter;
 import com.pactera.chengguan.adapter.SpinnerAdapter;
 import com.pactera.chengguan.base.BaseActivity;
@@ -75,7 +73,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent=new Intent(mContext,CaseDetialsActivity.class);
+        Intent intent=new Intent(mContext,CaseFinishActivity.class);
         startActivity(intent);
     }
 }

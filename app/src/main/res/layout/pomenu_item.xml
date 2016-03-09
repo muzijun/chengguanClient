@@ -5,7 +5,10 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/textView"
-        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_small"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        android:textColor="@color/coloraeaeae"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

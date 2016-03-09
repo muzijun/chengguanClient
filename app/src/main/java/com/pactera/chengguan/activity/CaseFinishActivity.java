@@ -18,10 +18,15 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
-public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
-    private PopMenu popMenu;
+/**办结
+ * Created by lijun on 2016/3/9.
+ */
+public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener{ private PopMenu popMenu;
     private AQuery mAq;
-    private ImageCycleView imageCycleView;
+    //作业前照片
+    private ImageCycleView imageCycleView_begin;
+    //作业后照片
+    private ImageCycleView imageCycleView_end;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
             "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
@@ -32,17 +37,17 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_case_detials);
+        setContentView(R.layout.activity_case_finish);
         init();
     }
 
     protected void init() {
         LinearLayout menu = (LinearLayout) findViewById(R.id.lin);               // 初始化弹出菜单
         popMenu = new PopMenu(this);
-        popMenu.addItems(new String[]{"下派", "保存"});
+        popMenu.addItems(new String[]{"流程日志", "延期记录"});
         popMenu.setOnItemClickListener(this);
         addView(menu);
-        mAq = new AQuery(CaseDetialsActivity.this);
+        mAq = new AQuery(mContext);
         mAq.id(R.id.title).text("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
             ADInfo info = new ADInfo();
@@ -50,8 +55,11 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             info.setContent("top-->" + i);
             infos.add(info);
         }
-        imageCycleView = (ImageCycleView) findViewById(R.id.imagecycle);
-        imageCycleView.setImageResources(infos, mCycleViewListener);
+        imageCycleView_begin = (ImageCycleView) findViewById(R.id.imagecycle);
+        imageCycleView_end=(ImageCycleView)findViewById(R.id.imagecycle_end);
+        imageCycleView_begin.setImageResources(infos, mCycleViewListener);
+        imageCycleView_end.setImageResources(infos, mCycleViewListener);
+
     }
 
 
@@ -71,22 +79,22 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
 
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
-            Intent intent = new Intent(CaseDetialsActivity.this, ImagePagerActivity.class);
+            Intent intent = new Intent(mContext, ImagePagerActivity.class);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
             startActivity(intent);
-            Toast.makeText(CaseDetialsActivity.this, "content->" + info.getContent(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "content->" + info.getContent(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void displayImage(String imageURL, ImageView imageView) {
-            Glide.with(CaseDetialsActivity.this).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
+            Glide.with(mContext).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
         }
     };
 
 
     public void check(View view) {
-        startActivity(new Intent(CaseDetialsActivity.this, CheckActivity.class));
+        startActivity(new Intent(mContext, CheckActivity.class));
     }
 
     @Override
@@ -104,4 +112,5 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     public void onItemClick(int index) {
 
     }
+
 }
