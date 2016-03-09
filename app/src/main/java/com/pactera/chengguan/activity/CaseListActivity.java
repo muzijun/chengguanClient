@@ -1,5 +1,6 @@
 package com.pactera.chengguan.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     }
 
     private void init() {
-        ((TextView) findViewById(R.id.title)).setText("案件详情");
+        ((TextView) findViewById(R.id.title)).setText("案件列表");
         swipeToLoadLayout = (ChenguanSwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         ListView mListView = (ListView) findViewById(R.id.swipe_target);
         CaseListAdapter caseListAdapter=new CaseListAdapter(mContext);
@@ -74,6 +75,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent=new Intent(mContext,CaseDetialsActivity.class);
+        startActivity(intent);
     }
 }
