@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.adapter.ProcessRecordAdapter;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
@@ -148,13 +149,22 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
             }
 
-        }  else if (state == 3) {
+        } else if (state == 3) {
+            Intent intent;
             switch (index) {
-
+                //考核
+                case 0:
+                    intent = new Intent(mContext, AssessActivity.class);
+                    startActivity(intent);
+                    break;
+                //流程日志
+                case 4:
+                    intent = new Intent(mContext, ProcessRecordActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }
-
 
 
     }
