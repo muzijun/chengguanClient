@@ -50,7 +50,7 @@ public class ImageDetailFragment extends BaseFragment {
 
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                Toast.makeText(getContext(), mContext.getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.net_error), Toast.LENGTH_LONG).show();
                 progressBar.stop();
                 super.onLoadFailed(e, errorDrawable);
             }
