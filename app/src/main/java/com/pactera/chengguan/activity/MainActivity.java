@@ -6,22 +6,90 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.fragment.MaintainManageFragment;
+import com.pactera.chengguan.fragment.MoreFragment;
 import com.pactera.chengguan.fragment.TabThreeFragment;
-import com.pactera.chengguan.fragment.TabFourFragment;
 import com.pactera.chengguan.fragment.TabTwoFragment;
 import com.pactera.chengguan.view.DoubleClickExitHelper;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by lijun on 2015/12/2.
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    @Bind(R.id.content)
+    FrameLayout content;
+
+    /**
+     * 在Tab布局上显示案件图片的控件
+     */
+    @Bind(R.id.case_image)
+    ImageView caseImage;
+    /**
+     * 在Tab布局上显示案件的控件
+     */
+    @Bind(R.id.case_text)
+    TextView caseText;
+    /**
+     * 案件界面布局
+     */
+    @Bind(R.id.case_layout)
+    RelativeLayout caseLayout;
+    /**
+     * 在Tab布局上显示通知图片的控件
+     */
+    @Bind(R.id.notice_image)
+    ImageView noticeImage;
+    /**
+     * 在Tab布局上显示通知的控件
+     */
+    @Bind(R.id.notice_text)
+    TextView noticeText;
+    /**
+     * 通知界面布局
+     */
+    @Bind(R.id.notice_layout)
+    RelativeLayout noticeLayout;
+    /**
+     * 在Tab布局上显示广告图片的控件
+     */
+    @Bind(R.id.advertise_image)
+    ImageView advertiseImage;
+    /**
+     * 在Tab布局上显示广告的控件
+     */
+    @Bind(R.id.advertise_text)
+    TextView advertiseText;
+    /**
+     * 广告界面布局
+     */
+    @Bind(R.id.advertise_layout)
+    RelativeLayout advertiseLayout;
+    /**
+     * 在Tab布局上显示更多的控件
+     */
+    @Bind(R.id.more_image)
+    ImageView moreImage;
+    /**
+     * 在Tab布局上显示更多的控件
+     */
+    @Bind(R.id.more_text)
+    TextView moreText;
+    /**
+     * 更多界面布局
+     */
+    @Bind(R.id.more_layout)
+    RelativeLayout moreLayout;
     private DoubleClickExitHelper mDoubleClickExit;
 
     /**
@@ -41,66 +109,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 更多Fragment
      */
-    private TabFourFragment tabFourFragment;
+    private MoreFragment tabFourFragment;
 
-
-    /**
-     * 在Tab布局上显示案件图片的控件
-     */
-    private ImageView caseImage;
-
-    /**
-     * 在Tab布局上显示广告图片的控件
-     */
-    private ImageView advertiseImage;
-
-    /**
-     * 在Tab布局上显示通知图片的控件
-     */
-    private ImageView noticeImage;
-    /**
-     * 在Tab布局上显示更多的控件
-     */
-    private ImageView moreImage;
-
-    /**
-     * 在Tab布局上显示案件的控件
-     */
-    private TextView caseText;
-
-    /**
-     * 在Tab布局上显示广告的控件
-     */
-    private TextView advertiseText;
-
-    /**
-     * 在Tab布局上显示通知的控件
-     */
-    private TextView noticeText;
-    /**
-     * 在Tab布局上显示更多的控件
-     */
-    private TextView moreText;
-
-
-    /**
-     * 案件界面布局
-     */
-    private View caseLayout;
-
-    /**
-     * 广告界面布局
-     */
-    private View advertiseLayout;
-
-    /**
-     * 通知界面布局
-     */
-    private View noticeLayout;
-    /**
-     * 更多界面布局
-     */
-    private View moreLayout;
 
     /**
      * 用于对Fragment进行管理
@@ -112,6 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         // 初始化布局元素
         initViews();
@@ -130,18 +141,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initViews() {
         mDoubleClickExit = new DoubleClickExitHelper(this);
-        caseLayout = findViewById(R.id.case_layout);
-        advertiseLayout = findViewById(R.id.advertise_layout);
-        noticeLayout = findViewById(R.id.notice_layout);
-        moreLayout = findViewById(R.id.more_layout);
-        caseImage = (ImageView) findViewById(R.id.case_image);
-        advertiseImage = (ImageView) findViewById(R.id.advertise_image);
-        noticeImage = (ImageView) findViewById(R.id.notice_image);
-        moreImage = (ImageView) findViewById(R.id.more_image);
-        caseText = (TextView) findViewById(R.id.case_text);
-        advertiseText = (TextView) findViewById(R.id.advertise_text);
-        noticeText = (TextView) findViewById(R.id.notice_text);
-        moreText = (TextView) findViewById(R.id.more_text);
         caseLayout.setOnClickListener(this);
         advertiseLayout.setOnClickListener(this);
         noticeLayout.setOnClickListener(this);
@@ -232,7 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 moreText.setTextColor(getResources().getColor(R.color.color21b6ec));
                 if (tabFourFragment == null) {
                     // PersonalFragment，则创建一个并添加到界面上
-                    tabFourFragment = new TabFourFragment();
+                    tabFourFragment = new MoreFragment();
                     transaction.add(R.id.content, tabFourFragment);
                 } else {
                     // PersonalFragment，则直接将它显示出来

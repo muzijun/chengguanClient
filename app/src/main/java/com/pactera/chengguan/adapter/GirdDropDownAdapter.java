@@ -11,8 +11,8 @@ import com.pactera.chengguan.R;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 
 public class GirdDropDownAdapter extends BaseAdapter {
@@ -61,24 +61,25 @@ public class GirdDropDownAdapter extends BaseAdapter {
     }
 
     private void fillValue(int position, ViewHolder viewHolder) {
-        viewHolder.mText.setText(list.get(position));
+        viewHolder.text.setText(list.get(position));
         if (checkItemPosition != -1) {
             if (checkItemPosition == position) {
-                viewHolder.mText.setTextColor(context.getResources().getColor(R.color.drop_down_selected));
-                viewHolder.mText.setCompoundDrawablesWithIntrinsicBounds(null, null, context.getResources().getDrawable(R.mipmap.drop_down_checked), null);
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.drop_down_selected));
+                viewHolder.text.setCompoundDrawablesWithIntrinsicBounds(null, null, context.getResources().getDrawable(R.mipmap.drop_down_checked), null);
             } else {
-                viewHolder.mText.setTextColor(context.getResources().getColor(R.color.drop_down_unselected));
-                viewHolder.mText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.drop_down_unselected));
+                viewHolder.text.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             }
         }
     }
 
+
     static class ViewHolder {
-        @InjectView(R.id.text)
-        TextView mText;
+        @Bind(R.id.text)
+        TextView text;
 
         ViewHolder(View view) {
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 }

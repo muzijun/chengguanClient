@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
@@ -19,23 +18,22 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * 办结or处理中or审核
  * Created by lijun on 2016/3/9.
  */
 public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
-    @InjectView(R.id.title)
+
+    @Bind(R.id.title)
     TextView title;
-    @InjectView(R.id.lin)
+    @Bind(R.id.lin)
     LinearLayout lin;
-    //作业前照片
-    @InjectView(R.id.imagecycle)
+    @Bind(R.id.imagecycle)
     ImageCycleView imagecycle;
-    //作业后照片
-    @InjectView(R.id.imagecycle_end)
+    @Bind(R.id.imagecycle_end)
     ImageCycleView imagecycleEnd;
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
@@ -58,7 +56,7 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_finish);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         init();
     }
 
