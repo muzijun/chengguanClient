@@ -27,4 +27,10 @@
 
     <dimen name="popmenu_width">100dp</dimen>
     <dimen name="popmenu_yoff">10dp</dimen>
+
+
+    <!--搜索-->
+    <dimen name="tv_padding_value">4dp</dimen>
+    <dimen name="item_search_padding">10dp</dimen>
+    <dimen name="item_search_underline_padding">20dp</dimen>
 </resources>

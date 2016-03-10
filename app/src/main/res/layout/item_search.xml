@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="@dimen/item_search_padding">
+
+    <LinearLayout
+        android:id="@id/ll_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tx_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_shaper"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/tv_padding_value"
+            android:paddingBottom="@dimen/tv_padding_value"
+            android:text="@string/position" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/tx_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/tv_padding_value"
+                android:text="@string/length" />
+
+            <TextView
+                android:id="@id/tx_start_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/tv_padding_value"
+                android:text="@string/start_position" />
+
+            <TextView
+                android:id="@id/tx_protect_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/tv_padding_value"
+                android:text="@string/protect_level" />
+
+            <TextView
+                android:id="@id/tx_duty_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/tv_padding_value"
+                android:text="@string/duty_main" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_alignBottom="@id/ll_body"
+        android:paddingBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/item_search_underline_padding"
+        android:layout_marginLeft="@dimen/item_search_underline_padding"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--搜索-->
+    <item name="tx_address" type="id"/>
+    <item name="ll_body" type="id"/>
+    <item name="tx_length" type="id"/>
+    <item name="tx_start_position" type="id"/>
+    <item name="tx_protect_level" type="id"/>
+    <item name="tx_duty_main" type="id"/>
+</resources>

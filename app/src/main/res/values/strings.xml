@@ -30,4 +30,11 @@
     <string name="net_error">网络异常</string>
     <string name="title_activity_case_detials">CaseDetialsActivity</string>
 
+    
+    <!--搜索-->
+    <string name="length">长度:%1$s</string>
+    <string name="start_position">起始点:%1$s</string>
+    <string name="protect_level">养护级别:%1$s</string>
+    <string name="duty_main">责任主体:%1$s</string>
+    <string name="position">%1$5s菱湖大道</string>
 </resources>
