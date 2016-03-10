@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
-import com.pactera.chengguan.adapter.ProcessRecordAdapter;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
@@ -20,17 +19,25 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * 办结or处理中or审核
  * Created by lijun on 2016/3/9.
  */
 public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
-    private PopMenu popMenu;
-    private AQuery mAq;
+    @InjectView(R.id.title)
+    TextView title;
+    @InjectView(R.id.lin)
+    LinearLayout lin;
     //作业前照片
-    private ImageCycleView imageCycleView_begin;
+    @InjectView(R.id.imagecycle)
+    ImageCycleView imagecycle;
     //作业后照片
-    private ImageCycleView imageCycleView_end;
+    @InjectView(R.id.imagecycle_end)
+    ImageCycleView imagecycleEnd;
+    private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
             "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
@@ -51,27 +58,24 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_finish);
+        ButterKnife.inject(this);
         init();
     }
 
-    protected void init() {
-        LinearLayout menu = (LinearLayout) findViewById(R.id.lin);               // 初始化弹出菜单
+    protected void init() {         // 初始化弹出菜单
         popMenu = new PopMenu(this);
         addView();
         popMenu.setOnItemClickListener(this);
-        addTitleView(menu);
-        mAq = new AQuery(mContext);
-        mAq.id(R.id.title).text("考核案件");
+        addTitleView(lin);
+        title.setText("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
             ADInfo info = new ADInfo();
             info.setUrl(imageUrls[i]);
             info.setContent("top-->" + i);
             infos.add(info);
         }
-        imageCycleView_begin = (ImageCycleView) findViewById(R.id.imagecycle);
-        imageCycleView_end = (ImageCycleView) findViewById(R.id.imagecycle_end);
-        imageCycleView_begin.setImageResources(infos, mCycleViewListener);
-        imageCycleView_end.setImageResources(infos, mCycleViewListener);
+        imagecycle.setImageResources(infos, mCycleViewListener);
+        imagecycleEnd.setImageResources(infos, mCycleViewListener);
 
     }
 
@@ -119,10 +123,6 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         }
     };
 
-
-    public void check(View view) {
-        startActivity(new Intent(mContext, CheckActivity.class));
-    }
 
     @Override
     public void onClick(View v) {

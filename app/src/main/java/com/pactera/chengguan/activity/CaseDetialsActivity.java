@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -18,10 +19,17 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
+    @InjectView(R.id.title)
+    TextView title;
+    @InjectView(R.id.lin)
+    LinearLayout lin;
+    @InjectView(R.id.imagecycle)
+    ImageCycleView imagecycle;
     private PopMenu popMenu;
-    private AQuery mAq;
-    private ImageCycleView imageCycleView;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
             "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
@@ -33,25 +41,23 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_detials);
+        ButterKnife.inject(this);
         init();
     }
 
-    protected void init() {
-        LinearLayout menu = (LinearLayout) findViewById(R.id.lin);               // 初始化弹出菜单
+    protected void init() {         // 初始化弹出菜单
         popMenu = new PopMenu(this);
         popMenu.addItems(new String[]{"下派", "保存"});
         popMenu.setOnItemClickListener(this);
-        addView(menu);
-        mAq = new AQuery(CaseDetialsActivity.this);
-        mAq.id(R.id.title).text("考核案件");
+        addView(lin);
+        title.setText("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
             ADInfo info = new ADInfo();
             info.setUrl(imageUrls[i]);
             info.setContent("top-->" + i);
             infos.add(info);
         }
-        imageCycleView = (ImageCycleView) findViewById(R.id.imagecycle);
-        imageCycleView.setImageResources(infos, mCycleViewListener);
+        imagecycle.setImageResources(infos, mCycleViewListener);
     }
 
 
@@ -85,9 +91,6 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     };
 
 
-    public void check(View view) {
-        startActivity(new Intent(CaseDetialsActivity.this, CheckActivity.class));
-    }
 
     @Override
     public void onClick(View v) {

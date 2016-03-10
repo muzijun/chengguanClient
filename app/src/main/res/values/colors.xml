@@ -43,4 +43,8 @@
     <color name="bg_line">#b4b4b4</color>
     <color name="bg_gray">#e1e1e1</color>
     <color name="colorEBBA06">#EBBA06</color>
+
+    <color name="drop_down_selected">#7B1FA2</color>
+    <color name="drop_down_unselected">#111111</color>
+
 </resources>

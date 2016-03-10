@@ -12,34 +12,39 @@ import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.BaseFragment;
 import com.pactera.chengguan.fragment.ImageDetailFragment;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created by lijun on 2016/3/4.
  */
-public class ImagePagerActivity extends BaseActivity{
+public class ImagePagerActivity extends BaseActivity {
     private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
-
-    private ViewPager mPager;
+    @InjectView(R.id.pager)
+    ViewPager pager;
+    @InjectView(R.id.indicator)
+    TextView indicator;
     private int pagerPosition;
-    private TextView indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_detail_pager);
+        ButterKnife.inject(this);
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         String[] urls = getIntent().getStringArrayExtra(EXTRA_IMAGE_URLS);
-        mPager = (ViewPager) findViewById(R.id.pager);
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(
                 getSupportFragmentManager(), urls);
-        mPager.setAdapter(mAdapter);
-        mPager.setPageTransformer(true, new DepthPageTransformer());
+        pager.setAdapter(mAdapter);
+        pager.setPageTransformer(true, new DepthPageTransformer());
         indicator = (TextView) findViewById(R.id.indicator);
-        CharSequence text = getString(R.string.viewpager_indicator, 1, mPager
+        CharSequence text = getString(R.string.viewpager_indicator, 1, pager
                 .getAdapter().getCount());
         indicator.setText(text);
         // 更新下标
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
@@ -52,7 +57,7 @@ public class ImagePagerActivity extends BaseActivity{
             @Override
             public void onPageSelected(int arg0) {
                 CharSequence text = getString(R.string.viewpager_indicator,
-                        arg0 + 1, mPager.getAdapter().getCount());
+                        arg0 + 1, pager.getAdapter().getCount());
                 indicator.setText(text);
             }
 
@@ -61,8 +66,9 @@ public class ImagePagerActivity extends BaseActivity{
             pagerPosition = savedInstanceState.getInt(STATE_POSITION);
         }
 
-        mPager.setCurrentItem(pagerPosition);
+        pager.setCurrentItem(pagerPosition);
     }
+
     private class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
         public String[] fileList;

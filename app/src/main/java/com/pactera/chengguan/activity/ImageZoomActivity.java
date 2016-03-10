@@ -19,11 +19,20 @@ import com.pactera.chengguan.model.PhotoEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class ImageZoomActivity extends Activity {
 
-    private ViewPager pager;
+    @InjectView(R.id.viewpager)
+    ViewPager viewpager;
+    @InjectView(R.id.photo_bt_exit)
+    Button photoBtExit;
+    @InjectView(R.id.photo_bt_del)
+    Button photoBtDel;
+    @InjectView(R.id.photo_relativeLayout)
+    RelativeLayout photoRelativeLayout;
     private MyPageAdapter adapter;
     private int currentPosition;
     private ArrayList<String> mDataList = new ArrayList<String>();
@@ -33,45 +42,39 @@ public class ImageZoomActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_zoom);
-
-        photo_relativeLayout = (RelativeLayout) findViewById(R.id.photo_relativeLayout);
-        photo_relativeLayout.setBackgroundColor(0x70000000);
-
+        ButterKnife.inject(this);
+        photoRelativeLayout.setBackgroundColor(0x70000000);
         initData();
-
-        Button photo_bt_exit = (Button) findViewById(R.id.photo_bt_exit);
-        photo_bt_exit.setOnClickListener(new View.OnClickListener() {
+        photoBtExit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
             }
         });
-        Button photo_bt_del = (Button) findViewById(R.id.photo_bt_del);
-        photo_bt_del.setOnClickListener(new View.OnClickListener() {
+        photoBtDel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mDataList.size() == 1) {
                     removeImgs();
                     finish();
                 } else {
                     removeImg(currentPosition);
-                    pager.removeAllViews();
+                    viewpager.removeAllViews();
                     adapter.removeView(currentPosition);
                     adapter.notifyDataSetChanged();
                 }
             }
         });
 
-        pager = (ViewPager) findViewById(R.id.viewpager);
-        pager.setOnPageChangeListener(pageChangeListener);
+        viewpager.setOnPageChangeListener(pageChangeListener);
 
         adapter = new MyPageAdapter(mDataList);
-        pager.setAdapter(adapter);
-        pager.setCurrentItem(currentPosition);
+        viewpager.setAdapter(adapter);
+        viewpager.setCurrentItem(currentPosition);
     }
 
     private void initData() {
         currentPosition = getIntent().getIntExtra(
                 Contants.EXTRA_CURRENT_IMG_POSITION, 0);
-        mDataList =(ArrayList<String>) getIntent().getSerializableExtra(Contants.EXTRA_IMAGE_LIST);
+        mDataList = (ArrayList<String>) getIntent().getSerializableExtra(Contants.EXTRA_IMAGE_LIST);
     }
 
     private void removeImgs() {

@@ -13,7 +13,6 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.fragment.MaintainManageFragment;
 import com.pactera.chengguan.fragment.TabThreeFragment;
-import com.pactera.chengguan.fragment.TabOneFragment;
 import com.pactera.chengguan.fragment.TabFourFragment;
 import com.pactera.chengguan.fragment.TabTwoFragment;
 import com.pactera.chengguan.view.DoubleClickExitHelper;

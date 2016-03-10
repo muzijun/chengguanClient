@@ -26,12 +26,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.ApprovalActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".activity.CheckActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".activity.CaseListActivity">
             android:screenOrientation="portrait">
         </activity>
