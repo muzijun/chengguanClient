@@ -41,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:drawablePadding=""
                 android:paddingRight="30dp"
                 android:text="分类:"/>
 
@@ -117,7 +116,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:drawablePadding=""
                 android:paddingRight="30dp"
                 android:text="月份:"/>
 
@@ -142,7 +140,7 @@
     </LinearLayout>
 
 
-    <Button
+    <com.rey.material.widget.Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
