@@ -170,6 +170,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:drawablePadding="10dp"
                         android:drawableLeft="@mipmap/icon_send"
                         android:text="2016-02-16"
                         android:textColor="@color/coloraeaeae" />

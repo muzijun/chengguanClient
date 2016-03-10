@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -18,10 +19,12 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
-/**办结
+/**
+ * 办结
  * Created by lijun on 2016/3/9.
  */
-public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener{ private PopMenu popMenu;
+public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
+    private PopMenu popMenu;
     private AQuery mAq;
     //作业前照片
     private ImageCycleView imageCycleView_begin;
@@ -56,7 +59,7 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
             infos.add(info);
         }
         imageCycleView_begin = (ImageCycleView) findViewById(R.id.imagecycle);
-        imageCycleView_end=(ImageCycleView)findViewById(R.id.imagecycle_end);
+        imageCycleView_end = (ImageCycleView) findViewById(R.id.imagecycle_end);
         imageCycleView_begin.setImageResources(infos, mCycleViewListener);
         imageCycleView_end.setImageResources(infos, mCycleViewListener);
 
@@ -110,6 +113,12 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
     @Override
     public void onItemClick(int index) {
+        switch (index) {
+            case 0:
+                Intent intent = new Intent(mContext, ProcessRecordActivity.class);
+                startActivity(intent);
+                break;
+        }
 
     }
 

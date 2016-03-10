@@ -42,6 +42,9 @@
             android:name=".activity.CaseFinishActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.ProcessRecordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.ImageZoomActivity"/>

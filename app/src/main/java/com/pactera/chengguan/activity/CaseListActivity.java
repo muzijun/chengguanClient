@@ -40,7 +40,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         ((TextView) findViewById(R.id.title)).setText("案件列表");
         swipeToLoadLayout = (ChenguanSwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         ListView mListView = (ListView) findViewById(R.id.swipe_target);
-        CaseListAdapter caseListAdapter=new CaseListAdapter(mContext);
+        CaseListAdapter caseListAdapter = new CaseListAdapter(mContext);
         mListView.setAdapter(caseListAdapter);
         mListView.setOnItemClickListener(this);
         spinner_one = (Spinner) findViewById(R.id.spinner_one);
@@ -73,7 +73,17 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent=new Intent(mContext,CaseFinishActivity.class);
-        startActivity(intent);
+        Intent intent;
+        switch (position) {
+            case 0:
+                intent = new Intent(mContext, CaseDetialsActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                intent = new Intent(mContext, CaseFinishActivity.class);
+                startActivity(intent);
+                break;
+        }
+
     }
 }

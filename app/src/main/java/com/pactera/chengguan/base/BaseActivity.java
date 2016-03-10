@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.pactera.chengguan.util.AppManager;
 
@@ -13,9 +14,10 @@ import java.util.List;
 /**
  * Created by lijun on 2015/12/2.
  */
-public class BaseActivity extends FragmentActivity{
+public class BaseActivity extends FragmentActivity {
 
     protected BaseActivity mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,14 @@ public class BaseActivity extends FragmentActivity{
                     handleResult(f, requestCode, resultCode, data);
             }
         }
+    }
+
+    /**
+     * 返回按钮
+     * @param view
+     */
+    public void back(View view) {
+        finish();
     }
 
     @Override
