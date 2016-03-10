@@ -19,19 +19,19 @@ import com.pactera.chengguan.model.PhotoEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class ImageZoomActivity extends Activity {
 
-    @InjectView(R.id.viewpager)
+    @Bind(R.id.viewpager)
     ViewPager viewpager;
-    @InjectView(R.id.photo_bt_exit)
+    @Bind(R.id.photo_bt_exit)
     Button photoBtExit;
-    @InjectView(R.id.photo_bt_del)
+    @Bind(R.id.photo_bt_del)
     Button photoBtDel;
-    @InjectView(R.id.photo_relativeLayout)
+    @Bind(R.id.photo_relativeLayout)
     RelativeLayout photoRelativeLayout;
     private MyPageAdapter adapter;
     private int currentPosition;
@@ -42,7 +42,7 @@ public class ImageZoomActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_zoom);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         photoRelativeLayout.setBackgroundColor(0x70000000);
         initData();
         photoBtExit.setOnClickListener(new View.OnClickListener() {

@@ -13,7 +13,11 @@ import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.ImagePagerActivity;
 import com.pactera.chengguan.view.ImageItemCycle;
+
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -30,12 +34,13 @@ public class CaseListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context mContext;
+
     public CaseListAdapter(Context context) {
-        mContext=context;
+        mContext = context;
         inflater = LayoutInflater.from(context);
         for (int i = 0; i < 10; i++) {
             ArrayList<String> info = new ArrayList<String>();
-            for (int j = 0; j< imageUrls.length; j++) {
+            for (int j = 0; j < imageUrls.length; j++) {
                 info.add(imageUrls[j]);
             }
             infos.add(info);
@@ -62,16 +67,15 @@ public class CaseListAdapter extends BaseAdapter {
         ArrayList<String> data = infos.get(position);
         ViewHolder holder = null;
         if (convertView == null) {
-            holder = new ViewHolder();
             convertView = inflater
                     .inflate(R.layout.caselist_item, null, false);
-            holder.imageItemCycle = (ImageItemCycle) convertView.findViewById(R.id.imagecycle);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.imageItemCycle.setImageResources(data,mCycleViewListener);
+        holder.imagecycle.setImageResources(data, mCycleViewListener);
         return convertView;
     }
 
@@ -80,8 +84,8 @@ public class CaseListAdapter extends BaseAdapter {
 
         @Override
         public void onImageClick(String info, int postion, View imageView) {
-            Intent intent=new Intent(mContext,ImagePagerActivity.class);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS,imageUrls);
+            Intent intent = new Intent(mContext, ImagePagerActivity.class);
+            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
             intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, postion);
             mContext.startActivity(intent);
             Toast.makeText(mContext, "content->" + postion, Toast.LENGTH_SHORT).show();
@@ -92,12 +96,17 @@ public class CaseListAdapter extends BaseAdapter {
             Glide.with(mContext).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
         }
     };
+
+    static class ViewHolder {
+        @Bind(R.id.imagecycle)
+        ImageItemCycle imagecycle;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
 }
 
 
-
-class ViewHolder {
-    ImageItemCycle imageItemCycle;
-}
 
 

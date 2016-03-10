@@ -12,8 +12,8 @@ import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.BaseFragment;
 import com.pactera.chengguan.fragment.ImageDetailFragment;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Created by lijun on 2016/3/4.
@@ -22,9 +22,9 @@ public class ImagePagerActivity extends BaseActivity {
     private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
-    @InjectView(R.id.pager)
+    @Bind(R.id.pager)
     ViewPager pager;
-    @InjectView(R.id.indicator)
+    @Bind(R.id.indicator)
     TextView indicator;
     private int pagerPosition;
 
@@ -32,7 +32,7 @@ public class ImagePagerActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_detail_pager);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         String[] urls = getIntent().getStringArrayExtra(EXTRA_IMAGE_URLS);
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(

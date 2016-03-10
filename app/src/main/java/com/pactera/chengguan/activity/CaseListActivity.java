@@ -21,21 +21,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * 案件详情
  * Created by lijun on 2016/3/9.
  */
 public class CaseListActivity extends BaseActivity implements OnRefreshListener, OnLoadMoreListener, AdapterView.OnItemClickListener {
-    private static final String[] tab_one = {"不限","待办", "不可办"};
-    private static final String[] tab_two = {"不限","月度", "季度"};
-    private static final String[] tab_three = {"不限","一月", "二月"};
-    private static final String[] tab_four = {"不限","升序", "降序"};
-    @InjectView(R.id.title)
+    private static final String[] tab_one = {"不限", "待办", "不可办"};
+    private static final String[] tab_two = {"不限", "月度", "季度"};
+    private static final String[] tab_three = {"不限", "一月", "二月"};
+    private static final String[] tab_four = {"不限", "升序", "降序"};
+    @Bind(R.id.title)
     TextView title;
-    @InjectView(R.id.dropDownMenu)
+    @Bind(R.id.dropDownMenu)
     DropDownMenu dropDownMenu;
     private String headers[] = {"不限", "不限", "不限", "不限"};
     private GirdDropDownAdapter tab_one_Adapter;
@@ -48,7 +48,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.caselist);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         init();
 
     }
@@ -115,8 +115,8 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private View createView() {
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.caselist_content, null);
-        ListView swipeTarget=(ListView)view.findViewById(R.id.swipe_target);
-        ChenguanSwipeToLoadLayout swipeToLoadLayout = (ChenguanSwipeToLoadLayout)view.findViewById(R.id.swipeToLoadLayout);
+        ListView swipeTarget = ButterKnife.findById(view,R.id.swipe_target);
+        ChenguanSwipeToLoadLayout swipeToLoadLayout = (ChenguanSwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         CaseListAdapter caseListAdapter = new CaseListAdapter(mContext);
         swipeTarget.setAdapter(caseListAdapter);
         swipeTarget.setOnItemClickListener(this);

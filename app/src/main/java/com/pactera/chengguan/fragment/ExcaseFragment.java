@@ -22,6 +22,8 @@ import com.pactera.chengguan.view.NoScrollGridView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
@@ -31,10 +33,13 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
  */
 public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
     private static final int REQUEST_IMAGE = 2;
-    private NoScrollGridView mGridView;
-    private ImagePublishAdapter mAdapter;
     //案件详情按钮
-    private TextView case_list;
+    @Bind(R.id.case_list)
+    TextView caseList;
+    @Bind(R.id.gridview)
+    NoScrollGridView gridview;
+    private ImagePublishAdapter mAdapter;
+
     private ArrayList<String> mDataList = new ArrayList<String>();
 
     @Override
@@ -46,13 +51,12 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
 
     @Override
     public void initContentView(View view) {
-        mGridView = (NoScrollGridView) view.findViewById(R.id.gridview);
-        case_list = (TextView) view.findViewById(R.id.case_list);
-        mGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
+        ButterKnife.bind(this, view);
+        gridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImagePublishAdapter(mContext, mDataList);
-        mGridView.setAdapter(mAdapter);
-        case_list.setOnClickListener(this);
-        mGridView.setOnItemClickListener(this);
+        gridview.setAdapter(mAdapter);
+        caseList.setOnClickListener(this);
+        gridview.setOnItemClickListener(this);
         EventBus.getDefault().register(this);
     }
 
@@ -120,7 +124,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.case_list:
-                Intent intent=new Intent(mContext, CaseListActivity.class);
+                Intent intent = new Intent(mContext, CaseListActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -135,5 +139,11 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

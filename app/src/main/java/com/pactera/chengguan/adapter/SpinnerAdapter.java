@@ -12,7 +12,7 @@ import com.pactera.chengguan.R;
 /**
  * Created by lijun on 2015/12/15.
  */
-public class SpinnerAdapter extends BaseAdapter {
+public class  SpinnerAdapter extends BaseAdapter {
     private String[] mList;
     private Context mContext;
     public SpinnerAdapter(Context pContext, String[] pList) {

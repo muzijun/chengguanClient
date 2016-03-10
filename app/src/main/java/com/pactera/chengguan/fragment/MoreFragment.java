@@ -9,22 +9,27 @@ import android.widget.TextView;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by lijun on 2015/12/2.
  */
-public class TabFourFragment extends BaseFragment {
+public class MoreFragment extends BaseFragment {
 
-    private TextView mTitle;
+    @Bind(R.id.title)
+    TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return initView(R.layout.tab_four, inflater);
+        View view = initView(R.layout.fragment_more, inflater);
+        return view;
     }
 
     @Override
     public void initContentView(View view) {
-        mTitle = (TextView) view.findViewById(R.id.title);
-        mTitle.setText(mRes.getString(R.string.title_more));
+        ButterKnife.bind(this, view);
+        title.setText(mRes.getString(R.string.title_more));
     }
 
     @Override
@@ -32,4 +37,9 @@ public class TabFourFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

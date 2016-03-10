@@ -9,7 +9,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
@@ -19,15 +18,15 @@ import com.pactera.chengguan.view.PopMenu;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
-    @InjectView(R.id.title)
+    @Bind(R.id.title)
     TextView title;
-    @InjectView(R.id.lin)
+    @Bind(R.id.lin)
     LinearLayout lin;
-    @InjectView(R.id.imagecycle)
+    @Bind(R.id.imagecycle)
     ImageCycleView imagecycle;
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
@@ -41,7 +40,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_detials);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         init();
     }
 
@@ -89,7 +88,6 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             Glide.with(CaseDetialsActivity.this).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
         }
     };
-
 
 
     @Override
