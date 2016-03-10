@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.adapter.ProcessRecordAdapter;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.view.ImageCycleView;
@@ -20,7 +21,7 @@ import com.pactera.chengguan.view.PopMenu;
 import java.util.ArrayList;
 
 /**
- * 办结
+ * 办结or处理中or审核
  * Created by lijun on 2016/3/9.
  */
 public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
@@ -36,6 +37,15 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
             "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
             "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
             "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    public static final String STATE = "State";
+    //状态1为办结，2为处理中，3为审核
+    private int state;
+    //办结
+    private String[] state_one = {"流程日志", "延期记录"};
+    //处理中
+    private String[] state_two = {"延期", "结案", "延期记录"};
+    //审核
+    private String[] state_three = {"考核", "延期", "结案", "不通过", "流程日志", "延期记录"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +57,9 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     protected void init() {
         LinearLayout menu = (LinearLayout) findViewById(R.id.lin);               // 初始化弹出菜单
         popMenu = new PopMenu(this);
-        popMenu.addItems(new String[]{"流程日志", "延期记录"});
+        addView();
         popMenu.setOnItemClickListener(this);
-        addView(menu);
+        addTitleView(menu);
         mAq = new AQuery(mContext);
         mAq.id(R.id.title).text("考核案件");
         for (int i = 0; i < imageUrls.length; i++) {
@@ -65,8 +75,22 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
     }
 
+    /**
+     * 根据传入的参数，加载不同的界面
+     */
+    private void addView() {
+        state = getIntent().getIntExtra(STATE, 0);
+        if (state == 1) {
+            popMenu.addItems(state_one);
+        } else if (state == 2) {
+            popMenu.addItems(state_two);
+        } else if (state == 3) {
+            popMenu.addItems(state_three);
+        }
+    }
 
-    private void addView(LinearLayout linearLayout) {
+
+    private void addTitleView(LinearLayout linearLayout) {
         ImageView imageView = new ImageView(mContext);
         imageView.setId(R.id.top);
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -113,13 +137,35 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
     @Override
     public void onItemClick(int index) {
-        switch (index) {
-            case 0:
-                Intent intent = new Intent(mContext, ProcessRecordActivity.class);
-                startActivity(intent);
-                break;
+        if (state == 1) {
+            switch (index) {
+                case 0:
+                    Intent intent = new Intent(mContext, ProcessRecordActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        } else if (state == 2) {
+            switch (index) {
+
+            }
+
+        } else if (state == 3) {
+            Intent intent;
+            switch (index) {
+                //考核
+                case 0:
+                    intent = new Intent(mContext, AssessActivity.class);
+                    startActivity(intent);
+                    break;
+                //流程日志
+                case 4:
+                    intent = new Intent(mContext, ProcessRecordActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+
         }
 
-    }
 
+    }
 }

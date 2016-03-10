@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.androidquery.AQuery;
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.base.BaseActivity;
 
-public class AssessActivity extends AppCompatActivity {
+/**
+ * 考核
+ */
+public class AssessActivity extends BaseActivity {
     private AQuery mAq;
 
     @Override
@@ -17,7 +21,7 @@ public class AssessActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mAq = new AQuery(AssessActivity.this);
+        mAq = new AQuery(mContext);
         mAq.id(R.id.title).text("考核");
     }
 }

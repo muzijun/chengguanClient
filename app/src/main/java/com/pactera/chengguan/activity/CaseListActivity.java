@@ -81,8 +81,20 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
                 break;
             case 1:
                 intent = new Intent(mContext, CaseFinishActivity.class);
+                intent.putExtra(CaseFinishActivity.STATE,1);
                 startActivity(intent);
                 break;
+            case 2:
+                intent = new Intent(mContext, CaseFinishActivity.class);
+                intent.putExtra(CaseFinishActivity.STATE,2);
+                startActivity(intent);
+                break;
+            case 3:
+                intent = new Intent(mContext, CaseFinishActivity.class);
+                intent.putExtra(CaseFinishActivity.STATE,3);
+                startActivity(intent);
+                break;
+
         }
 
     }
