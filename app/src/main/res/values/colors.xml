@@ -13,7 +13,6 @@
     <color name="colorBule">#018dc8</color>
 
 
-
     <!--rey.material颜色-->
     <color name="colorControlNormal">#FF78909C</color>
     <color name="colorPrimaryQuarter">#3303A9F4</color>
@@ -30,14 +29,12 @@
 
     <color name="colorFF0000">#FF0000</color>
     <color name="coloraeaeae">#aeaeae</color>
-   <!--透明-->
+    <!--透明-->
     <color name="colorTransparent">#00000000</color>
     <!--   深色 -->
     <color name="color222222">#222222</color>
     <!--  浅色 -->
     <color name="color999999">#999999</color>
-
-    <color name="colorFFFFFF">#FFFFFF</color>
     <!-- 标题字体颜色 -->
     <color name="title_font">#a4a4a4</color>
     <!-- 背景颜色 -->
@@ -45,4 +42,5 @@
     <!-- 背景线颜色 -->
     <color name="bg_line">#b4b4b4</color>
     <color name="bg_gray">#e1e1e1</color>
+    <color name="colorEBBA06">#EBBA06</color>
 </resources>
