@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_color_f7f9f9"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_color_f7f9f9"
+              android:orientation="vertical">
 
-    <include layout="@layout/include_titlebar" />
+    <include layout="@layout/include_titlebar"/>
 
     <View
         android:layout_width="match_parent"
@@ -13,75 +13,143 @@
         android:layout_marginTop="27dp"
         android:background="@color/bg_line"/>
 
-    <RelativeLayout
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorWhite">
-
-        <ImageView
-            android:id="@+id/img_approval"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_approval"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_approval"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="@dimen/text_size_medium"
-            android:text="@string/item_approval"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_next"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"/>
-
-    </RelativeLayout>
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_approval"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="工作联系单"
+        android:textSize="@dimen/text_size_medium"/>
 
     <View
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="0.4dp"
         android:layout_gravity="center_horizontal"
         android:background="@color/bg_line"/>
 
-    <RelativeLayout
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorWhite">
+        android:layout_centerVertical="true"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_assess"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="@string/item_assess"
+        android:textSize="@dimen/text_size_medium"/>
 
-        <ImageView
-            android:id="@+id/img_assess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_assess"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:background="@color/bg_line"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_assess"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="@dimen/text_size_medium"
-            android:text="@string/item_assess"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_next"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/bg_line"/>
 
-    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_approval"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="通知"
+        android:textSize="@dimen/text_size_medium"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="0.4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/bg_line"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_assess"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="我的信息"
+        android:textSize="@dimen/text_size_medium"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="0.4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/bg_line"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_assess"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="通讯录"
+        android:textSize="@dimen/text_size_medium"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:background="@color/bg_line"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/bg_line"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@mipmap/icon_assess"
+        android:drawablePadding="20dp"
+        android:drawableRight="@mipmap/arraw_right2"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:text="破损问题"
+        android:textSize="@dimen/text_size_medium"/>
+
 
     <View
         android:layout_width="match_parent"
@@ -99,36 +167,31 @@
         android:layout_height="50dp"
         android:background="@color/colorWhite">
 
-        <ImageView
-            android:id="@+id/img_myinfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_myinfo"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_myinfo"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="@dimen/text_size_medium"
-            android:text="@string/item_myinfo"/>
+            android:drawableLeft="@mipmap/icon_assess"
+            android:drawablePadding="20dp"
+            android:drawableRight="@mipmap/arraw_right2"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
+            android:text="软件更新"
+            android:textSize="@dimen/text_size_medium"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_next"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"/>
-
+            android:layout_centerVertical="true"
+            android:layout_marginRight="70dp"
+            android:src="@mipmap/state_new"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.4dp"
         android:background="@color/bg_line"/>
-    
+
 </LinearLayout>

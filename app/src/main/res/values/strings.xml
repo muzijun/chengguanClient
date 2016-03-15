@@ -20,7 +20,7 @@
 
 
     <!-- 更多 -->
-    <string name="title_more">更多</string>
+    <string name="title_more">更多信息</string>
     <string name="item_approval">审批</string>
     <string name="item_assess">考核</string>
     <string name="item_myinfo">我的信息</string>

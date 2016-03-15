@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_approval"
             android:text="道路"
             android:textSize="@dimen/text_size_medium" />
 
@@ -56,7 +55,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_assess"
             android:text="桥梁"
             android:textSize="@dimen/text_size_medium" />
 
@@ -91,7 +89,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_myinfo"
             android:text="广场"
             android:textSize="@dimen/text_size_medium" />
 
@@ -123,7 +120,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_myinfo"
             android:text="泵站"
             android:textSize="@dimen/text_size_medium" />
 
@@ -161,7 +157,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_myinfo"
             android:text="雨水管道"
             android:textSize="@dimen/text_size_medium" />
 
@@ -194,7 +189,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_assess"
             android:text="河道栏杆"
             android:textSize="@dimen/text_size_medium" />
 
@@ -227,7 +221,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/img_assess"
             android:text="过街设施"
             android:textSize="@dimen/text_size_medium" />
 
