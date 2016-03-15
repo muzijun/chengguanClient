@@ -8,5 +8,5 @@
         android:topRightRadius="6dp" />
 
     <solid
-        android:color="@color/colorBule"/>
+        android:color="@color/color21b6ec"/>
 </shape>
