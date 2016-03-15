@@ -50,6 +50,8 @@
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.ImageZoomActivity"/>
         <activity android:name=".activity.ImagePagerActivity"/>
+        <activity android:name=".activity.WorkSheetActivity"/>
+
     </application>
 
 </manifest>
