@@ -68,7 +68,7 @@ public class CaseListAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = inflater
-                    .inflate(R.layout.caselist_item, null, false);
+                    .inflate(R.layout.item_caselist, null, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
 

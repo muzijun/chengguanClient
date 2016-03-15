@@ -1,5 +1,7 @@
 package com.pactera.chengguan.config;
 
+import com.pactera.chengguan.BuildConfig;
+
 /**
  * Created by lijun on 2015/12/16.
  */

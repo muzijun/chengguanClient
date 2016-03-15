@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
+import com.pactera.chengguan.fragment.BasicDataFragment;
 import com.pactera.chengguan.fragment.MaintainManageFragment;
 import com.pactera.chengguan.fragment.MoreFragment;
-import com.pactera.chengguan.fragment.TabThreeFragment;
-import com.pactera.chengguan.fragment.TabTwoFragment;
+import com.pactera.chengguan.fragment.MonitorFragment;
 import com.pactera.chengguan.view.DoubleClickExitHelper;
 
 import butterknife.Bind;
@@ -100,12 +100,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 用于广告的Fragment
      */
-    private TabThreeFragment tabThreeFragment;
+    private BasicDataFragment basicDataFragment;
 
     /**
      * 用于通知的Fragment
      */
-    private TabTwoFragment tabTwoFragment;
+    private MonitorFragment tabTwoFragment;
     /**
      * 更多Fragment
      */
@@ -203,7 +203,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 noticeText.setTextColor(getResources().getColor(R.color.color21b6ec));
                 if (tabTwoFragment == null) {
                     // 如果NoticeFragment为空，则创建一个并添加到界面上
-                    tabTwoFragment = new TabTwoFragment();
+                    tabTwoFragment = new MonitorFragment();
                     transaction.add(R.id.content, tabTwoFragment);
                 } else {
                     // 如果NoticeFragment不为空，则直接将它显示出来
@@ -215,13 +215,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // 当点击了动态tab时，改变控件的图片和文字颜色
                 advertiseImage.setImageResource(R.mipmap.ico_advertise_on);
                 advertiseText.setTextColor(getResources().getColor(R.color.color21b6ec));
-                if (tabThreeFragment == null) {
-                    // TabThreeFragment，则创建一个并添加到界面上
-                    tabThreeFragment = new TabThreeFragment();
-                    transaction.add(R.id.content, tabThreeFragment);
+                if (basicDataFragment == null) {
+                    // BasicDataFragment，则创建一个并添加到界面上
+                    basicDataFragment = new BasicDataFragment();
+                    transaction.add(R.id.content, basicDataFragment);
                 } else {
-                    // TabThreeFragment，则直接将它显示出来
-                    transaction.show(tabThreeFragment);
+                    // BasicDataFragment，则直接将它显示出来
+                    transaction.show(basicDataFragment);
                 }
                 break;
 
@@ -266,8 +266,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (tabOneFragment != null) {
             transaction.hide(tabOneFragment);
         }
-        if (tabThreeFragment != null) {
-            transaction.hide(tabThreeFragment);
+        if (basicDataFragment != null) {
+            transaction.hide(basicDataFragment);
         }
         if (tabTwoFragment != null) {
             transaction.hide(tabTwoFragment);

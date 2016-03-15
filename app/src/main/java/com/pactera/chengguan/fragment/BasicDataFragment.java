@@ -9,19 +9,23 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseFragment;
 
 /**
- * Created by lijun on 2015/12/11.
+ * 基础数据
+ * Created by lijun on 2015/12/2.
  */
-public class ThreeFragment extends BaseFragment {
+public class BasicDataFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = initView(R.layout.approval_three, inflater);
+        View view = initView(R.layout.fragment_basic_data, inflater);
         return view;
     }
+
     @Override
     public void initContentView(View view) {
 
     }
+
     @Override
     protected void lazyLoad() {
+
     }
 }

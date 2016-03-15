@@ -47,7 +47,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.caselist);
+        setContentView(R.layout.activity_caselist);
         ButterKnife.bind(this);
         init();
 
