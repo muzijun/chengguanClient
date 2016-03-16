@@ -67,6 +67,8 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         title.setText("桥梁");
         backImg.setVisibility(View.GONE);
         popMenu = new PopMenu(mContext);
+        View popmenu_background = ButterKnife.findById(popMenu.getview(), R.id.popmenu_background);
+        popmenu_background.setBackgroundResource(R.drawable.drop_down_menuleft_normal);
         popMenu.addItems(option);
         popMenu.setOnItemClickListener(this);
         addMenuView(leftLin);

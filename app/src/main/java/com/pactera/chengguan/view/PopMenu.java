@@ -1,4 +1,5 @@
 package com.pactera.chengguan.view;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,10 +19,9 @@ import java.util.ArrayList;
 
 /**
  * 修改于：2013-2-28 17:03:35
- *         修正 ListView item 点击响应失败！
+ * 修正 ListView item 点击响应失败！
  *
  * @author Yichou
- *
  */
 public class PopMenu implements AdapterView.OnItemClickListener {
     public interface OnItemClickListener {
@@ -34,6 +34,7 @@ public class PopMenu implements AdapterView.OnItemClickListener {
     private ListView listView;
     private OnItemClickListener listener;
     private LayoutInflater inflater;
+    private View view;
 
 
     public PopMenu(Context context) {
@@ -42,7 +43,7 @@ public class PopMenu implements AdapterView.OnItemClickListener {
         itemList = new ArrayList<String>(5);
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.popmenu, null);
+        view = inflater.inflate(R.layout.popmenu, null);
 
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setAdapter(new PopAdapter());
@@ -53,6 +54,13 @@ public class PopMenu implements AdapterView.OnItemClickListener {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    /**
+     * 取出view
+     */
+    public View getview() {
+        return  view;
     }
 
     @Override
@@ -132,7 +140,7 @@ public class PopMenu implements AdapterView.OnItemClickListener {
         }
 
         private final class ViewHolder {
-            TextView  groupItem;
+            TextView groupItem;
         }
     }
 }

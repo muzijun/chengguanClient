@@ -45,7 +45,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     }
 
     protected void init() {         // 初始化弹出菜单
-        popMenu = new PopMenu(this);
+        popMenu = new PopMenu(mContext);
         popMenu.addItems(new String[]{"下派", "保存"});
         popMenu.setOnItemClickListener(this);
         addView(lin);

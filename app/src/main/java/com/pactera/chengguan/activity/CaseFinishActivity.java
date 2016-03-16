@@ -61,7 +61,7 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     }
 
     protected void init() {         // 初始化弹出菜单
-        popMenu = new PopMenu(this);
+        popMenu = new PopMenu(mContext);
         addView();
         popMenu.setOnItemClickListener(this);
         addTitleView(lin);
