@@ -37,12 +37,14 @@ public  class BaseCallback extends Callback<String> {
 
     @Override
     public void onError(Request request, Exception e) {
+        ProgressDlgUtil.stopProgressDlg();
         mCallBackListener.fail();
     }
 
     @Override
     public void onResponse(String response) {
-//    mCallBackListener.success(new Gson().fromJson(response.toString(), mClazz));
+        ProgressDlgUtil.stopProgressDlg();
+        mCallBackListener.success(new Gson().fromJson(response.toString(), mClazz));
     }
 
 }

@@ -46,6 +46,12 @@
             android:name=".activity.PostPoneActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.SelectActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.InputActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.ImageZoomActivity"/>

@@ -91,6 +91,7 @@
                     android:background="@color/colorD7d7d7"/>
 
                 <TextView
+                    android:id="@+id/tx_describe"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -107,6 +108,7 @@
                     android:background="@color/colorD7d7d7"/>
 
                 <TextView
+                    android:id="@+id/tx_address"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
@@ -151,6 +153,7 @@
                         android:textColor="#E19D0A"/>
 
                     <TextView
+                        android:id="@+id/tx_type"
                         android:layout_width="fill_parent"
                         android:layout_height="30dp"
                         android:layout_marginLeft="20dp"
@@ -178,17 +181,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/colorD7d7d7"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="20dp"
+                <LinearLayout
                     android:layout_marginTop="5dp"
-                    android:drawableRight="@mipmap/arraw_right"
-                    android:gravity="center_vertical"
-                    android:paddingRight="30dp"
-                    android:text="作业单位:无锡市政府"
-                    android:textColor="@color/colorBule"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:text="作业单位:"
+                        android:textColor="@color/colorBule"/>
+
+                    <TextView
+                        android:id="@+id/tx_unit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:drawableRight="@mipmap/arraw_right"
+                        android:gravity="center_vertical"
+                        android:paddingRight="30dp"
+                        android:textColor="@color/colorBule"
+                        android:text="无锡市政府"/>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

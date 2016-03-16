@@ -44,7 +44,7 @@ public class ChengApplication extends Application {
         Cache cache = new Cache(this.getCacheDir(), cacheSize);
         OkHttpUtils.getInstance().getOkHttpClient().setCache(cache);
         OkHttpUtils.getInstance().getOkHttpClient().interceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-        OkHttpUtils.getInstance().getOkHttpClient().setConnectTimeout(100000, TimeUnit.MILLISECONDS);
+        OkHttpUtils.getInstance().getOkHttpClient().setConnectTimeout(10000, TimeUnit.MILLISECONDS);
     }
 
 

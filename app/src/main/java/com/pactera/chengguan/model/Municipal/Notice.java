@@ -11,6 +11,7 @@ public class Notice {
 
     private int id;             //id
     private int month;          //月份
+    private int status;         //状态
     private String title;       //标题
     private String sender;      //发送人
     private List<String> units; //接收单位

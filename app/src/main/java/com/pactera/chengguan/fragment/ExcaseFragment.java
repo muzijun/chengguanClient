@@ -8,15 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.CaseListActivity;
 import com.pactera.chengguan.activity.ImageZoomActivity;
+import com.pactera.chengguan.activity.SelectActivity;
 import com.pactera.chengguan.adapter.ImagePublishAdapter;
 import com.pactera.chengguan.base.BaseFragment;
 import com.pactera.chengguan.config.Contants;
+import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.model.PhotoEvent;
+import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.view.NoScrollGridView;
 
 import java.io.Serializable;
@@ -38,28 +42,77 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     TextView caseList;
     @Bind(R.id.gridview)
     NoScrollGridView gridview;
+    @Bind(R.id.unit_text)
+    TextView unitText;
+    @Bind(R.id.unit_lin)
+    LinearLayout unitLin;
+    @Bind(R.id.type_text)
+    TextView typeText;
+    @Bind(R.id.type_lin)
+    LinearLayout typeLin;
+    @Bind(R.id.month_text)
+    TextView monthText;
+    @Bind(R.id.month_lin)
+    LinearLayout monthLin;
+
     private ImagePublishAdapter mAdapter;
 
     private ArrayList<String> mDataList = new ArrayList<String>();
+    //作业单位集合
+    private ArrayList<String> mSelectData_unit = new ArrayList<String>();
+    //考核类型集合
+    private ArrayList<String> mSelectData_type = new ArrayList<String>();
+    //月份集合
+    private ArrayList<String> mSelectData_month = new ArrayList<String>();
+
+    //作业单位
+    private String[] unit_data = {"无锡市政府", "无锡城管局"};
+    //考核类型
+    private String[] type_data = {"日常", "月度", "季度", "年度"};
+    //月份
+    private String[] month_data = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = initView(R.layout.fragment_excase, inflater);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void initContentView(View view) {
         ButterKnife.bind(this, view);
+        addData();
         gridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImagePublishAdapter(mContext, mDataList);
         gridview.setAdapter(mAdapter);
         caseList.setOnClickListener(this);
+        unitLin.setOnClickListener(this);
+        monthLin.setOnClickListener(this);
+        typeLin.setOnClickListener(this);
         gridview.setOnItemClickListener(this);
         EventBus.getDefault().register(this);
     }
 
+
+    /**
+     * 填充数据
+     */
+    private void addData() {
+        for (int i = 0; i < unit_data.length; i++) {
+            String unit = new String(unit_data[i]);
+            mSelectData_unit.add(unit);
+        }
+        for (int i = 0; i < type_data.length; i++) {
+            String type = new String(type_data[i]);
+            mSelectData_type.add(type);
+        }
+        for (int i = 0; i < month_data.length; i++) {
+            String type = new String(month_data[i]);
+            mSelectData_month.add(type);
+        }
+    }
 
     private void setMode() {
         Intent intent = new Intent(mContext, MultiImageSelectorActivity.class);
@@ -95,6 +148,28 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         mDataList = event.getMsg();
     }
 
+    public void onEventMainThread(SelectEvent event) {
+        if (event.getAddress().equals(this.getClass().getName())) {
+            //月份
+            if (event.getType().equals(SelectActivity.STATE_MONTH)) {
+                monthText.setText(event.getmMsg());
+            }
+            //考核类型
+            else if (event.getType().equals(SelectActivity.STATE_TYPE)) {
+                if (event.getmMsg().equals("日常")) {
+                    monthLin.setVisibility(View.GONE);
+                } else {
+                    monthLin.setVisibility(View.VISIBLE);
+                }
+                typeText.setText(event.getmMsg());
+            }
+            //作业单位
+            else if (event.getType().equals(SelectActivity.STATE_UNIT)) {
+                unitText.setText(event.getmMsg());
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -122,9 +197,34 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.case_list:
-                Intent intent = new Intent(mContext, CaseListActivity.class);
+                intent = new Intent(mContext, CaseListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.unit_lin:
+                intent = new Intent(mContext, SelectActivity.class);
+                intent.putExtra("type", SelectActivity.STATE_UNIT);
+                intent.putStringArrayListExtra("data", mSelectData_unit);
+                intent.putExtra("title", "作业单位");
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+                break;
+            case R.id.month_lin:
+                intent = new Intent(mContext, SelectActivity.class);
+                intent.putExtra("type", SelectActivity.STATE_MONTH);
+                intent.putStringArrayListExtra("data", mSelectData_month);
+                intent.putExtra("title", "月份");
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+                break;
+            case R.id.type_lin:
+                intent = new Intent(mContext, SelectActivity.class);
+                intent.putExtra("type", SelectActivity.STATE_TYPE);
+                intent.putStringArrayListExtra("data", mSelectData_type);
+                intent.putExtra("title", "考核类型");
+                intent.putExtra("address", this.getClass().getName());
                 startActivity(intent);
                 break;
         }

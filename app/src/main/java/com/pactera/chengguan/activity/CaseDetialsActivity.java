@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
+import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
     @Bind(R.id.title)
@@ -28,6 +30,14 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     LinearLayout lin;
     @Bind(R.id.imagecycle)
     ImageCycleView imagecycle;
+    @Bind(R.id.tx_address)
+    TextView txAddress;
+    @Bind(R.id.tx_type)
+    TextView txType;
+    @Bind(R.id.tx_unit)
+    TextView txUnit;
+    @Bind(R.id.tx_describe)
+    TextView txDescribe;
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
@@ -35,6 +45,14 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
             "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
             "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    //作业单位集合
+    private ArrayList<String> mSelectData_unit = new ArrayList<String>();
+    //考核类型集合
+    private ArrayList<String> mSelectData_type = new ArrayList<String>();
+    //作业单位
+    private String[] unit_data = {"无锡市政府", "无锡城管局"};
+    //考核类型
+    private String[] type_data = {"日常", "月度", "季度", "年度"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +62,9 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         init();
     }
 
-    protected void init() {         // 初始化弹出菜单
+    protected void init() {
+        addData();
+        // 初始化弹出菜单
         popMenu = new PopMenu(mContext);
         popMenu.addItems(new String[]{"下派", "保存"});
         popMenu.setOnItemClickListener(this);
@@ -57,6 +77,11 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             infos.add(info);
         }
         imagecycle.setImageResources(infos, mCycleViewListener);
+        txUnit.setOnClickListener(this);
+        txType.setOnClickListener(this);
+        txAddress.setOnClickListener(this);
+        txDescribe.setOnClickListener(this);
+        EventBus.getDefault().register(this);
     }
 
 
@@ -70,6 +95,20 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         imageView.setOnClickListener(this);
         linearLayout.addView(imageView);
 
+    }
+
+    /**
+     * 填充数据
+     */
+    private void addData() {
+        for (int i = 0; i < unit_data.length; i++) {
+            String unit = new String(unit_data[i]);
+            mSelectData_unit.add(unit);
+        }
+        for (int i = 0; i < type_data.length; i++) {
+            String type = new String(type_data[i]);
+            mSelectData_type.add(type);
+        }
     }
 
     private ImageCycleView.ImageCycleViewListener mCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
@@ -92,10 +131,46 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.top:
 
                 popMenu.showAsDropDown(v);
+                break;
+            case R.id.tx_describe:
+                intent = new Intent(mContext, InputActivity.class);
+                intent.putExtra("type", InputActivity.DESCRIPTION);
+                intent.putStringArrayListExtra("data", mSelectData_type);
+                intent.putExtra("content", txDescribe.getText().toString());
+                intent.putExtra("title", "描述");
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+
+                break;
+            case R.id.tx_address:
+                intent = new Intent(mContext, InputActivity.class);
+                intent.putExtra("type", InputActivity.ADDRESS);
+                intent.putStringArrayListExtra("data", mSelectData_type);
+                intent.putExtra("title", "地址");
+                intent.putExtra("content", txAddress.getText().toString());
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+                break;
+            case R.id.tx_type:
+                intent = new Intent(mContext, SelectActivity.class);
+                intent.putExtra("type", SelectActivity.STATE_TYPE);
+                intent.putStringArrayListExtra("data", mSelectData_type);
+                intent.putExtra("title", "考核类型");
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+                break;
+            case R.id.tx_unit:
+                intent = new Intent(mContext, SelectActivity.class);
+                intent.putExtra("type", SelectActivity.STATE_UNIT);
+                intent.putStringArrayListExtra("data", mSelectData_unit);
+                intent.putExtra("title", "作业单位");
+                intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
                 break;
         }
 
@@ -104,5 +179,28 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     @Override
     public void onItemClick(int index) {
 
+    }
+
+    public void onEventMainThread(SelectEvent event) {
+        if (event.getAddress().equals(this.getClass().getName())) {
+            //考核类型
+            if (event.getType().equals(SelectActivity.STATE_TYPE)) {
+                txType.setText(event.getmMsg());
+            }
+            //作业单位
+            else if (event.getType().equals(SelectActivity.STATE_UNIT)) {
+                txUnit.setText(event.getmMsg());
+            } else if (event.getType().equals(InputActivity.DESCRIPTION)) {
+                txDescribe.setText(event.getmMsg());
+            } else if (event.getType().equals((InputActivity.ADDRESS))) {
+                txAddress.setText(event.getmMsg());
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

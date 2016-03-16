@@ -28,4 +28,14 @@ public class Contants {
     public static final String EXTRA_CAN_ADD_IMAGE_SIZE = "can_add_image_size";
 
 
+    /******************** 网络接口地址 *************************/
+    //登陆
+    public static final String USER_LOGIN = BuildConfig.BASE_URL + "login_mobile";
+    //获取案件列表
+    public static final String CASE_LIST = "";
+
+
+    /******************** 网络结果参数和错误码 *****************/
+    public static final int RESULT_OK = 0;          //成功
+
 }

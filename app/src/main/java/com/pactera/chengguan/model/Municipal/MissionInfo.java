@@ -10,8 +10,9 @@ import java.util.List;
 public class MissionInfo {
 
     public static final int MISSION_WORK = 1;   //任务单
-    public static final int NORMAL_TASK = 2;    //普通任务联系单
-    public static final int IMPORTANT_TASK = 3; //重大任务联系单
+    public static final int TASK_WORK = 2;      //任务联系单
+    public static final int NORMAL_TASK = 3;    //普通任务联系单
+    public static final int IMPORTANT_TASK = 4; //重大任务联系单
 
     public static final String[] dealStatusName = {"待办", "处理中", "办结"};
     public static final String[] months = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月"

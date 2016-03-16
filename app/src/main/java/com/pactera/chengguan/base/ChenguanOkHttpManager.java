@@ -56,7 +56,7 @@ public class ChenguanOkHttpManager {
      * @param request
      */
     protected static void post(RequestPair request) {
-        PostFormBuilder builder = OkHttpUtils.post().url(BuildConfig.BASE_URL + request.getUrl());
+        PostFormBuilder builder = OkHttpUtils.post().url(request.getUrl());
         for (RequestParam param : request.getParams()) {
             builder.addParams(param.getKey(), param.getValue());
         }

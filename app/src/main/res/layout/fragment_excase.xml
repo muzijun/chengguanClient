@@ -76,6 +76,7 @@
                 android:layout_marginTop="10dp"
                 style="@style/horizontal_line" />
             <LinearLayout
+                android:id="@+id/unit_lin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -96,19 +97,24 @@
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_size_micro"/>
                 <TextView
+                    android:id="@+id/unit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="无锡市政府"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginRight="20dp"
+                    android:drawableRight="@mipmap/icon_next"
+                    android:drawablePadding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textColor="@color/coloraeaeae"
                     android:textSize="@dimen/text_size_micro"/>
             </LinearLayout>
             <View
                 style="@style/horizontal_line" />
             <LinearLayout
+                android:id="@+id/type_lin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -129,13 +135,55 @@
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_size_micro"/>
                 <TextView
+                    android:id="@+id/type_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="日常"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:layout_marginRight="20dp"
+                    android:drawableRight="@mipmap/icon_next"
+                    android:drawablePadding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textColor="@color/coloraeaeae"
+                    android:textSize="@dimen/text_size_micro"/>
+            </LinearLayout>
+            <View
+                style="@style/horizontal_line" />
+            <LinearLayout
+                android:id="@+id/month_lin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/colorFF0000"
+                    android:layout_gravity="center"
+                    android:text="*"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="月份"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_size_micro"/>
+                <TextView
+                    android:id="@+id/month_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="二月"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:drawableRight="@mipmap/icon_next"
+                    android:drawablePadding="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textColor="@color/coloraeaeae"
                     android:textSize="@dimen/text_size_micro"/>
             </LinearLayout>
