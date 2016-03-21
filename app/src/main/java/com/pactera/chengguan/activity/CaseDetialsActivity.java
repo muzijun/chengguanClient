@@ -38,6 +38,10 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     TextView txUnit;
     @Bind(R.id.tx_describe)
     TextView txDescribe;
+    @Bind(R.id.tx_date_edit)
+    TextView txDateEdit;
+    @Bind(R.id.tx_deduct)
+    TextView txDeduct;
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
@@ -54,11 +58,13 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     //考核类型
     private String[] type_data = {"日常", "月度", "季度", "年度"};
     //事业单位
-    private  String STATE_UNIT = "STATE_UNIT";
+    private String STATE_UNIT = "STATE_UNIT";
     //考核类型
-    private  String STATE_TYPE = "STATE_TYPE";
-    //月份
-    private  String STATE_MONTH = "STATE_MONTH";
+    private String STATE_TYPE = "STATE_TYPE";
+    //描述
+    private String DESCRIPTION = "DESCRIPTION";
+    //地址
+    private String ADDRESS = "ADDRESS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,8 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         txType.setOnClickListener(this);
         txAddress.setOnClickListener(this);
         txDescribe.setOnClickListener(this);
+        txDateEdit.setOnClickListener(this);
+        txDeduct.setOnClickListener(this);
         EventBus.getDefault().register(this);
     }
 
@@ -140,22 +148,20 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         Intent intent;
         switch (v.getId()) {
             case R.id.top:
-
                 popMenu.showAsDropDown(v);
                 break;
             case R.id.tx_describe:
                 intent = new Intent(mContext, InputActivity.class);
-                intent.putExtra("type", InputActivity.DESCRIPTION);
+                intent.putExtra("type", DESCRIPTION);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("content", txDescribe.getText().toString());
                 intent.putExtra("title", "描述");
                 intent.putExtra("address", this.getClass().getName());
                 startActivity(intent);
-
                 break;
             case R.id.tx_address:
                 intent = new Intent(mContext, InputActivity.class);
-                intent.putExtra("type", InputActivity.ADDRESS);
+                intent.putExtra("type", ADDRESS);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("title", "地址");
                 intent.putExtra("content", txAddress.getText().toString());
@@ -164,7 +170,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 break;
             case R.id.tx_type:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type",STATE_TYPE);
+                intent.putExtra("type", STATE_TYPE);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("title", "考核类型");
                 intent.putExtra("address", this.getClass().getName());
@@ -172,10 +178,14 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 break;
             case R.id.tx_unit:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type",STATE_UNIT);
+                intent.putExtra("type", STATE_UNIT);
                 intent.putStringArrayListExtra("data", mSelectData_unit);
                 intent.putExtra("title", "作业单位");
                 intent.putExtra("address", this.getClass().getName());
+                startActivity(intent);
+                break;
+            case R.id.tx_deduct:
+                intent=new Intent(mContext,PointsActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -196,9 +206,9 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
                 txUnit.setText(event.getmMsg());
-            } else if (event.getType().equals(InputActivity.DESCRIPTION)) {
+            } else if (event.getType().equals(DESCRIPTION)) {
                 txDescribe.setText(event.getmMsg());
-            } else if (event.getType().equals((InputActivity.ADDRESS))) {
+            } else if (event.getType().equals((ADDRESS))) {
                 txAddress.setText(event.getmMsg());
             }
         }

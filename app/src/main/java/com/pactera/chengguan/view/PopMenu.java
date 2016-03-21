@@ -63,6 +63,10 @@ public class PopMenu implements AdapterView.OnItemClickListener {
         return  view;
     }
 
+    public ArrayList<String> getItemList() {
+        return itemList;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (listener != null) {
@@ -89,7 +93,7 @@ public class PopMenu implements AdapterView.OnItemClickListener {
 
     // 下拉式 弹出 pop菜单 parent 右下角
     public void showAsDropDown(View parent) {
-        popupWindow.showAsDropDown(parent, 10,
+        popupWindow.showAsDropDown(parent, -10,
                 // 保证尺寸是根据屏幕像素密度来的
                 context.getResources().getDimensionPixelSize(R.dimen.popmenu_yoff));
 

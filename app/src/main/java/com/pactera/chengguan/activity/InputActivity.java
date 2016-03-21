@@ -31,10 +31,6 @@ public class InputActivity extends BaseActivity implements View.OnClickListener 
     EditText edit;
     private String type;
     private String address;
-    //描述
-    public static final  String DESCRIPTION = "DESCRIPTION";
-    //地址
-    public static final  String ADDRESS = "ADDRESS";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

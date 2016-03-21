@@ -1,5 +1,6 @@
 package com.pactera.chengguan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.activity.BdataSearchActivity;
 import com.pactera.chengguan.adapter.CaseListAdapter;
 import com.pactera.chengguan.adapter.GirdDropDownAdapter;
 import com.pactera.chengguan.adapter.SearchAdapter;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
  * 基础数据
  * Created by lijun on 2015/12/2.
  */
-public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemClickListener, View.OnClickListener,OnRefreshListener, OnLoadMoreListener, AdapterView.OnItemClickListener{
+public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemClickListener, View.OnClickListener, OnRefreshListener, OnLoadMoreListener, AdapterView.OnItemClickListener {
     @Bind(R.id.left_lin)
     LinearLayout leftLin;
     @Bind(R.id.title)
@@ -117,11 +119,12 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         });
 
     }
+
     private View createView() {
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.basic_data_content, null);
         ListView swipeTarget = ButterKnife.findById(view, R.id.swipe_target);
-        ChenguanSwipeToLoadLayout swipeToLoadLayout =  ButterKnife.findById(view,R.id.swipeToLoadLayout);
+        ChenguanSwipeToLoadLayout swipeToLoadLayout = ButterKnife.findById(view, R.id.swipeToLoadLayout);
         SearchAdapter searchAdapter = new SearchAdapter(mContext);
         swipeTarget.setAdapter(searchAdapter);
         swipeTarget.setOnItemClickListener(this);
@@ -129,8 +132,10 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         swipeToLoadLayout.setOnLoadMoreListener(this);
         return view;
     }
+
     /**
      * 添加选项
+     *
      * @param linearLayout
      */
     private void addMenuView(LinearLayout linearLayout) {
@@ -144,8 +149,10 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         linearLayout.addView(imageView);
 
     }
+
     /**
      * 添加搜索
+     *
      * @param linearLayout
      */
     private void addSearchView(LinearLayout linearLayout) {
@@ -159,6 +166,7 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         linearLayout.addView(imageView);
 
     }
+
     @Override
     protected void lazyLoad() {
 
@@ -174,8 +182,11 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top:
-
                 popMenu.showAsDropDown(v);
+                break;
+            case R.id.content:
+                Intent intent = new Intent(mContext, BdataSearchActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -183,6 +194,28 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
     //popmenu点击事件
     @Override
     public void onItemClick(int index) {
+        switch (index) {
+            case 0:
+                title.setText(popMenu.getItemList().get(0));
+                break;
+            case 1:
+                title.setText(popMenu.getItemList().get(1));
+                break;
+            case 2:
+                title.setText(popMenu.getItemList().get(2));
+                break;
+            case 3:
+                title.setText(popMenu.getItemList().get(3));
+                break;
+            case 4:
+                title.setText(popMenu.getItemList().get(4));
+                break;
+            case 5:
+                title.setText(popMenu.getItemList().get(5));
+                break;
+
+
+        }
 
     }
 
