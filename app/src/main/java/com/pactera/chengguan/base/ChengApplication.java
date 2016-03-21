@@ -28,9 +28,16 @@ import java.util.concurrent.TimeUnit;
  * @author lijun
  */
 public class ChengApplication extends Application {
+
+    public static ChengApplication instance;
+
+    //用户登录token
+    public String access_token;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         init();
     }
 

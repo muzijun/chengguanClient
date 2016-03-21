@@ -53,6 +53,12 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     private String[] unit_data = {"无锡市政府", "无锡城管局"};
     //考核类型
     private String[] type_data = {"日常", "月度", "季度", "年度"};
+    //事业单位
+    private  String STATE_UNIT = "STATE_UNIT";
+    //考核类型
+    private  String STATE_TYPE = "STATE_TYPE";
+    //月份
+    private  String STATE_MONTH = "STATE_MONTH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +164,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 break;
             case R.id.tx_type:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type", SelectActivity.STATE_TYPE);
+                intent.putExtra("type",STATE_TYPE);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("title", "考核类型");
                 intent.putExtra("address", this.getClass().getName());
@@ -166,7 +172,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 break;
             case R.id.tx_unit:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type", SelectActivity.STATE_UNIT);
+                intent.putExtra("type",STATE_UNIT);
                 intent.putStringArrayListExtra("data", mSelectData_unit);
                 intent.putExtra("title", "作业单位");
                 intent.putExtra("address", this.getClass().getName());
@@ -184,11 +190,11 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     public void onEventMainThread(SelectEvent event) {
         if (event.getAddress().equals(this.getClass().getName())) {
             //考核类型
-            if (event.getType().equals(SelectActivity.STATE_TYPE)) {
+            if (event.getType().equals(STATE_TYPE)) {
                 txType.setText(event.getmMsg());
             }
             //作业单位
-            else if (event.getType().equals(SelectActivity.STATE_UNIT)) {
+            else if (event.getType().equals(STATE_UNIT)) {
                 txUnit.setText(event.getmMsg());
             } else if (event.getType().equals(InputActivity.DESCRIPTION)) {
                 txDescribe.setText(event.getmMsg());

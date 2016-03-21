@@ -72,6 +72,12 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     //月份
     private String[] month_data = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
 
+    //事业单位
+    private  String STATE_UNIT = "STATE_UNIT";
+    //考核类型
+    private  String STATE_TYPE = "STATE_TYPE";
+    //月份
+    private String STATE_MONTH = "STATE_MONTH";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -151,11 +157,11 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public void onEventMainThread(SelectEvent event) {
         if (event.getAddress().equals(this.getClass().getName())) {
             //月份
-            if (event.getType().equals(SelectActivity.STATE_MONTH)) {
+            if (event.getType().equals(STATE_MONTH)) {
                 monthText.setText(event.getmMsg());
             }
             //考核类型
-            else if (event.getType().equals(SelectActivity.STATE_TYPE)) {
+            else if (event.getType().equals(STATE_TYPE)) {
                 if (event.getmMsg().equals("日常")) {
                     monthLin.setVisibility(View.GONE);
                 } else {
@@ -164,7 +170,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 typeText.setText(event.getmMsg());
             }
             //作业单位
-            else if (event.getType().equals(SelectActivity.STATE_UNIT)) {
+            else if (event.getType().equals(STATE_UNIT)) {
                 unitText.setText(event.getmMsg());
             }
         }
@@ -205,7 +211,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.unit_lin:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type", SelectActivity.STATE_UNIT);
+                intent.putExtra("type",STATE_UNIT);
                 intent.putStringArrayListExtra("data", mSelectData_unit);
                 intent.putExtra("title", "作业单位");
                 intent.putExtra("address", this.getClass().getName());
@@ -213,7 +219,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.month_lin:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type", SelectActivity.STATE_MONTH);
+                intent.putExtra("type", STATE_MONTH);
                 intent.putStringArrayListExtra("data", mSelectData_month);
                 intent.putExtra("title", "月份");
                 intent.putExtra("address", this.getClass().getName());
@@ -221,7 +227,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.type_lin:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type", SelectActivity.STATE_TYPE);
+                intent.putExtra("type",STATE_TYPE);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("title", "考核类型");
                 intent.putExtra("address", this.getClass().getName());

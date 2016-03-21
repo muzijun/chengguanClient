@@ -32,7 +32,21 @@ public class Contants {
     //登陆
     public static final String USER_LOGIN = BuildConfig.BASE_URL + "login_mobile";
     //获取案件列表
-    public static final String CASE_LIST = "";
+    public static final String CASE_LIST = BuildConfig.BASE_URL + "case_list.mobile";
+    //新建案件
+    public static final String CASE_CREATE = BuildConfig.BASE_URL + "newCase.mobile";
+    //案件延期
+    public static final String CASE_DELAY = BuildConfig.BASE_URL + "caseDelay.mobile";
+    //案件结案
+    public static final String CASE_FINISH = BuildConfig.BASE_URL + "caseFinish.mobile";
+    //获取案件延期记录
+    public static final String CASE_DELAY_RECORD = BuildConfig.BASE_URL + "caseDelayRecord.mobile";
+    //获取案件流程日志
+    public static final String CASE_FLOW = BuildConfig.BASE_URL + "caseFlow.mobile";
+    //案件考核
+    public static final String CASE_CHECK = BuildConfig.BASE_URL + "caseCheck.mobile";
+    //案件不通过返工
+    public static final String CASE_NOT_SECOND = BuildConfig.BASE_URL + "caseNotSecond.mobile";
 
 
     /******************** 网络结果参数和错误码 *****************/

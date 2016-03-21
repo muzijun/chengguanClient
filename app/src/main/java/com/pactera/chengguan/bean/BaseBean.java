@@ -8,7 +8,7 @@ import com.pactera.chengguan.util.LogUtils;
  * Created by huang hua
  * 2016/3/15.
  */
-public abstract class BaseBean {
+public class BaseBean {
 
     private static final String TAG = "BaseBean";
 

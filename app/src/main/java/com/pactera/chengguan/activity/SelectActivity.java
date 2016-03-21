@@ -30,12 +30,6 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
     TextView title;
     @Bind(R.id.listView)
     ListView listView;
-    //事业单位
-    public static final String STATE_UNIT = "STATE_UNIT";
-    //考核类型
-    public static final String STATE_TYPE = "STATE_TYPE";
-    //月份
-    public static final String STATE_MONTH = "STATE_MONTH";
     private ArrayList<String> mData;
     private String type;
     private String address;
