@@ -26,6 +26,7 @@ public class ProgressDlgUtil {
             progressDlg.setTitle(strMessage);
         }else{
             stopProgressDlg();
+            progressDlg = new RequestProgressDialog(ctx, R.style.dialog);
             progressDlg.setTitle(strMessage);
         }
         progressDlg

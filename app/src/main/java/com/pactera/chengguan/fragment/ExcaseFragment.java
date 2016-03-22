@@ -8,19 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.CaseListActivity;
 import com.pactera.chengguan.activity.ImageZoomActivity;
 import com.pactera.chengguan.activity.SelectActivity;
 import com.pactera.chengguan.adapter.ImagePublishAdapter;
+import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.BaseFragment;
+import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.BaseHandler;
 import com.pactera.chengguan.config.Contants;
-import com.pactera.chengguan.model.ADInfo;
+import com.pactera.chengguan.config.MunicipalCache;
+import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.PhotoEvent;
 import com.pactera.chengguan.model.SelectEvent;
+import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.NoScrollGridView;
 
 import java.io.Serializable;
@@ -35,7 +42,8 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
  * 考核案件
  * Created by lijun on 2016/3/8.
  */
-public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener
+        , RequestListener {
     private static final int REQUEST_IMAGE = 2;
     //案件详情按钮
     @Bind(R.id.case_list)
@@ -54,6 +62,8 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     TextView monthText;
     @Bind(R.id.month_lin)
     LinearLayout monthLin;
+    @Bind(R.id.commit)
+    Button commit;
 
     private ImagePublishAdapter mAdapter;
 
@@ -65,10 +75,8 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     //月份集合
     private ArrayList<String> mSelectData_month = new ArrayList<String>();
 
-    //作业单位
-    private String[] unit_data = {"无锡市政府", "无锡城管局"};
     //考核类型
-    private String[] type_data = {"日常", "月度", "季度", "年度"};
+    private String[] type_data = {"月度", "季度", "年度", "日常"};
     //月份
     private String[] month_data = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
 
@@ -97,6 +105,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         unitLin.setOnClickListener(this);
         monthLin.setOnClickListener(this);
         typeLin.setOnClickListener(this);
+        commit.setOnClickListener(this);
         gridview.setOnItemClickListener(this);
         EventBus.getDefault().register(this);
     }
@@ -106,8 +115,8 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
      * 填充数据
      */
     private void addData() {
-        for (int i = 0; i < unit_data.length; i++) {
-            String unit = new String(unit_data[i]);
+        for (int i = 0; i < MunicipalCache.units.size(); i++) {
+            String unit = MunicipalCache.units.get(i);
             mSelectData_unit.add(unit);
         }
         for (int i = 0; i < type_data.length; i++) {
@@ -233,7 +242,18 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 intent.putExtra("address", this.getClass().getName());
                 startActivity(intent);
                 break;
+            case R.id.commit:
+                commitCreate();
+                break;
         }
+    }
+
+    /**
+     * 提交
+     */
+    public void commitCreate(){
+
+        MunicipalRequest.requestCreateCase(mContext, this, 1, null, null, 0, 0, "震泽路18号", 0, 0, 1, 1, 1, null);
     }
 
     @Override
@@ -252,4 +272,47 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+//    /**
+//     * 发送新建案件请求
+//     */
+//    private void requestCreateCase(){
+//        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+//        params.add(new RequestParam("type", 1+""));
+//        params.add(new RequestParam("description", selectTabTwoIndex+1+""));
+//        params.add(new RequestParam("point", selectTabThreeIndex+""));
+//        params.add(new RequestParam("termtime", selectTabFourIndex+1+""));
+//        params.add(new RequestParam("pagecount", ""+PAGE_COUNT));
+//        params.add(new RequestParam("lastid", ""+getListId()));
+//        RequestPair j= new RequestPair();
+//        j.setContext((BaseActivity)getActivity());
+//        j.setRequest(new BaseCallback(BaseBean.class,this,(BaseActivity)getActivity()));
+//        j.setMethod(Contants.Post);
+//        j.setUrl(Contants.CASE_CREATE);
+//        j.setParams(params);
+//        ChenguanOkHttpManager.requestIfNeedToken(j, true);
+//    }
+
+    @Override
+    public void success(Object result) {
+        BaseBean baseBean = (BaseBean) result;
+        baseBean.checkResult(newCaseHandler);
+    }
+
+    @Override
+    public void fail() {
+        Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_LONG).show();
+    }
+
+    private BaseHandler newCaseHandler = new BaseHandler() {
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            Toast.makeText(getActivity(), "提交新案件成功!", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            Toast.makeText(getActivity(), "提交新案件失败："+result+" | msg:"+message, Toast.LENGTH_LONG).show();
+        }
+    };
 }

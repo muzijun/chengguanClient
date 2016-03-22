@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.ImagePagerActivity;
+import com.pactera.chengguan.model.municipal.CaseInfo;
 import com.pactera.chengguan.view.ImageItemCycle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,10 +37,12 @@ public class CaseListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context mContext;
+    private List<CaseInfo> caseInfoList;
 
-    public CaseListAdapter(Context context) {
+    public CaseListAdapter(Context context, List<CaseInfo> caseInfoList) {
         mContext = context;
         inflater = LayoutInflater.from(context);
+        this.caseInfoList = caseInfoList;
         for (int i = 0; i < 10; i++) {
             ArrayList<String> info = new ArrayList<String>();
             for (int j = 0; j < imageUrls.length; j++) {
@@ -47,14 +52,19 @@ public class CaseListAdapter extends BaseAdapter {
         }
     }
 
+    public void setNotifyChanged(List<CaseInfo> caseInfoList){
+        this.caseInfoList = caseInfoList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
-        return infos.size();
+        return caseInfoList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return caseInfoList.get(position);
     }
 
     @Override
@@ -65,17 +75,21 @@ public class CaseListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ArrayList<String> data = infos.get(position);
+        CaseInfo caseInfo = caseInfoList.get(position);
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = inflater
                     .inflate(R.layout.item_caselist, null, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.imagecycle.setImageResources(data, mCycleViewListener);
+        holder.date.setText(caseInfo.getDate());
+        holder.termTime.setText(caseInfo.getTermTime()+"天");
+        holder.description.setText(caseInfo.getDescription());
+        holder.address.setText(caseInfo.getLocation());
         return convertView;
     }
 
@@ -100,6 +114,18 @@ public class CaseListAdapter extends BaseAdapter {
     static class ViewHolder {
         @Bind(R.id.imagecycle)
         ImageItemCycle imagecycle;
+        @Bind(R.id.pic_status)
+        TextView picStatus;
+        @Bind(R.id.date)
+        TextView date;
+        @Bind(R.id.case_status)
+        ImageView caseStatus;
+        @Bind(R.id.termtime)
+        TextView termTime;
+        @Bind(R.id.desciption)
+        TextView description;
+        @Bind(R.id.address)
+        TextView address;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

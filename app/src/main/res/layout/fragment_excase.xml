@@ -138,7 +138,7 @@
                     android:id="@+id/type_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="日常"
+                    android:text="月度"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="right"
@@ -189,6 +189,17 @@
             </LinearLayout>
             <View
                 style="@style/horizontal_line" />
+            <Button
+                android:id="@+id/commit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/btn_background_save"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:text="@string/txt_commit"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

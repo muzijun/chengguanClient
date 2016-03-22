@@ -13,6 +13,9 @@
     <string name="tab_three">基础数据</string>
     <string name="tab_four">更多</string>
 
+    <!--养护管理-->
+    <string name="txt_commit">提交</string>
+
     <!--案件巡查-->
     <string name="Pager_one_title">巡查案件</string>
     <string name="Pager_two_tile">巡查打卡</string>

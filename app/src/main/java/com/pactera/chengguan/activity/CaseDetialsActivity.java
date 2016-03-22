@@ -188,6 +188,10 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 intent=new Intent(mContext,PointsActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.tx_date_edit:
+                intent=new Intent(mContext,PostPoneActivity.class);
+                startActivity(intent);
+                break;
         }
 
     }

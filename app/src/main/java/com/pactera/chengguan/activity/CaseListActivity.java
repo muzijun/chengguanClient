@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
@@ -14,6 +15,12 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.adapter.CaseListAdapter;
 import com.pactera.chengguan.adapter.GirdDropDownAdapter;
 import com.pactera.chengguan.base.BaseActivity;
+import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.BaseHandler;
+import com.pactera.chengguan.bean.municipal.CaseListBean;
+import com.pactera.chengguan.config.RequestListener;
+import com.pactera.chengguan.model.municipal.CaseInfo;
+import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ChenguanSwipeToLoadLayout;
 import com.yyydjk.library.DropDownMenu;
 
@@ -28,21 +35,36 @@ import butterknife.ButterKnife;
  * 案件详情
  * Created by lijun on 2016/3/9.
  */
-public class CaseListActivity extends BaseActivity implements OnRefreshListener, OnLoadMoreListener, AdapterView.OnItemClickListener {
-    private static final String[] tab_one = {"不限", "待办", "不可办"};
-    private static final String[] tab_two = {"不限", "月度", "季度"};
-    private static final String[] tab_three = {"不限", "一月", "二月"};
-    private static final String[] tab_four = {"不限", "升序", "降序"};
+public class CaseListActivity extends BaseActivity implements OnRefreshListener, OnLoadMoreListener
+        , AdapterView.OnItemClickListener, RequestListener {
+    private static final String[] tab_one = {"待办", "处理中", "办结"};
+    private static final String[] tab_two = {"月度", "季度", "年度", "日常"};
+    private static final String[] tab_three = {"不限", "一月", "二月", "三月", "四月", "五月", "六月"
+            , "七月", "八月", "九月", "十月", "十一月", "十二月"};
+    private static final String[] tab_four = {"按时间排序", "按超限排序"};
+    private String headers[] = {"待办", "月度", "不限", "按时间排序"};
+
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.dropDownMenu)
     DropDownMenu dropDownMenu;
-    private String headers[] = {"不限", "不限", "不限", "不限"};
+
     private GirdDropDownAdapter tab_one_Adapter;
     private GirdDropDownAdapter tab_two_Adapter;
     private GirdDropDownAdapter tab_three_Adapter;
     private GirdDropDownAdapter tab_four_Adapter;
     private List<View> popupViews = new ArrayList<>();
+    private int selectTabOneIndex = 0;          //tab_one
+    private int selectTabTwoIndex = 0;          //tab_two
+    private int selectTabThreeIndex = 0;        //tab_three
+    private int selectTabFourIndex = 0;         //tab_four
+    private List<CaseInfo> caseInfoList = new ArrayList<>();        //案件数据集合
+    private CaseListAdapter caseListAdapter;
+    private static final int PAGE_COUNT = 10;   //单页显示数量
+
+    private int requestStatus;
+    private static final int STATUS_REFRESH = 1;    //刷新
+    private static final int STATUS_MORE = 2;       //获取更多
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +72,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         setContentView(R.layout.activity_caselist);
         ButterKnife.bind(this);
         init();
-
+        requestCaseListData(STATUS_REFRESH);
     }
 
     private void init() {
@@ -82,6 +104,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_one_Adapter.setCheckItem(position);
+                selectTabOneIndex = position;
                 dropDownMenu.setTabText(position == 0 ? headers[0] : tab_one[position]);
                 dropDownMenu.closeMenu();
             }
@@ -90,6 +113,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_two_Adapter.setCheckItem(position);
+                selectTabTwoIndex = position;
                 dropDownMenu.setTabText(position == 0 ? headers[0] : tab_two[position]);
                 dropDownMenu.closeMenu();
             }
@@ -98,6 +122,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_three_Adapter.setCheckItem(position);
+                selectTabThreeIndex = position;
                 dropDownMenu.setTabText(position == 0 ? headers[0] : tab_three[position]);
                 dropDownMenu.closeMenu();
             }
@@ -106,6 +131,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_four_Adapter.setCheckItem(position);
+                selectTabFourIndex = position;
                 dropDownMenu.setTabText(position == 0 ? headers[0] : tab_four[position]);
                 dropDownMenu.closeMenu();
             }
@@ -117,7 +143,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
                 R.layout.caselist_content, null);
         ListView swipeTarget = ButterKnife.findById(view,R.id.swipe_target);
         ChenguanSwipeToLoadLayout swipeToLoadLayout = (ChenguanSwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        CaseListAdapter caseListAdapter = new CaseListAdapter(mContext);
+        caseListAdapter = new CaseListAdapter(mContext, caseInfoList);
         swipeTarget.setAdapter(caseListAdapter);
         swipeTarget.setOnItemClickListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
@@ -127,12 +153,12 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void onRefresh() {
-
+        requestCaseListData(STATUS_REFRESH);
     }
 
     @Override
     public void onLoadMore() {
-
+        requestCaseListData(STATUS_MORE);
     }
 
     @Override
@@ -162,4 +188,55 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         }
 
     }
+
+    /**
+     * 发送案件列表请求
+     */
+    private void requestCaseListData(int requestStatus){
+        this.requestStatus = requestStatus;
+        MunicipalRequest.requestCaseList(this, this, selectTabOneIndex+1, selectTabTwoIndex+1, selectTabThreeIndex+1
+                , selectTabFourIndex+1, PAGE_COUNT, getListId());
+    }
+
+    /**
+     * 获取列表最后一项的id
+     * @return
+     */
+    private int getListId(){
+        if(caseInfoList == null || caseInfoList.size() <= 0){
+            return 0;
+        }
+        return caseInfoList.get(caseInfoList.size()-1).getId();
+    }
+
+    @Override
+    public void success(Object result) {
+        CaseListBean caseListBean = (CaseListBean)result;
+        caseListBean.checkResult(caseListHandler);
+    }
+
+    @Override
+    public void fail() {
+        Toast.makeText(this, "请求失败", Toast.LENGTH_LONG).show();
+    }
+
+    private BaseHandler caseListHandler = new BaseHandler() {
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            CaseListBean caseListBean = (CaseListBean)baseBean;
+            List<CaseInfo> list = caseListBean.transformCaseInfo();
+            if(requestStatus == STATUS_REFRESH){
+                caseInfoList = list;
+            }else{
+                caseInfoList.addAll(list);
+            }
+            caseListAdapter.setNotifyChanged(caseInfoList);
+            Toast.makeText(CaseListActivity.this, "获取列表数据成功", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            Toast.makeText(CaseListActivity.this, "获取列表数据失败:" + message, Toast.LENGTH_LONG).show();
+        }
+    };
 }

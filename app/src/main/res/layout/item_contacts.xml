@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@color/colorWhite"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/name"
+        android:gravity="center"
+        android:text="好帅"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/job"
+        android:gravity="center"
+        android:text="软件工程师"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/telephone"
+        android:gravity="center"
+        android:text="13052116682"
+        android:textColor="@color/colorFF0000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</LinearLayout>

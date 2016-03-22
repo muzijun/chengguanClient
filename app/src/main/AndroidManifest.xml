@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
 
     <application
         android:name=".base.ChengApplication"
@@ -56,6 +58,9 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.PointsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ContactsActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"

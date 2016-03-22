@@ -13,11 +13,28 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.request.RequestCall;
 
+import java.util.ArrayList;
+
 /**
  * 请求管理
  * Created by lijun on 2015/12/9.
  */
 public class ChenguanOkHttpManager {
+
+    /**
+     * 发送请求并判断是否需要登录
+     * @param requestPair
+     * @param isNeedToken
+     */
+    public static void requestIfNeedToken(RequestPair requestPair, boolean isNeedToken, String systemId){
+        if(isNeedToken){
+            ArrayList<RequestParam> params = requestPair.getParams();
+            params.add(new RequestParam("access_token", ChengApplication.instance.access_token));
+            params.add(new RequestParam("systemid", systemId));
+            requestPair.setParams(params);
+        }
+        request(requestPair);
+    }
 
     public static void request(RequestPair requestPair) {
         if (requestPair == null) {
@@ -95,6 +112,5 @@ public class ChenguanOkHttpManager {
     public static void cancel(Object tag) {
         OkHttpUtils.getInstance().cancelTag(tag);
     }
-
 
 }

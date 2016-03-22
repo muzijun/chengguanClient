@@ -15,14 +15,17 @@ import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
 import com.pactera.chengguan.bean.municipal.LoginBean;
 import com.pactera.chengguan.config.Contants;
+import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.RequestPair;
 import com.pactera.chengguan.model.RequestParam;
 import com.pactera.chengguan.util.BaseCallback;
+import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.util.ProgressDlgUtil;
 import com.pactera.chengguan.util.SPUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,20 +51,6 @@ public class LoginActivity extends BaseActivity implements RequestListener {
         ButterKnife.bind(this);
     }
 
-    public void setLoginRequest(String account, String password){
-        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
-        params.add(new RequestParam("user", account));
-        params.add(new RequestParam("pwd", password));
-        RequestPair j= new RequestPair();
-        j.setContext(this);
-        j.setRequest(new BaseCallback(LoginBean.class,this,this));
-        j.setMethod(Contants.Post);
-        j.setLoadingShow(true);
-        j.setUrl(Contants.USER_LOGIN);
-        j.setParams(params);
-        ChenguanOkHttpManager.request(j);
-    }
-
     private boolean checkAccountAndPassword(String user, String password){
         if(user == null || user.isEmpty()){
             Toast.makeText(this, R.string.account_null_error, Toast.LENGTH_LONG).show();
@@ -81,19 +70,21 @@ public class LoginActivity extends BaseActivity implements RequestListener {
      * @param view
      */
     public void login(View view) {
-        String account = etAccount.getText().toString();
-        String password = etPassword.getText().toString();
-        if(!checkAccountAndPassword(account, password)){
-            return;
-        }
-        setLoginRequest(account, password);
+//        String account = etAccount.getText().toString();
+//        String password = etPassword.getText().toString();
+//        if(!checkAccountAndPassword(account, password)){
+//            return;
+//        }
+//        MunicipalRequest.requestLogin(this, this, account, password);
+        loginToNext();
     }
 
     /**
-     * 保存token信息
+     * 保存token信息和权限信息
      */
-    private void saveToken(String token){
+    private void saveTokenAndValue(String token, List<String> value){
         ChengApplication.instance.access_token = token;
+        ChengApplication.instance.authValue = value;
         SPUtils.put(this, SP_TOKEN, token);
     }
 
@@ -123,7 +114,7 @@ public class LoginActivity extends BaseActivity implements RequestListener {
             LoginBean loginBean = (LoginBean) baseBean;
             Toast.makeText(LoginActivity.this, "登录成功:"+message
                     +" | token:"+loginBean.access_token, Toast.LENGTH_LONG).show();
-
+            saveTokenAndValue(loginBean.access_token, loginBean.value);
             loginToNext();
         }
 
@@ -132,4 +123,6 @@ public class LoginActivity extends BaseActivity implements RequestListener {
             Toast.makeText(LoginActivity.this, "登录失败:"+message, Toast.LENGTH_LONG).show();
         }
     };
+
 }
+

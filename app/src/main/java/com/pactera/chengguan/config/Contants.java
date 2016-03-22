@@ -27,6 +27,8 @@ public class Contants {
     //可添加的图片数量
     public static final String EXTRA_CAN_ADD_IMAGE_SIZE = "can_add_image_size";
 
+    /******************** 系统类别字段 **************************/
+    public static final String SYSTEM_MUNICIPAL = "SZ";     //市政
 
     /******************** 网络接口地址 *************************/
     //登陆
@@ -34,7 +36,7 @@ public class Contants {
     //获取案件列表
     public static final String CASE_LIST = BuildConfig.BASE_URL + "case_list.mobile";
     //新建案件
-    public static final String CASE_CREATE = BuildConfig.BASE_URL + "newCase.mobile";
+    public static final String CASE_CREATE = BuildConfig.BASE_URL + "newOrUpdateCase.mobile";
     //案件延期
     public static final String CASE_DELAY = BuildConfig.BASE_URL + "caseDelay.mobile";
     //案件结案
