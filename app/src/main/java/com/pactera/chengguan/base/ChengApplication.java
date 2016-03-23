@@ -2,18 +2,23 @@ package com.pactera.chengguan.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.widget.Toast;
 
 import com.chengguan.dao.DaoMaster;
 import com.chengguan.dao.DaoSession;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.pactera.chengguan.BuildConfig;
+import com.pactera.chengguan.R;
+import com.pactera.chengguan.activity.LoginActivity;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.db.ChengguanOpenHelper;
 import com.pactera.chengguan.db.DBHelper;
+import com.pactera.chengguan.util.SPUtils;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Response;
@@ -21,7 +26,6 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -59,7 +63,6 @@ public class ChengApplication extends Application {
         OkHttpUtils.getInstance().getOkHttpClient().setCache(cache);
         OkHttpUtils.getInstance().getOkHttpClient().interceptors().add(REWRITE_CACHE_CONTROL_INTERCEPTOR);
         OkHttpUtils.getInstance().getOkHttpClient().setConnectTimeout(10000, TimeUnit.MILLISECONDS);
-        tempUnits();
     }
 
 
@@ -73,13 +76,25 @@ public class ChengApplication extends Application {
                     .build();
         }
     };
-    /**
-     * 临时增加作业单位假数据
-     */
-    private void tempUnits(){
-        List<String> unitList = new ArrayList<>();
-        unitList.add("无锡市政公司");
-        MunicipalCache.units = unitList;
-    }
 
+    /**
+     * Session过期后，跳转到登录界面
+     */
+    public void sessionErrorToLogin(){
+        Toast.makeText(this, R.string.session_error, Toast.LENGTH_LONG).show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SPUtils.remove(getApplicationContext(), MunicipalCache.SP_TOKEN);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        }).start();
+    }
 }

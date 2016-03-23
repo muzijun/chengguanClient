@@ -52,6 +52,11 @@ public class Contants {
 
 
     /******************** 网络结果参数和错误码 *****************/
-    public static final int RESULT_OK = 0;          //成功
+    //成功
+    public static final int RESULT_OK = 0;
+    //session过期
+    public static final int ERROR_SESSION = 101;
+    //登录失败
+    public static final int ERROR_LOGIN = 102;
 
 }

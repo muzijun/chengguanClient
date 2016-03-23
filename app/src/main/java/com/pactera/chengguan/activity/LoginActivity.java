@@ -41,16 +41,32 @@ public class LoginActivity extends BaseActivity implements RequestListener {
     @Bind(R.id.et_password)
     EditText etPassword;
 
-    //本地保存字段Key
-    private static final String SP_TOKEN = "token";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+        freeLogin();
     }
 
+    /**
+     * 免登录步骤
+     */
+    private void freeLogin(){
+        String token = (String)SPUtils.get(this, MunicipalCache.SP_TOKEN, "");
+        if(token.length() > 0){
+            ChengApplication.instance.access_token = token;
+            tempUnits();
+            loginToNext();
+        }
+    }
+
+    /**
+     * 检查账号密码是否为空
+     * @param user
+     * @param password
+     * @return
+     */
     private boolean checkAccountAndPassword(String user, String password){
         if(user == null || user.isEmpty()){
             Toast.makeText(this, R.string.account_null_error, Toast.LENGTH_LONG).show();
@@ -70,13 +86,12 @@ public class LoginActivity extends BaseActivity implements RequestListener {
      * @param view
      */
     public void login(View view) {
-//        String account = etAccount.getText().toString();
-//        String password = etPassword.getText().toString();
-//        if(!checkAccountAndPassword(account, password)){
-//            return;
-//        }
-//        MunicipalRequest.requestLogin(this, this, account, password);
-        loginToNext();
+        String account = etAccount.getText().toString();
+        String password = etPassword.getText().toString();
+        if(!checkAccountAndPassword(account, password)){
+            return;
+        }
+        MunicipalRequest.requestLogin(this, this, account, password);
     }
 
     /**
@@ -85,7 +100,7 @@ public class LoginActivity extends BaseActivity implements RequestListener {
     private void saveTokenAndValue(String token, List<String> value){
         ChengApplication.instance.access_token = token;
         ChengApplication.instance.authValue = value;
-        SPUtils.put(this, SP_TOKEN, token);
+        SPUtils.put(this, MunicipalCache.SP_TOKEN, token);
     }
 
     /**
@@ -115,6 +130,7 @@ public class LoginActivity extends BaseActivity implements RequestListener {
             Toast.makeText(LoginActivity.this, "登录成功:"+message
                     +" | token:"+loginBean.access_token, Toast.LENGTH_LONG).show();
             saveTokenAndValue(loginBean.access_token, loginBean.value);
+            tempUnits();
             loginToNext();
         }
 
@@ -124,5 +140,13 @@ public class LoginActivity extends BaseActivity implements RequestListener {
         }
     };
 
-}
+    /**
+     * 临时增加作业单位假数据
+     */
+    private void tempUnits(){
+        List<String> unitList = new ArrayList<>();
+        unitList.add("无锡市政公司");
+        MunicipalCache.units = unitList;
+    }
 
+}

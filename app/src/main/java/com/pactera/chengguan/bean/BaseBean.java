@@ -1,5 +1,6 @@
 package com.pactera.chengguan.bean;
 
+import com.pactera.chengguan.base.ChengApplication;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.util.LogUtils;
 
@@ -20,7 +21,11 @@ public class BaseBean {
             handler.doSuccess(this, message);
         }else{
             LogUtils.e(TAG, "result:"+result+" | message:"+message);
-            handler.doError(result, message);
+            if(result == Contants.ERROR_SESSION){
+                ChengApplication.instance.sessionErrorToLogin();
+            }else {
+                handler.doError(result, message);
+            }
         }
     }
 

@@ -23,6 +23,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
+/**
+ * 新建案件的案件详情（可编辑状态）
+ */
 public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
     @Bind(R.id.title)
     TextView title;

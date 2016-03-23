@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class MunicipalCache {
 
+    //本地token保存字段Key
+    public static final String SP_TOKEN = "token";
+
     //市政作业单位集合
     public static List<String> units;
 

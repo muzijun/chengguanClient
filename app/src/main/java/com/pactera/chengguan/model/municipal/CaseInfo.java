@@ -13,9 +13,13 @@ public class CaseInfo {
 
     public static final String[] months = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月"
             , "九月", "十月", "十一月", "十二月"};
+    public static final int CASE_NEW = 0;       //案件新增
+    public static final int CASE_PROCESS = 1;   //案件处理中
+    public static final int CASE_CHECK = 2;     //案件待审核
+    public static final int CASE_FINISH = 3;    //案件结案
 
     private int id;             //案件id
-    private int caseStatus;     //案件状态
+    private int caseStatus;     //案件状态   0. 案件新增，1.案件处理中，2. 案件待审核，3. 案件结案
     private int category;       //类别
     private int month;          //月份
     private String date;        //日期

@@ -39,10 +39,10 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         , AdapterView.OnItemClickListener, RequestListener {
     private static final String[] tab_one = {"待办", "处理中", "办结"};
     private static final String[] tab_two = {"月度", "季度", "年度", "日常"};
-    private static final String[] tab_three = {"不限", "一月", "二月", "三月", "四月", "五月", "六月"
+    private static final String[] tab_three = {"一月", "二月", "三月", "四月", "五月", "六月"
             , "七月", "八月", "九月", "十月", "十一月", "十二月"};
-    private static final String[] tab_four = {"按时间排序", "按超限排序"};
-    private String headers[] = {"待办", "月度", "不限", "按时间排序"};
+    private static final String[] tab_four = {"时间排序", "超限排序"};
+    private String headers[] = {"待办", "月度", "一月", "时间排序"};
 
     @Bind(R.id.title)
     TextView title;
@@ -105,8 +105,10 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_one_Adapter.setCheckItem(position);
                 selectTabOneIndex = position;
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_one[position]);
+//                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_one[position]);
+                dropDownMenu.setTabText(tab_one[position]);
                 dropDownMenu.closeMenu();
+                requestCaseListData(STATUS_REFRESH);
             }
         });
         two_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,8 +116,10 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_two_Adapter.setCheckItem(position);
                 selectTabTwoIndex = position;
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_two[position]);
+//                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_two[position]);
+                dropDownMenu.setTabText(tab_two[position]);
                 dropDownMenu.closeMenu();
+                requestCaseListData(STATUS_REFRESH);
             }
         });
         three_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,8 +127,10 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_three_Adapter.setCheckItem(position);
                 selectTabThreeIndex = position;
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_three[position]);
+//                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_three[position]);
+                dropDownMenu.setTabText(tab_three[position]);
                 dropDownMenu.closeMenu();
+                requestCaseListData(STATUS_REFRESH);
             }
         });
         four_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,8 +138,10 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 tab_four_Adapter.setCheckItem(position);
                 selectTabFourIndex = position;
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_four[position]);
+//                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_four[position]);
+                dropDownMenu.setTabText(tab_four[position]);
                 dropDownMenu.closeMenu();
+                requestCaseListData(STATUS_REFRESH);
             }
         });
     }
@@ -163,30 +171,29 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CaseInfo caseInfo = caseInfoList.get(position);
         Intent intent;
-        switch (position) {
-            case 0:
+        switch(caseInfo.getCaseStatus()){
+            case CaseInfo.CASE_NEW:
                 intent = new Intent(mContext, CaseDetialsActivity.class);
                 startActivity(intent);
                 break;
-            case 1:
-                intent = new Intent(mContext, CaseFinishActivity.class);
-                intent.putExtra(CaseFinishActivity.STATE, 1);
-                startActivity(intent);
-                break;
-            case 2:
+            case CaseInfo.CASE_PROCESS:
                 intent = new Intent(mContext, CaseFinishActivity.class);
                 intent.putExtra(CaseFinishActivity.STATE, 2);
                 startActivity(intent);
                 break;
-            case 3:
+            case CaseInfo.CASE_CHECK:
                 intent = new Intent(mContext, CaseFinishActivity.class);
                 intent.putExtra(CaseFinishActivity.STATE, 3);
                 startActivity(intent);
                 break;
-
+            case CaseInfo.CASE_FINISH:
+                intent = new Intent(mContext, CaseFinishActivity.class);
+                intent.putExtra(CaseFinishActivity.STATE, 1);
+                startActivity(intent);
+                break;
         }
-
     }
 
     /**
@@ -195,14 +202,14 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private void requestCaseListData(int requestStatus){
         this.requestStatus = requestStatus;
         MunicipalRequest.requestCaseList(this, this, selectTabOneIndex+1, selectTabTwoIndex+1, selectTabThreeIndex+1
-                , selectTabFourIndex+1, PAGE_COUNT, getListId());
+                , selectTabFourIndex+1, PAGE_COUNT, getLastId());
     }
 
     /**
      * 获取列表最后一项的id
      * @return
      */
-    private int getListId(){
+    private int getLastId(){
         if(caseInfoList == null || caseInfoList.size() <= 0){
             return 0;
         }

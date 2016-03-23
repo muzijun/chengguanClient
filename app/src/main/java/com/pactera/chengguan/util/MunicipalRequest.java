@@ -4,10 +4,15 @@ import com.google.gson.Gson;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.ChenguanOkHttpManager;
 import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.municipal.CaseCheckReq;
 import com.pactera.chengguan.bean.municipal.CaseCreateReq;
+import com.pactera.chengguan.bean.municipal.CaseDelayRecordBean;
 import com.pactera.chengguan.bean.municipal.CaseDelayReq;
+import com.pactera.chengguan.bean.municipal.CaseFlowBean;
 import com.pactera.chengguan.bean.municipal.CaseListBean;
 import com.pactera.chengguan.bean.municipal.CaseListReq;
+import com.pactera.chengguan.bean.municipal.CaseNormalReq;
+import com.pactera.chengguan.bean.municipal.CaseNotSecondReq;
 import com.pactera.chengguan.bean.municipal.LoginBean;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.RequestListener;
@@ -125,7 +130,122 @@ public class MunicipalRequest {
         j.setContext(context);
         j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
         j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
         j.setUrl(Contants.CASE_DELAY);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 案件结案接口
+     * @param context
+     * @param mCallBackListener
+     * @param caseid    案件id
+     */
+    public static void requestCaseFinish(BaseActivity context, RequestListener mCallBackListener
+            , int caseid){
+        CaseNormalReq req = new CaseNormalReq();
+        req.setData(caseid);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_FINISH);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 获取案件延期记录接口
+     * @param context
+     * @param mCallBackListener
+     * @param caseid    案件id
+     */
+    public static void requestCaseDelayRecord(BaseActivity context, RequestListener mCallBackListener
+            , int caseid){
+        CaseNormalReq req = new CaseNormalReq();
+        req.setData(caseid);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(CaseDelayRecordBean.class,mCallBackListener,context));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_DELAY_RECORD);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 获取案件流程日志
+     * @param context
+     * @param mCallBackListener
+     * @param caseid
+     */
+    public static void requestCaseFlow(BaseActivity context, RequestListener mCallBackListener
+            , int caseid){
+        CaseNormalReq req = new CaseNormalReq();
+        req.setData(caseid);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(CaseFlowBean.class,mCallBackListener,context));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_FLOW);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 案件考核接口
+     * @param context
+     * @param mCallBackListener
+     * @param caseid    案件id
+     * @param type      扣分依据分类
+     * @param point     扣分分数
+     * @param month     扣分计入月份 1.一月。。。12,十二月
+     */
+    public static void requestCaseCheck(BaseActivity context, RequestListener mCallBackListener
+            , int caseid, String type, int point, int month){
+        CaseCheckReq req = new CaseCheckReq();
+        req.setData(caseid, type, point, month);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseCheckReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_CHECK);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 案件不通过返工接口
+     * @param context
+     * @param mCallBackListener
+     * @param caseid    案件id
+     * @param opinion   返工意见
+     */
+    public static void requestCaseNotSecond(BaseActivity context, RequestListener mCallBackListener
+            , int caseid, String opinion){
+        CaseNotSecondReq req = new CaseNotSecondReq();
+        req.setData(caseid, opinion);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseNotSecondReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_NOT_SECOND);
         j.setParams(params);
         ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
     }

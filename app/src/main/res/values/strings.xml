@@ -34,5 +34,6 @@
     <string name="title_activity_case_detials">CaseDetialsActivity</string>
     <string name="account_null_error">用户名不能为空</string>
     <string name="password_null_error">密码不能为空</string>
+    <string name="session_error">登录过期，请重新登录</string>
 
 </resources>

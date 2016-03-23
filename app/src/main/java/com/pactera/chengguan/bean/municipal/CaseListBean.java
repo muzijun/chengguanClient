@@ -59,6 +59,9 @@ public class CaseListBean extends BaseBean {
         }
 
         private List<PicData> setPhotoData(List<Photo> photoList){
+            if(photoList == null){
+                return null;
+            }
             List<PicData> picDataList = new ArrayList<PicData>();
             for(Photo photo : photoList){
                 PicData pic = new PicData();

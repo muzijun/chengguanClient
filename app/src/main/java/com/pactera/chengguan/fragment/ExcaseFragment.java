@@ -86,6 +86,9 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     private  String STATE_TYPE = "STATE_TYPE";
     //月份
     private String STATE_MONTH = "STATE_MONTH";
+
+    private int selectUnitIndex, selectTypeIndex, selectMonthIndex;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -167,22 +170,37 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         if (event.getAddress().equals(this.getClass().getName())) {
             //月份
             if (event.getType().equals(STATE_MONTH)) {
-                monthText.setText(event.getmMsg());
+                String msg = event.getmMsg();
+                selectMonthIndex = getIndexFromArray(msg, month_data);
+                monthText.setText(msg);
             }
             //考核类型
             else if (event.getType().equals(STATE_TYPE)) {
-                if (event.getmMsg().equals("日常")) {
-                    monthLin.setVisibility(View.GONE);
-                } else {
-                    monthLin.setVisibility(View.VISIBLE);
-                }
-                typeText.setText(event.getmMsg());
+//                if (event.getmMsg().equals("日常")) {
+//                    monthLin.setVisibility(View.GONE);
+//                } else {
+//                    monthLin.setVisibility(View.VISIBLE);
+//                }
+                String msg = event.getmMsg();
+                selectTypeIndex = getIndexFromArray(msg, type_data);
+                typeText.setText(msg);
             }
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
-                unitText.setText(event.getmMsg());
+                String msg = event.getmMsg();
+                selectUnitIndex = MunicipalCache.units.indexOf(msg);
+                unitText.setText(msg);
             }
         }
+    }
+
+    private int getIndexFromArray(String msg, String[] array){
+        for(int i=0;i<array.length;i++){
+            if(array[i].equals(msg)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -252,8 +270,8 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
      * 提交
      */
     public void commitCreate(){
-
-        MunicipalRequest.requestCreateCase(mContext, this, 1, null, null, 0, 0, "震泽路18号", 0, 0, 1, 1, 1, null);
+        MunicipalRequest.requestCreateCase(mContext, this, 1, null, null, 0, 0, "震泽路18号", 0, 0
+                , selectUnitIndex+1, selectTypeIndex+1, selectMonthIndex+1, null);
     }
 
     @Override
@@ -272,26 +290,6 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
-//    /**
-//     * 发送新建案件请求
-//     */
-//    private void requestCreateCase(){
-//        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
-//        params.add(new RequestParam("type", 1+""));
-//        params.add(new RequestParam("description", selectTabTwoIndex+1+""));
-//        params.add(new RequestParam("point", selectTabThreeIndex+""));
-//        params.add(new RequestParam("termtime", selectTabFourIndex+1+""));
-//        params.add(new RequestParam("pagecount", ""+PAGE_COUNT));
-//        params.add(new RequestParam("lastid", ""+getListId()));
-//        RequestPair j= new RequestPair();
-//        j.setContext((BaseActivity)getActivity());
-//        j.setRequest(new BaseCallback(BaseBean.class,this,(BaseActivity)getActivity()));
-//        j.setMethod(Contants.Post);
-//        j.setUrl(Contants.CASE_CREATE);
-//        j.setParams(params);
-//        ChenguanOkHttpManager.requestIfNeedToken(j, true);
-//    }
 
     @Override
     public void success(Object result) {
