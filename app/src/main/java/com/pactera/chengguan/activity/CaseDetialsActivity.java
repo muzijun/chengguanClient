@@ -14,6 +14,7 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.model.SelectEvent;
+import com.pactera.chengguan.model.event.PointData;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 
@@ -68,6 +69,11 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     private String DESCRIPTION = "DESCRIPTION";
     //地址
     private String ADDRESS = "ADDRESS";
+    //工期
+    private String TIME = "TIME";
+    //分数
+    private String POINT = "POINT";
+    private PointData pointData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,11 +194,17 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 startActivity(intent);
                 break;
             case R.id.tx_deduct:
-                intent=new Intent(mContext,PointsActivity.class);
+                intent = new Intent(mContext, PointsActivity.class);
+                intent.putExtra("type", POINT);
+                intent.putExtra("data", txDeduct.getText().toString());
+                intent.putExtra("address", this.getClass().getName());
                 startActivity(intent);
                 break;
             case R.id.tx_date_edit:
-                intent=new Intent(mContext,PostPoneActivity.class);
+                intent = new Intent(mContext, TimeActivity.class);
+                intent.putExtra("type", TIME);
+                intent.putExtra("data", txDateEdit.getText().toString().replace("天", ""));
+                intent.putExtra("address", this.getClass().getName());
                 startActivity(intent);
                 break;
         }
@@ -217,6 +229,15 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
                 txDescribe.setText(event.getmMsg());
             } else if (event.getType().equals((ADDRESS))) {
                 txAddress.setText(event.getmMsg());
+            }
+            //工期
+            else if (event.getType().equals(TIME)) {
+                txDateEdit.setText(event.getmMsg() + "天");
+            }
+            //分数
+            else if (event.getType().equals(POINT)) {
+                pointData=(PointData)event.getObject();
+                txDeduct.setText(pointData.getNumber());
             }
         }
     }

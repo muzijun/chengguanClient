@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    tools:context=".activity.PostPoneActivity">
-
-    <include layout="@layout/include_titlebar" />
-
+    android:orientation="vertical">
+<include layout="@layout/include_titlebar"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
+        android:background="@color/colorWhite">
 
         <View
             android:layout_width="match_parent"
@@ -31,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="延期" />
+                android:text="工期" />
 
             <com.rey.material.widget.Button
                 android:id="@+id/bt_minus"
@@ -88,38 +82,6 @@
             android:background="@color/colorD7d7d7" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="20dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*"
-            android:textColor="@color/colorFF0000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="延期原因" />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/edit_background_gray"
-        android:gravity="top"
-        android:hint="请输入个人意见"
-        android:paddingLeft="10dip" />
-
     <com.rey.material.widget.Button
         android:id="@+id/commit"
         android:layout_width="match_parent"

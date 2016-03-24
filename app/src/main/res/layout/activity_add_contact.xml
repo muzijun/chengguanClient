@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="姓名:"
+                android:textSize="@dimen/text_size_small" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="25dp"
+                android:background="@null"
+                android:hint="请输入"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="邮箱:"
+                android:textSize="@dimen/text_size_small" />
+
+            <EditText
+                android:id="@+id/edit_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="25dp"
+                android:background="@null"
+                android:hint="请输入"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="单位:"
+                android:textSize="@dimen/text_size_small" />
+
+            <EditText
+                android:id="@+id/edit_unit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="25dp"
+                android:background="@null"
+                android:hint="请输入"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+        <View style="@style/horizontal_line" />
+    </LinearLayout>
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="手机:"
+            android:textSize="@dimen/text_size_small" />
+
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:phoneNumber="true"
+            android:background="@null"
+            android:hint="请输入"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+    <View style="@style/horizontal_line" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_background_save"
+        android:text="完成"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>

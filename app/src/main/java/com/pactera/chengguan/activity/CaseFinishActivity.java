@@ -135,26 +135,32 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
     @Override
     public void onItemClick(int index) {
+        Intent intent;
         if (state == 1) {
             switch (index) {
                 case 0:
-                    Intent intent = new Intent(mContext, ProcessRecordActivity.class);
+                    intent = new Intent(mContext, ProcessRecordActivity.class);
                     startActivity(intent);
                     break;
             }
         } else if (state == 2) {
             switch (index) {
-
+                case 0:
+                    intent = new Intent(mContext, PostPoneActivity.class);
+                    startActivity(intent);
+                 break;
             }
 
         } else if (state == 3) {
-            Intent intent;
             switch (index) {
                 //考核
                 case 0:
                     intent = new Intent(mContext, AssessActivity.class);
                     startActivity(intent);
                     break;
+                case 1:
+                    intent = new Intent(mContext, PostPoneActivity.class);
+                    startActivity(intent);
                 //流程日志
                 case 4:
                     intent = new Intent(mContext, ProcessRecordActivity.class);

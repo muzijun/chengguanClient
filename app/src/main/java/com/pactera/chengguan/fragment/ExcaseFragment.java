@@ -29,6 +29,9 @@ import com.pactera.chengguan.model.PhotoEvent;
 import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.NoScrollGridView;
+import com.pactera.chengguan.view.dialog.CommonDialog;
+import com.rey.material.app.Dialog;
+import com.rey.material.app.SimpleDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -81,9 +84,9 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     private String[] month_data = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"};
 
     //事业单位
-    private  String STATE_UNIT = "STATE_UNIT";
+    private String STATE_UNIT = "STATE_UNIT";
     //考核类型
-    private  String STATE_TYPE = "STATE_TYPE";
+    private String STATE_TYPE = "STATE_TYPE";
     //月份
     private String STATE_MONTH = "STATE_MONTH";
 
@@ -194,9 +197,9 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         }
     }
 
-    private int getIndexFromArray(String msg, String[] array){
-        for(int i=0;i<array.length;i++){
-            if(array[i].equals(msg)){
+    private int getIndexFromArray(String msg, String[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(msg)) {
                 return i;
             }
         }
@@ -238,7 +241,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.unit_lin:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type",STATE_UNIT);
+                intent.putExtra("type", STATE_UNIT);
                 intent.putStringArrayListExtra("data", mSelectData_unit);
                 intent.putExtra("title", "作业单位");
                 intent.putExtra("address", this.getClass().getName());
@@ -254,7 +257,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case R.id.type_lin:
                 intent = new Intent(mContext, SelectActivity.class);
-                intent.putExtra("type",STATE_TYPE);
+                intent.putExtra("type", STATE_TYPE);
                 intent.putStringArrayListExtra("data", mSelectData_type);
                 intent.putExtra("title", "考核类型");
                 intent.putExtra("address", this.getClass().getName());
@@ -269,9 +272,22 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     /**
      * 提交
      */
-    public void commitCreate(){
-        MunicipalRequest.requestCreateCase(mContext, this, 1, null, null, 0, 0, "震泽路18号", 0, 0
-                , selectUnitIndex+1, selectTypeIndex+1, selectMonthIndex+1, null);
+    public void commitCreate() {
+        CommonDialog dialog = new CommonDialog(mContext, R.style.dialog_dimenable,new CommonDialog.OnClickDialogListener() {
+            @Override
+            public void onClickOkBtn() {
+                MunicipalRequest.requestCreateCase(mContext, ExcaseFragment.this, 1, null, null, 0, 0, "震泽路18号", 0, 0
+                        , selectUnitIndex + 1, selectTypeIndex + 1, selectMonthIndex + 1, null);
+            }
+
+            @Override
+            public void onClickCancelBtn() {
+            }
+        });
+        dialog.show();
+        dialog.setDialogTitle("信息提示");
+        dialog.setDialogContent("请点击确认信息无误并进行新案件");
+
     }
 
     @Override
@@ -310,7 +326,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
 
         @Override
         public void doError(int result, String message) {
-            Toast.makeText(getActivity(), "提交新案件失败："+result+" | msg:"+message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "提交新案件失败：" + result + " | msg:" + message, Toast.LENGTH_LONG).show();
         }
     };
 }

@@ -12,6 +12,9 @@ import com.rey.material.widget.Button;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 延期
+ */
 public class PostPoneActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.title)
     TextView title;
@@ -23,6 +26,8 @@ public class PostPoneActivity extends BaseActivity implements View.OnClickListen
     Button btPlus;
     @Bind(R.id.edit)
     EditText edit;
+    @Bind(R.id.commit)
+    Button commit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class PostPoneActivity extends BaseActivity implements View.OnClickListen
         title.setText("延期");
         btMinus.setOnClickListener(this);
         btPlus.setOnClickListener(this);
+        commit.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +60,8 @@ public class PostPoneActivity extends BaseActivity implements View.OnClickListen
                 point = edtDays.getText().toString();
                 number = Integer.valueOf(point);
                 edtDays.setText(String.valueOf(number + 1));
+                break;
+            case R.id.commit:
                 break;
         }
     }

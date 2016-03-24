@@ -12,6 +12,8 @@ public class SelectEvent {
     private String type;
     //内容
     private String mMsg;
+    //对象
+    private Object object;
 
     public String getAddress() {
         return address;
@@ -35,5 +37,13 @@ public class SelectEvent {
 
     public void setmMsg(String mMsg) {
         this.mMsg = mMsg;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
     }
 }
