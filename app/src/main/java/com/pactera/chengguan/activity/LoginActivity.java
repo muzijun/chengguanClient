@@ -109,13 +109,12 @@ public class LoginActivity extends BaseActivity implements RequestListener {
     private void loginToNext(){
         Intent intent = new Intent(mContext, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     @Override
-    public void success(Object result) {
+    public void success(String reqUrl, Object result) {
         LoginBean loginBean = (LoginBean) result;
-        loginBean.checkResult(loginHandler);
+        loginBean.checkResult(this, loginHandler);
     }
 
     @Override

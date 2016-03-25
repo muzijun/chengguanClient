@@ -43,7 +43,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("pwd", password));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(LoginBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(LoginBean.class,mCallBackListener,context, Contants.USER_LOGIN));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.USER_LOGIN);
@@ -70,7 +70,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseListReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(CaseListBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(CaseListBean.class,mCallBackListener,context, Contants.CASE_LIST));
         j.setMethod(Contants.Post);
         j.setUrl(Contants.CASE_LIST);
         j.setParams(params);
@@ -104,7 +104,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseCreateReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_CREATE));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_CREATE);
@@ -128,7 +128,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseDelayReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_DELAY));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_DELAY);
@@ -150,7 +150,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_FINISH));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_FINISH);
@@ -172,7 +172,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(CaseDelayRecordBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(CaseDelayRecordBean.class,mCallBackListener,context, Contants.CASE_DELAY_RECORD));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_DELAY_RECORD);
@@ -194,7 +194,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(CaseFlowBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(CaseFlowBean.class,mCallBackListener,context, Contants.CASE_FLOW));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_FLOW);
@@ -219,7 +219,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseCheckReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_CHECK));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_CHECK);
@@ -242,7 +242,7 @@ public class MunicipalRequest {
         params.add(new RequestParam("json", new Gson().toJson(req, CaseNotSecondReq.class)));
         RequestPair j= new RequestPair();
         j.setContext(context);
-        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context));
+        j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_NOT_SECOND));
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_NOT_SECOND);

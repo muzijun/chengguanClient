@@ -19,14 +19,14 @@ public  class BaseCallback extends Callback<String> {
     private  Class<?> mClazz;
     private BaseActivity mContext;
     protected RequestListener mCallBackListener;
+    private String reqUrl;
 
-
-    public BaseCallback(Class<?> clazz,RequestListener mCallBackListener,BaseActivity mContext) {
+    public BaseCallback(Class<?> clazz,RequestListener mCallBackListener,BaseActivity mContext, String reqUrl) {
         super();
         this.mClazz = clazz;
         this.mContext=mContext;
         this.mCallBackListener=mCallBackListener;
-
+        this.reqUrl = reqUrl;
     }
 
     @Override
@@ -44,7 +44,7 @@ public  class BaseCallback extends Callback<String> {
     @Override
     public void onResponse(String response) {
         ProgressDlgUtil.stopProgressDlg();
-        mCallBackListener.success(new Gson().fromJson(response.toString(), mClazz));
+        mCallBackListener.success(reqUrl, new Gson().fromJson(response.toString(), mClazz));
     }
 
 }

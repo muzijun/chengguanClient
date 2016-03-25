@@ -90,6 +90,20 @@ public class CaseListAdapter extends BaseAdapter {
         holder.termTime.setText(caseInfo.getTermTime()+"天");
         holder.description.setText(caseInfo.getDescription());
         holder.address.setText(caseInfo.getLocation());
+        switch(caseInfo.getCaseStatus()){
+            case CaseInfo.CASE_NEW:
+                holder.caseStatus.setImageResource(R.mipmap.state_new);
+                break;
+            case CaseInfo.CASE_PROCESS:
+                holder.caseStatus.setImageResource(R.mipmap.icon_progress);
+                break;
+            case CaseInfo.CASE_CHECK:
+                holder.caseStatus.setImageResource(R.mipmap.icon_checked);
+                break;
+            case CaseInfo.CASE_FINISH:
+                holder.caseStatus.setImageResource(R.mipmap.icon_end);
+                break;
+        }
         return convertView;
     }
 

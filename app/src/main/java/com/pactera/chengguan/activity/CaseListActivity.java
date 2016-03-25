@@ -65,6 +65,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private int requestStatus;
     private static final int STATUS_REFRESH = 1;    //刷新
     private static final int STATUS_MORE = 2;       //获取更多
+    private ChenguanSwipeToLoadLayout swipeToLoadLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +151,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.caselist_content, null);
         ListView swipeTarget = ButterKnife.findById(view,R.id.swipe_target);
-        ChenguanSwipeToLoadLayout swipeToLoadLayout = (ChenguanSwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
+        swipeToLoadLayout = (ChenguanSwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
         caseListAdapter = new CaseListAdapter(mContext, caseInfoList);
         swipeTarget.setAdapter(caseListAdapter);
         swipeTarget.setOnItemClickListener(this);
@@ -173,24 +174,33 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CaseInfo caseInfo = caseInfoList.get(position);
         Intent intent;
+        Bundle bundle = new Bundle();
         switch(caseInfo.getCaseStatus()){
             case CaseInfo.CASE_NEW:
                 intent = new Intent(mContext, CaseDetialsActivity.class);
+                bundle.putSerializable("case", caseInfo);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case CaseInfo.CASE_PROCESS:
                 intent = new Intent(mContext, CaseFinishActivity.class);
-                intent.putExtra(CaseFinishActivity.STATE, 2);
+                bundle.putSerializable("case", caseInfo);
+                bundle.putInt(CaseFinishActivity.STATE, 2);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case CaseInfo.CASE_CHECK:
                 intent = new Intent(mContext, CaseFinishActivity.class);
-                intent.putExtra(CaseFinishActivity.STATE, 3);
+                bundle.putSerializable("case", caseInfo);
+                bundle.putInt(CaseFinishActivity.STATE, 3);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case CaseInfo.CASE_FINISH:
                 intent = new Intent(mContext, CaseFinishActivity.class);
-                intent.putExtra(CaseFinishActivity.STATE, 1);
+                bundle.putSerializable("case", caseInfo);
+                bundle.putInt(CaseFinishActivity.STATE, 1);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
         }
@@ -202,24 +212,29 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private void requestCaseListData(int requestStatus){
         this.requestStatus = requestStatus;
         MunicipalRequest.requestCaseList(this, this, selectTabOneIndex+1, selectTabTwoIndex+1, selectTabThreeIndex+1
-                , selectTabFourIndex+1, PAGE_COUNT, getLastId());
+                , selectTabFourIndex+1, PAGE_COUNT, getLastId(requestStatus));
     }
 
     /**
      * 获取列表最后一项的id
      * @return
      */
-    private int getLastId(){
-        if(caseInfoList == null || caseInfoList.size() <= 0){
+    private int getLastId(int requestStatus){
+        if(requestStatus == STATUS_REFRESH || caseInfoList == null || caseInfoList.size() <= 0){
             return 0;
         }
         return caseInfoList.get(caseInfoList.size()-1).getId();
     }
 
     @Override
-    public void success(Object result) {
+    public void success(String reqUrl, Object result) {
+        if(requestStatus == STATUS_REFRESH){
+            swipeToLoadLayout.setRefreshing(false);
+        }else{
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         CaseListBean caseListBean = (CaseListBean)result;
-        caseListBean.checkResult(caseListHandler);
+        caseListBean.checkResult(this, caseListHandler);
     }
 
     @Override

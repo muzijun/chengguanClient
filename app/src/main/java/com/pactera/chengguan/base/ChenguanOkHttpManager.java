@@ -31,6 +31,7 @@ public class ChenguanOkHttpManager {
             ArrayList<RequestParam> params = requestPair.getParams();
             params.add(new RequestParam("access_token", ChengApplication.instance.access_token));
             params.add(new RequestParam("systemid", systemId));
+            params.add(new RequestParam("loginMobile", ""+Contants.MOBILE_CHENGGUAN));
             requestPair.setParams(params);
         }
         request(requestPair);

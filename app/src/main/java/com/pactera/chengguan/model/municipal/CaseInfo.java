@@ -2,6 +2,8 @@ package com.pactera.chengguan.model.municipal;
 
 import com.pactera.chengguan.bean.municipal.CaseListBean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ import java.util.List;
  * Created by huang hua
  * 2016/3/7.
  */
-public class CaseInfo {
+public class CaseInfo implements Serializable{
 
     public static final String[] months = {"一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月"
             , "九月", "十月", "十一月", "十二月"};
@@ -20,7 +22,7 @@ public class CaseInfo {
 
     private int id;             //案件id
     private int caseStatus;     //案件状态   0. 案件新增，1.案件处理中，2. 案件待审核，3. 案件结案
-    private int category;       //类别
+    private int category;       //类别    1.月度，2.季度，3.年度，4.日常
     private int month;          //月份
     private String date;        //日期
     private int termTime;       //期限时间
@@ -193,5 +195,13 @@ public class CaseInfo {
 
     public void setExceedLogList(List<CaseExceedLog> exceedLogList) {
         this.exceedLogList = exceedLogList;
+    }
+
+    public List<String> getBeforePicUrlList(){
+        List<String> urlList = new ArrayList<String>();
+        for(PicData pic : beforePic){
+            urlList.add(pic.getUrl());
+        }
+        return urlList;
     }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View style="@style/horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tx_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3天"
+            android:textColor="@color/colorEBBA06" />
+
+        <TextView
+            android:id="@+id/tx_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="2016-02-17" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="10dp"
+        style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/tx_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="近期连绵大雨，无法进行道路延期施工"
+        android:textColor="@color/color222222"
+        android:textSize="@dimen/text_size_small" />
+
+    <View style="@style/horizontal_line" />
+</LinearLayout>

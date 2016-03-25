@@ -68,7 +68,12 @@
         <activity
         android:name=".activity.AddContactActivity"
         android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name=".activity.DelayRecordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ReworkActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"/>

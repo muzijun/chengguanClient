@@ -80,7 +80,7 @@ public class ChengApplication extends Application {
     /**
      * Session过期后，跳转到登录界面
      */
-    public void sessionErrorToLogin(){
+    public void sessionErrorToLogin(final Context context){
         Toast.makeText(this, R.string.session_error, Toast.LENGTH_LONG).show();
         new Thread(new Runnable() {
             @Override
@@ -91,9 +91,9 @@ public class ChengApplication extends Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                Intent intent = new Intent(context, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
             }
         }).start();
     }

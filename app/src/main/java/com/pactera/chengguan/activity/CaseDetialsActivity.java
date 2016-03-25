@@ -12,9 +12,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
+import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.BaseHandler;
+import com.pactera.chengguan.config.MunicipalCache;
+import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.model.event.PointData;
+import com.pactera.chengguan.model.municipal.CaseInfo;
+import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 
@@ -27,7 +33,8 @@ import de.greenrobot.event.EventBus;
 /**
  * 新建案件的案件详情（可编辑状态）
  */
-public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener, View.OnClickListener {
+public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener
+        , View.OnClickListener, RequestListener {
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.lin)
@@ -46,6 +53,9 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     TextView txDateEdit;
     @Bind(R.id.tx_deduct)
     TextView txDeduct;
+    @Bind(R.id.icon_case_status)
+    ImageView ivStatus;
+
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
@@ -57,10 +67,10 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     private ArrayList<String> mSelectData_unit = new ArrayList<String>();
     //考核类型集合
     private ArrayList<String> mSelectData_type = new ArrayList<String>();
-    //作业单位
-    private String[] unit_data = {"无锡市政府", "无锡城管局"};
+//    //作业单位
+//    private String[] unit_data = {"无锡市政府", "无锡城管局"};
     //考核类型
-    private String[] type_data = {"日常", "月度", "季度", "年度"};
+    private String[] type_data = {"月度", "季度", "年度", "日常"};
     //事业单位
     private String STATE_UNIT = "STATE_UNIT";
     //考核类型
@@ -75,12 +85,34 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     private String POINT = "POINT";
     private PointData pointData;
 
+    //案件信息
+    private CaseInfo caseInfo;
+    private int termTime;
+    private int checkPoint;
+    private String description;
+    private String location;
+    private int category;
+    private int unitId;
+
+    private int requestStatus;
+    private static final int STATUS_UPDATE = 1;     //保存
+    private static final int STATUS_ISSUE = 2;      //下派
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_detials);
         ButterKnife.bind(this);
+        getIntentContent();
         init();
+    }
+
+    private void getIntentContent(){
+        Bundle bundle = getIntent().getExtras();
+        caseInfo = (CaseInfo) bundle.get("case");
+        if(caseInfo == null){
+            finish();
+        }
     }
 
     protected void init() {
@@ -124,13 +156,40 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
      * 填充数据
      */
     private void addData() {
-        for (int i = 0; i < unit_data.length; i++) {
-            String unit = new String(unit_data[i]);
+        for (int i = 0; i < MunicipalCache.units.size(); i++) {
+            String unit = new String(MunicipalCache.units.get(i));
             mSelectData_unit.add(unit);
         }
         for (int i = 0; i < type_data.length; i++) {
             String type = new String(type_data[i]);
             mSelectData_type.add(type);
+        }
+        termTime = caseInfo.getTermTime();
+        checkPoint = caseInfo.getCheckPoint();
+        description = caseInfo.getDescription();
+        location = caseInfo.getLocation();
+        category = caseInfo.getCategory();
+        unitId = caseInfo.getOperateUnitId();
+
+        txDateEdit.setText(termTime+"天");
+        txDeduct.setText(checkPoint);
+        txDescribe.setText(description);
+        txAddress.setText(location);
+        txType.setText(category <= 0 ? type_data[0] : type_data[category-1]);
+        txUnit.setText(MunicipalCache.units.get(0));
+        switch (caseInfo.getCaseStatus()){
+            case CaseInfo.CASE_NEW:
+                ivStatus.setImageResource(R.mipmap.state_new);
+                break;
+            case CaseInfo.CASE_PROCESS:
+                ivStatus.setImageResource(R.mipmap.icon_progress);
+                break;
+            case CaseInfo.CASE_CHECK:
+                ivStatus.setImageResource(R.mipmap.icon_checked);
+                break;
+            case CaseInfo.CASE_FINISH:
+                ivStatus.setImageResource(R.mipmap.icon_end);
+                break;
         }
     }
 
@@ -213,38 +272,99 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
 
     @Override
     public void onItemClick(int index) {
-
+        if(index == 0){ //下派
+            requestStatus = STATUS_ISSUE;
+            MunicipalRequest.requestCreateCase(this, this, STATUS_ISSUE, ""+caseInfo.getId(), description
+                    , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
+                    , caseInfo.getMonth(), caseInfo.getBeforePicUrlList());
+        }else if(index == 1){ //保存
+            requestStatus = STATUS_UPDATE;
+            MunicipalRequest.requestCreateCase(this, this, STATUS_UPDATE, ""+caseInfo.getId(), description
+                    , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
+                    , caseInfo.getMonth(), caseInfo.getBeforePicUrlList());
+        }
     }
 
     public void onEventMainThread(SelectEvent event) {
         if (event.getAddress().equals(this.getClass().getName())) {
+            String msg = event.getmMsg();
             //考核类型
             if (event.getType().equals(STATE_TYPE)) {
-                txType.setText(event.getmMsg());
+                category = getIndex(msg, type_data);
+                txType.setText(msg);
             }
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
-                txUnit.setText(event.getmMsg());
+                txUnit.setText(msg);
             } else if (event.getType().equals(DESCRIPTION)) {
-                txDescribe.setText(event.getmMsg());
+                description = msg;
+                txDescribe.setText(msg);
             } else if (event.getType().equals((ADDRESS))) {
-                txAddress.setText(event.getmMsg());
+                location = msg;
+                txAddress.setText(msg);
             }
             //工期
             else if (event.getType().equals(TIME)) {
-                txDateEdit.setText(event.getmMsg() + "天");
+                termTime = Integer.parseInt(msg);
+                txDateEdit.setText(msg + "天");
             }
             //分数
             else if (event.getType().equals(POINT)) {
                 pointData=(PointData)event.getObject();
+                checkPoint = Integer.parseInt(pointData.getNumber());
                 txDeduct.setText(pointData.getNumber());
             }
         }
+    }
+
+    private int getIndex(String msg, String[] array){
+        for(int i=0;i<array.length;i++){
+            if(array[i].equals(msg)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private BaseHandler updateHandler = new BaseHandler() {
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            String msg;
+            if(requestStatus == STATUS_UPDATE){
+                msg = "案件保存成功!";
+            }else{
+                msg = "案件下派成功!";
+            }
+            Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            String msg;
+            if(requestStatus == STATUS_UPDATE){
+                msg = "案件保存失败:"+result+" | msg:"+message;
+            }else{
+                msg = "案件下派失败:"+result+" | msg:"+message;
+            }
+            Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    @Override
+    public void success(String reqUrl, Object result) {
+        BaseBean baseBean = (BaseBean) result;
+        baseBean.checkResult(this, updateHandler);
+    }
+
+    @Override
+    public void fail() {
+        Toast.makeText(this, "请求失败", Toast.LENGTH_LONG).show();
     }
 }

@@ -308,9 +308,9 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     }
 
     @Override
-    public void success(Object result) {
+    public void success(String reqUrl, Object result) {
         BaseBean baseBean = (BaseBean) result;
-        baseBean.checkResult(newCaseHandler);
+        baseBean.checkResult(mContext, newCaseHandler);
     }
 
     @Override

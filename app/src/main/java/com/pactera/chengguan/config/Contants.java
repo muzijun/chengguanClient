@@ -27,6 +27,10 @@ public class Contants {
     //可添加的图片数量
     public static final String EXTRA_CAN_ADD_IMAGE_SIZE = "can_add_image_size";
 
+    /******************** 客户端区分字段 **************************/
+    public static final int MOBILE_CHENGGUAN = 1;       //城管客户端
+    public static final int MOBILE_UNIT = 2;            //作业单位客户端
+
     /******************** 系统类别字段 **************************/
     public static final String SYSTEM_MUNICIPAL = "SZ";     //市政
 
