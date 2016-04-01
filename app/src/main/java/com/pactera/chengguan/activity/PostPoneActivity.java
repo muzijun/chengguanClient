@@ -101,7 +101,6 @@ public class PostPoneActivity extends BaseActivity implements View.OnClickListen
         public void doSuccess(BaseBean baseBean, String message) {
             Toast.makeText(PostPoneActivity.this, "延期成功!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
-            intent.putExtra("days", days);
             setResult(1, intent);
             finish();
         }

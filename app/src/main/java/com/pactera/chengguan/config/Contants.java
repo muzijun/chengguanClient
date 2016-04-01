@@ -63,4 +63,12 @@ public class Contants {
     //登录失败
     public static final int ERROR_LOGIN = 102;
 
+    /******************** 市政系统本地路径参数配置 *****************/
+    //本地根路径
+    public static final String PATH_SZ = "/chengguan/sz/";
+    //图片压缩路径
+    public static final String PATH_IMG_COMPRESS = "compress/";
+    //图片缓存路径
+    public static final String PATH_IMG_CACHE = "img/";
+
 }

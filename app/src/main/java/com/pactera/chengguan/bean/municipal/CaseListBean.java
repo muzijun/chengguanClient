@@ -24,7 +24,7 @@ public class CaseListBean extends BaseBean {
         public int sort;            //类别
         public int month;           //月份
         public String createTime;   //日期
-        public int deadline;        //期限日期
+        public int remainDays;      //期限日期
         public String caseAddress;  //案件地址
         public double longitude;    //地址经度
         public double latitude;     //地址纬度
@@ -38,6 +38,7 @@ public class CaseListBean extends BaseBean {
         public static class Photo{
             public String photoPath;   //照片地址
             public String createTime;  //照片时间
+            public String photoName;    //照片名称
         }
 
         public void transformData(CaseInfo caseInfo){
@@ -46,7 +47,7 @@ public class CaseListBean extends BaseBean {
             caseInfo.setCategory(sort);
             caseInfo.setMonth(month);
             caseInfo.setDate(createTime);
-            caseInfo.setTermTime(deadline);
+            caseInfo.setTermTime(remainDays);
             caseInfo.setLocation(caseAddress);
             caseInfo.setLongitude(longitude);
             caseInfo.setLatitude(latitude);
@@ -67,6 +68,7 @@ public class CaseListBean extends BaseBean {
                 PicData pic = new PicData();
                 pic.setUrl(photo.photoPath);
                 pic.setDate(photo.createTime);
+                pic.setName(photo.photoName);
                 picDataList.add(pic);
             }
             return picDataList;

@@ -20,11 +20,14 @@ import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.model.event.PointData;
 import com.pactera.chengguan.model.municipal.CaseInfo;
+import com.pactera.chengguan.model.municipal.PicData;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,39 +38,39 @@ import de.greenrobot.event.EventBus;
  */
 public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemClickListener
         , View.OnClickListener, RequestListener {
+
+
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.lin)
     LinearLayout lin;
     @Bind(R.id.imagecycle)
     ImageCycleView imagecycle;
+    @Bind(R.id.tx_describe)
+    TextView txDescribe;
     @Bind(R.id.tx_address)
     TextView txAddress;
     @Bind(R.id.tx_type)
     TextView txType;
     @Bind(R.id.tx_unit)
     TextView txUnit;
-    @Bind(R.id.tx_describe)
-    TextView txDescribe;
     @Bind(R.id.tx_date_edit)
     TextView txDateEdit;
     @Bind(R.id.tx_deduct)
     TextView txDeduct;
-    @Bind(R.id.icon_case_status)
-    ImageView ivStatus;
-
     private PopMenu popMenu;
     private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+//    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
+//            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
+//            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
+//            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
+//            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    private ArrayList<String> imageUrls = new ArrayList<String>();
     //作业单位集合
     private ArrayList<String> mSelectData_unit = new ArrayList<String>();
     //考核类型集合
     private ArrayList<String> mSelectData_type = new ArrayList<String>();
-//    //作业单位
+    //    //作业单位
 //    private String[] unit_data = {"无锡市政府", "无锡城管局"};
     //考核类型
     private String[] type_data = {"月度", "季度", "年度", "日常"};
@@ -95,8 +98,8 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
     private int unitId;
 
     private int requestStatus;
-    private static final int STATUS_UPDATE = 1;     //保存
-    private static final int STATUS_ISSUE = 2;      //下派
+    public static final int STATUS_UPDATE = 1;     //保存
+    public static final int STATUS_ISSUE = 2;      //下派
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +110,18 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         init();
     }
 
-    private void getIntentContent(){
+    private void getIntentContent() {
         Bundle bundle = getIntent().getExtras();
         caseInfo = (CaseInfo) bundle.get("case");
-        if(caseInfo == null){
+        if (caseInfo == null) {
             finish();
+        }
+        List<PicData> beforeList = caseInfo.getBeforePic();
+        for(PicData pic : beforeList){
+            String localUrl = pic.getLocalUrl();
+            if(localUrl != null && localUrl.length() > 0){
+                imageUrls.add(localUrl);
+            }
         }
     }
 
@@ -123,9 +133,9 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         popMenu.setOnItemClickListener(this);
         addView(lin);
         title.setText("考核案件");
-        for (int i = 0; i < imageUrls.length; i++) {
+        for (int i = 0; i < imageUrls.size(); i++) {
             ADInfo info = new ADInfo();
-            info.setUrl(imageUrls[i]);
+            info.setUrl(imageUrls.get(i));
             info.setContent("top-->" + i);
             infos.add(info);
         }
@@ -171,26 +181,12 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         category = caseInfo.getCategory();
         unitId = caseInfo.getOperateUnitId();
 
-        txDateEdit.setText(termTime+"天");
-        txDeduct.setText(checkPoint);
+        txDateEdit.setText(termTime + "天");
+        txDeduct.setText("" + checkPoint);
         txDescribe.setText(description);
         txAddress.setText(location);
-        txType.setText(category <= 0 ? type_data[0] : type_data[category-1]);
+        txType.setText(type_data[caseInfo.getCategory() - 1]);
         txUnit.setText(MunicipalCache.units.get(0));
-        switch (caseInfo.getCaseStatus()){
-            case CaseInfo.CASE_NEW:
-                ivStatus.setImageResource(R.mipmap.state_new);
-                break;
-            case CaseInfo.CASE_PROCESS:
-                ivStatus.setImageResource(R.mipmap.icon_progress);
-                break;
-            case CaseInfo.CASE_CHECK:
-                ivStatus.setImageResource(R.mipmap.icon_checked);
-                break;
-            case CaseInfo.CASE_FINISH:
-                ivStatus.setImageResource(R.mipmap.icon_end);
-                break;
-        }
     }
 
     private ImageCycleView.ImageCycleViewListener mCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
@@ -272,16 +268,16 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
 
     @Override
     public void onItemClick(int index) {
-        if(index == 0){ //下派
+        if (index == 0) { //下派
             requestStatus = STATUS_ISSUE;
-            MunicipalRequest.requestCreateCase(this, this, STATUS_ISSUE, ""+caseInfo.getId(), description
+            MunicipalRequest.requestCreateCase(this, this, STATUS_ISSUE, "" + caseInfo.getId(), description
                     , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
-                    , caseInfo.getMonth(), caseInfo.getBeforePicUrlList());
-        }else if(index == 1){ //保存
+                    , caseInfo.getMonth(), null);
+        } else if (index == 1) { //保存
             requestStatus = STATUS_UPDATE;
-            MunicipalRequest.requestCreateCase(this, this, STATUS_UPDATE, ""+caseInfo.getId(), description
+            MunicipalRequest.requestCreateCase(this, this, STATUS_UPDATE, "" + caseInfo.getId(), description
                     , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
-                    , caseInfo.getMonth(), caseInfo.getBeforePicUrlList());
+                    , caseInfo.getMonth(), null);
         }
     }
 
@@ -296,6 +292,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
                 txUnit.setText(msg);
+                unitId = MunicipalCache.units.indexOf(msg);
             } else if (event.getType().equals(DESCRIPTION)) {
                 description = msg;
                 txDescribe.setText(msg);
@@ -310,16 +307,16 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             }
             //分数
             else if (event.getType().equals(POINT)) {
-                pointData=(PointData)event.getObject();
+                pointData = (PointData) event.getObject();
                 checkPoint = Integer.parseInt(pointData.getNumber());
                 txDeduct.setText(pointData.getNumber());
             }
         }
     }
 
-    private int getIndex(String msg, String[] array){
-        for(int i=0;i<array.length;i++){
-            if(array[i].equals(msg)){
+    private int getIndex(String msg, String[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(msg)) {
                 return i;
             }
         }
@@ -336,10 +333,14 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         @Override
         public void doSuccess(BaseBean baseBean, String message) {
             String msg;
-            if(requestStatus == STATUS_UPDATE){
+            if (requestStatus == STATUS_UPDATE) {
                 msg = "案件保存成功!";
-            }else{
+                //TODO 刷新界面
+                //临时代码
+                setResult(STATUS_ISSUE);
+            } else {
                 msg = "案件下派成功!";
+                setResult(STATUS_ISSUE);
             }
             Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
             finish();
@@ -348,10 +349,10 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         @Override
         public void doError(int result, String message) {
             String msg;
-            if(requestStatus == STATUS_UPDATE){
-                msg = "案件保存失败:"+result+" | msg:"+message;
-            }else{
-                msg = "案件下派失败:"+result+" | msg:"+message;
+            if (requestStatus == STATUS_UPDATE) {
+                msg = "案件保存失败:" + result + " | msg:" + message;
+            } else {
+                msg = "案件下派失败:" + result + " | msg:" + message;
             }
             Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
         }

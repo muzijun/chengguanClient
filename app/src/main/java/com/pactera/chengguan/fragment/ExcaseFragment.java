@@ -20,19 +20,24 @@ import com.pactera.chengguan.activity.SelectActivity;
 import com.pactera.chengguan.adapter.ImagePublishAdapter;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.BaseFragment;
+import com.pactera.chengguan.base.ChenguanOkHttpManager;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.PhotoEvent;
+import com.pactera.chengguan.model.RequestFile;
+import com.pactera.chengguan.model.RequestPair;
 import com.pactera.chengguan.model.SelectEvent;
+import com.pactera.chengguan.util.BaseCallback;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.NoScrollGridView;
 import com.pactera.chengguan.view.dialog.CommonDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.SimpleDialog;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -96,7 +101,6 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = initView(R.layout.fragment_excase, inflater);
-        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -104,6 +108,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public void initContentView(View view) {
         ButterKnife.bind(this, view);
         addData();
+        unitText.setText(MunicipalCache.units.get(0));
         gridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImagePublishAdapter(mContext, mDataList);
         gridview.setAdapter(mAdapter);
@@ -276,8 +281,12 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         CommonDialog dialog = new CommonDialog(mContext, R.style.dialog_dimenable,new CommonDialog.OnClickDialogListener() {
             @Override
             public void onClickOkBtn() {
+                if(mDataList.size() <= 0){
+                    Toast.makeText(mContext, "请添加图片!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 MunicipalRequest.requestCreateCase(mContext, ExcaseFragment.this, 1, null, null, 0, 0, "震泽路18号", 0, 0
-                        , selectUnitIndex + 1, selectTypeIndex + 1, selectMonthIndex + 1, null);
+                        , selectUnitIndex + 1, selectTypeIndex + 1, selectMonthIndex + 1, mDataList);
             }
 
             @Override
@@ -322,6 +331,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
         @Override
         public void doSuccess(BaseBean baseBean, String message) {
             Toast.makeText(getActivity(), "提交新案件成功!", Toast.LENGTH_LONG).show();
+            resetImageAdapter();
         }
 
         @Override
@@ -329,4 +339,12 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
             Toast.makeText(getActivity(), "提交新案件失败：" + result + " | msg:" + message, Toast.LENGTH_LONG).show();
         }
     };
+
+    /**
+     * 重置图片添加内容
+     */
+    private void resetImageAdapter(){
+        mDataList.clear();
+        mAdapter.notifyDataSetChanged();
+    }
 }

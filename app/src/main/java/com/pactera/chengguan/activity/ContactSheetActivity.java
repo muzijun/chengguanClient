@@ -1,6 +1,8 @@
 package com.pactera.chengguan.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +16,7 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.adapter.CaseListAdapter;
 import com.pactera.chengguan.adapter.GirdDropDownAdapter;
 import com.pactera.chengguan.base.BaseActivity;
+import com.pactera.chengguan.fragment.TaskContactFragment;
 import com.pactera.chengguan.view.ChenguanSwipeToLoadLayout;
 import com.yyydjk.library.DropDownMenu;
 
@@ -45,17 +48,22 @@ public class ContactSheetActivity extends BaseActivity implements OnRefreshListe
     private static final String[] tab_three = {"一月", "二月", "三月", "四月", "五月", "六月"
             , "七月", "八月", "九月", "十月", "十一月", "十二月"};
     private String headers[] = {"待办", "任务联系单", "一月"};
-    private CaseListAdapter caseListAdapter;
     private ChenguanSwipeToLoadLayout swipeToLoadLayout;
+    private FragmentManager fm;
+     // 开启Fragment事务
+     private FragmentTransaction transaction;
+     private TaskContactFragment mWeixin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_sheet);
         ButterKnife.bind(this);
+        init();
     }
 
     private void init() {
-        title.setText("案件列表");
+        title.setText("工作联系单");
         final ListView one_View = new ListView(this);
         tab_one_Adapter = new GirdDropDownAdapter(this, Arrays.asList(tab_one));
         one_View.setDividerHeight(0);
@@ -88,6 +96,9 @@ public class ContactSheetActivity extends BaseActivity implements OnRefreshListe
                 tab_two_Adapter.setCheckItem(position);
                 dropDownMenu.setTabText(tab_two[position]);
                 dropDownMenu.closeMenu();
+                if (position == 0) {
+
+                }
             }
         });
         three_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,18 +109,25 @@ public class ContactSheetActivity extends BaseActivity implements OnRefreshListe
                 dropDownMenu.closeMenu();
             }
         });
+        setDefaultFragment();
+
     }
 
     private View createView() {
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.contactsheet_content, null);
-        ListView swipeTarget = ButterKnife.findById(view,R.id.swipe_target);
         swipeToLoadLayout = (ChenguanSwipeToLoadLayout) view.findViewById(R.id.swipeToLoadLayout);
-        swipeTarget.setAdapter(caseListAdapter);
-        swipeTarget.setOnItemClickListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         return view;
+    }
+
+    private void setDefaultFragment() {
+        fm = getSupportFragmentManager();
+        transaction = fm.beginTransaction();
+        mWeixin = new TaskContactFragment();
+        transaction.replace(R.id.swipe_target, mWeixin);
+        transaction.commit();
     }
 
     @Override

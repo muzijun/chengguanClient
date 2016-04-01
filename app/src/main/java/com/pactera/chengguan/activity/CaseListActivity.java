@@ -2,6 +2,8 @@ package com.pactera.chengguan.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -66,6 +68,9 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private static final int STATUS_REFRESH = 1;    //刷新
     private static final int STATUS_MORE = 2;       //获取更多
     private ChenguanSwipeToLoadLayout swipeToLoadLayout;
+
+    public static final int REQUEST_ACTIVITY_DETAIL = 1;
+    public static final int REQUEST_ACTIVITY_FINISH = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,21 +185,21 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
                 intent = new Intent(mContext, CaseDetialsActivity.class);
                 bundle.putSerializable("case", caseInfo);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_ACTIVITY_DETAIL);
                 break;
             case CaseInfo.CASE_PROCESS:
                 intent = new Intent(mContext, CaseFinishActivity.class);
                 bundle.putSerializable("case", caseInfo);
                 bundle.putInt(CaseFinishActivity.STATE, 2);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_ACTIVITY_FINISH);
                 break;
             case CaseInfo.CASE_CHECK:
                 intent = new Intent(mContext, CaseFinishActivity.class);
                 bundle.putSerializable("case", caseInfo);
                 bundle.putInt(CaseFinishActivity.STATE, 3);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_ACTIVITY_FINISH);
                 break;
             case CaseInfo.CASE_FINISH:
                 intent = new Intent(mContext, CaseFinishActivity.class);
@@ -259,6 +264,30 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         @Override
         public void doError(int result, String message) {
             Toast.makeText(CaseListActivity.this, "获取列表数据失败:" + message, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case REQUEST_ACTIVITY_DETAIL:
+                if(resultCode == CaseDetialsActivity.STATUS_ISSUE){
+                    mHandler.sendEmptyMessage(0);
+                }
+                break;
+            case REQUEST_ACTIVITY_FINISH:
+                if(resultCode > 0) {
+                    mHandler.sendEmptyMessage(0);
+                }
+                break;
+        }
+    }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            swipeToLoadLayout.setRefreshing(true);
         }
     };
 }

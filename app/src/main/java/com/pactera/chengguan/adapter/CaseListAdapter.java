@@ -2,6 +2,9 @@ package com.pactera.chengguan.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.pactera.chengguan.BuildConfig;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.ImagePagerActivity;
+import com.pactera.chengguan.base.ChengApplication;
 import com.pactera.chengguan.model.municipal.CaseInfo;
+import com.pactera.chengguan.model.municipal.PicData;
 import com.pactera.chengguan.view.ImageItemCycle;
 
 import java.util.ArrayList;
@@ -28,13 +34,12 @@ import butterknife.ButterKnife;
  * Created by lijun on 2016/3/9.
  */
 public class CaseListAdapter extends BaseAdapter {
-    private ArrayList<ArrayList<String>> infos = new ArrayList<ArrayList<String>>();
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
-
+//    private ArrayList<ArrayList<String>> infos = new ArrayList<ArrayList<String>>();
+//    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
+//            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
+//            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
+//            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
+//            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
     private LayoutInflater inflater;
     private Context mContext;
     private List<CaseInfo> caseInfoList;
@@ -43,13 +48,13 @@ public class CaseListAdapter extends BaseAdapter {
         mContext = context;
         inflater = LayoutInflater.from(context);
         this.caseInfoList = caseInfoList;
-        for (int i = 0; i < 10; i++) {
-            ArrayList<String> info = new ArrayList<String>();
-            for (int j = 0; j < imageUrls.length; j++) {
-                info.add(imageUrls[j]);
-            }
-            infos.add(info);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            ArrayList<String> info = new ArrayList<String>();
+//            for (int j = 0; j < imageUrls.length; j++) {
+//                info.add(imageUrls[j]);
+//            }
+//            infos.add(info);
+//        }
     }
 
     public void setNotifyChanged(List<CaseInfo> caseInfoList){
@@ -74,8 +79,16 @@ public class CaseListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ArrayList<String> data = infos.get(position);
         CaseInfo caseInfo = caseInfoList.get(position);
+        ArrayList<PicData> data = new ArrayList<PicData>();
+        List<PicData> beforeList = caseInfo.getBeforePic();
+        if(beforeList.size() > 0){
+            data.addAll(beforeList);
+        }
+        List<PicData> afterList = caseInfo.getAfterPic();
+        if(afterList.size() > 0){
+            data.addAll(afterList);
+        }
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = inflater
@@ -85,9 +98,10 @@ public class CaseListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.imagecycle.setImageResources(data, mCycleViewListener);
+        if(data.size() > 0) {
+            holder.imagecycle.setImageResources(data, mCycleViewListener, ChengApplication.instance.access_token);
+        }
         holder.date.setText(caseInfo.getDate());
-        holder.termTime.setText(caseInfo.getTermTime()+"天");
         holder.description.setText(caseInfo.getDescription());
         holder.address.setText(caseInfo.getLocation());
         switch(caseInfo.getCaseStatus()){
@@ -112,30 +126,46 @@ public class CaseListAdapter extends BaseAdapter {
 
         @Override
         public void onImageClick(String info, int postion, View imageView) {
-            Intent intent = new Intent(mContext, ImagePagerActivity.class);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, postion);
-            mContext.startActivity(intent);
-            Toast.makeText(mContext, "content->" + postion, Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(mContext, ImagePagerActivity.class);
+//            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
+//            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, postion);
+//            mContext.startActivity(intent);
+//            Toast.makeText(mContext, "content->" + postion, Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void displayImage(String imageURL, ImageView imageView) {
-            Glide.with(mContext).load(imageURL).centerCrop().placeholder(R.mipmap.icon_stub).error(R.mipmap.icon_error).into(imageView);
+            HandlerObject hObject = new HandlerObject(imageURL, imageView);
+            Message msg = Message.obtain(mHandler, 0, hObject);
+            mHandler.sendMessage(msg);
+        }
+    };
+
+    class HandlerObject{
+        String handlerUrl;
+        ImageView handlerImageView;
+
+        public HandlerObject(String handlerUrl, ImageView handlerImageView){
+            this.handlerUrl = handlerUrl;
+            this.handlerImageView = handlerImageView;
+        }
+    }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            HandlerObject hObject = (HandlerObject) msg.obj;
+            Glide.with(mContext).load(hObject.handlerUrl).centerCrop().into(hObject.handlerImageView);
         }
     };
 
     static class ViewHolder {
         @Bind(R.id.imagecycle)
         ImageItemCycle imagecycle;
-        @Bind(R.id.pic_status)
-        TextView picStatus;
         @Bind(R.id.date)
         TextView date;
         @Bind(R.id.case_status)
         ImageView caseStatus;
-        @Bind(R.id.termtime)
-        TextView termTime;
         @Bind(R.id.desciption)
         TextView description;
         @Bind(R.id.address)

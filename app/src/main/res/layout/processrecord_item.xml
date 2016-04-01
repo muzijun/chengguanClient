@@ -11,6 +11,7 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/node"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -19,6 +20,7 @@
             android:textSize="@dimen/text_size_small"
             android:textColor="@color/colorEBBA06"/>
         <TextView
+            android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,6 +28,7 @@
             android:textSize="@dimen/text_size_small"
             android:text="王木木"/>
         <TextView
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,6 +38,7 @@
     </LinearLayout>
     <View style="@style/horizontal_line" />
     <TextView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="时间段会撒娇峰会上大家发挥到数据库费"

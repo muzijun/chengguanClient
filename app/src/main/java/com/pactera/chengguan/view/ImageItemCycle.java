@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.adapter.CycleViewPager;
+import com.pactera.chengguan.model.municipal.PicData;
+import com.pactera.chengguan.util.FileDownloadUtils;
 
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
  * <pre>
  *   集合ViewPager和指示器的一个轮播控件，主要用于一般常见的广告图片轮播，具有自动轮播和手动轮播功能
  *   使用：只需在xml文件中使用{@code <com.minking.imagecycleview.ImageCycleView/>} ，
- *   然后在页面中调用  {@link #setImageResources(ArrayList, ImageCycleViewListener) }即可!
+ *   然后在页面中调用  {@link #setImageResources(ArrayList, ImageCycleViewListener, String)}  }即可!
  *
  *   另外提供{@link #startImageCycle() } \ {@link #pushImageCycle() }两种方法，用于在Activity不可见之时节省资源；
  *   因为自动轮播需要进行控制，有利于内存管理
@@ -116,7 +118,8 @@ public class ImageItemCycle extends LinearLayout {
     /**
      * 装填图片数据
      */
-    public void setImageResources(ArrayList<String> infoList, ImageCycleViewListener imageCycleViewListener) {
+    public void setImageResources(ArrayList<PicData> infoList, ImageCycleViewListener imageCycleViewListener
+            , String token) {
         // 清除所有子视图
         mGroup.removeAllViews();
         // 图片广告数量
@@ -138,7 +141,7 @@ public class ImageItemCycle extends LinearLayout {
             }
             mGroup.addView(mImageViews[i]);
         }
-        mAdvAdapter = new ImageCycleAdapter(mContext, infoList, imageCycleViewListener);
+        mAdvAdapter = new ImageCycleAdapter(mContext, infoList, token, imageCycleViewListener);
         mBannerPager.setAdapter(mAdvAdapter);
         startImageTimerTask();
     }
@@ -239,7 +242,7 @@ public class ImageItemCycle extends LinearLayout {
         /**
          * 图片资源列表
          */
-        private ArrayList<String> mAdList = new ArrayList<String>();
+        private ArrayList<PicData> mAdList = new ArrayList<PicData>();
 
         /**
          * 广告图片点击监听器
@@ -247,10 +250,15 @@ public class ImageItemCycle extends LinearLayout {
         private ImageCycleViewListener mImageCycleViewListener;
 
         private Context mContext;
+        private String token;
+        private String name;
+        private String path;
 
-        public ImageCycleAdapter(Context context, ArrayList<String> adList, ImageCycleViewListener imageCycleViewListener) {
+        public ImageCycleAdapter(Context context, ArrayList<PicData> adList, String token
+                , ImageCycleViewListener imageCycleViewListener) {
             mContext = context;
             mAdList = adList;
+            this.token = token;
             mImageCycleViewListener = imageCycleViewListener;
             mImageViewCacheList = new ArrayList<>();
         }
@@ -267,7 +275,7 @@ public class ImageItemCycle extends LinearLayout {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            String imageUrl = mAdList.get(position);
+            PicData picData = mAdList.get(position);
             ImageView imageView = null;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new ImageView(mContext);
@@ -278,15 +286,16 @@ public class ImageItemCycle extends LinearLayout {
                 imageView = mImageViewCacheList.remove(0);
             }
             // 设置图片点击监听
-            imageView.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    mImageCycleViewListener.onImageClick(mAdList.get(position),position, v);
-                }
-            });
+//            imageView.setOnClickListener(new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    mImageCycleViewListener.onImageClick(mAdList.get(position),position, v);
+//                }
+//            });
             container.addView(imageView);
-            mImageCycleViewListener.displayImage(imageUrl, imageView);
+            FileDownloadUtils.downloadLauncher(mImageCycleViewListener, imageView, token, picData);
+//            mImageCycleViewListener.displayImage(imageUrl, imageView);
             return imageView;
         }
 

@@ -14,10 +14,12 @@
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_twitter_header" />
 
-        <FrameLayout
-            android:id="@+id/swipe_target"
+        <ListView
+            android:id="@id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </ListView>
 
         <include
             android:id="@id/swipe_load_more_footer"

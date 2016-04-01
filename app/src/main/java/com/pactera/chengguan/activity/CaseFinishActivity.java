@@ -18,12 +18,15 @@ import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.ADInfo;
 import com.pactera.chengguan.model.municipal.CaseInfo;
+import com.pactera.chengguan.model.municipal.PicData;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 import com.pactera.chengguan.view.dialog.CommonDialog;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,10 +44,6 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     LinearLayout lin;
     @Bind(R.id.imagecycle)
     ImageCycleView imagecycle;
-    @Bind(R.id.imagecycle_end)
-    ImageCycleView imagecycleEnd;
-    @Bind(R.id.tv_termtime)
-    TextView tvTermtime;
     @Bind(R.id.tv_point)
     TextView tvPoint;
     @Bind(R.id.tv_description)
@@ -57,18 +56,22 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     TextView tvDate;
     @Bind(R.id.tv_unit)
     TextView tvUnit;
+    @Bind(R.id.imagecycle_end)
+    ImageCycleView imagecycleEnd;
     @Bind(R.id.tv_operation)
     TextView tvOperation;
-    @Bind(R.id.icon_case_status)
-    ImageView ivStatus;
-
+    @Bind(R.id.timer)
+    TextView timer;
     private PopMenu popMenu;
-    private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    private ArrayList<ADInfo> beforeInfos = new ArrayList<ADInfo>();
+    private ArrayList<ADInfo> afterInfos = new ArrayList<ADInfo>();
+//    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
+//            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
+//            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
+//            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
+//            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    private ArrayList<String> beforeImageUrls = new ArrayList<String>();
+    private ArrayList<String> afterImageUrls = new ArrayList<String>();
     public static final String STATE = "State";
     //状态1为办结，2为处理中，3为审核
     private int state;
@@ -83,7 +86,9 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
     private CaseInfo caseInfo;
 
-    private static final int REQ_POSTPONE_CODE = 1;     //延期
+    private static final int REQUEST_ACTIVITY_POSTPONE = 1;     //延期
+    private static final int REQUEST_ACTIVITY_ASSESS = 2;   //考核
+    private static final int REQUEST_ACTIVITY_REWORK = 3;   //返工
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +99,25 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         init();
     }
 
-    private void getIntentContent(){
+    private void getIntentContent() {
         Bundle bundle = getIntent().getExtras();
         caseInfo = (CaseInfo) bundle.get("case");
         state = bundle.getInt(STATE, 0);
+
+        List<PicData> beforeList = caseInfo.getBeforePic();
+        for(PicData pic : beforeList){
+            String localUrl = pic.getLocalUrl();
+            if(localUrl != null && localUrl.length() > 0){
+                beforeImageUrls.add(localUrl);
+            }
+        }
+        List<PicData> afterList = caseInfo.getAfterPic();
+        for(PicData pic : afterList){
+            String localUrl = pic.getLocalUrl();
+            if(localUrl != null && localUrl.length() > 0){
+                afterImageUrls.add(localUrl);
+            }
+        }
     }
 
     protected void init() {         // 初始化弹出菜单
@@ -106,36 +126,27 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         popMenu.setOnItemClickListener(this);
         addTitleView(lin);
         title.setText("考核案件");
-        for (int i = 0; i < imageUrls.length; i++) {
+        for (int i = 0; i < beforeImageUrls.size(); i++) {
             ADInfo info = new ADInfo();
-            info.setUrl(imageUrls[i]);
+            info.setUrl(beforeImageUrls.get(i));
             info.setContent("top-->" + i);
-            infos.add(info);
+            beforeInfos.add(info);
         }
-        imagecycle.setImageResources(infos, mCycleViewListener);
-        imagecycleEnd.setImageResources(infos, mCycleViewListener);
-
-        tvTermtime.setText(caseInfo.getTermTime()+"天");
-        tvPoint.setText(caseInfo.getCheckPoint());
+        for (int i = 0; i < afterImageUrls.size(); i++) {
+            ADInfo info = new ADInfo();
+            info.setUrl(afterImageUrls.get(i));
+            info.setContent("top-->" + i);
+            afterInfos.add(info);
+        }
+        imagecycle.setImageResources(beforeInfos, mCycleViewListener);
+        imagecycleEnd.setImageResources(afterInfos, mCycleViewListener);
+        tvPoint.setText("" + caseInfo.getCheckPoint());
         tvDescription.setText(caseInfo.getDescription());
         tvLocation.setText(caseInfo.getLocation());
-        tvType.setText(type_data[caseInfo.getCategory()-1]);
+        tvType.setText(type_data[caseInfo.getCategory() - 1] + File.separator + CaseInfo.MONTHS[caseInfo.getMonth()-1]);
         tvDate.setText(caseInfo.getDate());
         tvOperation.setText(caseInfo.getDescription());
-        switch (caseInfo.getCaseStatus()){
-            case CaseInfo.CASE_NEW:
-                ivStatus.setImageResource(R.mipmap.state_new);
-                break;
-            case CaseInfo.CASE_PROCESS:
-                ivStatus.setImageResource(R.mipmap.icon_progress);
-                break;
-            case CaseInfo.CASE_CHECK:
-                ivStatus.setImageResource(R.mipmap.icon_checked);
-                break;
-            case CaseInfo.CASE_FINISH:
-                ivStatus.setImageResource(R.mipmap.icon_end);
-                break;
-        }
+        timer.setText("倒计时: "+caseInfo.getTermTime()+"天");
     }
 
     /**
@@ -168,9 +179,7 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
 
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
-            Intent intent = new Intent(mContext, ImagePagerActivity.class);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, imageUrls);
-            intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+            Intent intent = new Intent(mContext, PictureCompareActivity.class);
             startActivity(intent);
             Toast.makeText(mContext, "content->" + info.getContent(), Toast.LENGTH_SHORT).show();
         }
@@ -186,7 +195,6 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top:
-
                 popMenu.showAsDropDown(v);
                 break;
         }
@@ -196,26 +204,42 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     @Override
     public void onItemClick(int index) {
         Intent intent;
+        Bundle bundle;
         if (state == 1) {
             switch (index) {
                 case 0: //流程日志
                     intent = new Intent(mContext, ProcessRecordActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     break;
                 case 1: //延期记录
-                    //TODO
+                    intent = new Intent(mContext, DelayRecordActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
             }
         } else if (state == 2) {
             switch (index) {
                 case 0: //延期
                     intent = new Intent(mContext, PostPoneActivity.class);
-                    startActivityForResult(intent, REQ_POSTPONE_CODE);
-                 break;
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUEST_ACTIVITY_POSTPONE);
+                    break;
                 case 1: //结案
                     finishCase();
                     break;
                 case 2: //延期记录
+                    intent = new Intent(mContext, DelayRecordActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
             }
 
@@ -223,23 +247,41 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
             switch (index) {
                 case 0: //考核
                     intent = new Intent(mContext, AssessActivity.class);
-                    startActivity(intent);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUEST_ACTIVITY_ASSESS);
                     break;
                 case 1: //延期
                     intent = new Intent(mContext, PostPoneActivity.class);
-                    startActivityForResult(intent, REQ_POSTPONE_CODE);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUEST_ACTIVITY_POSTPONE);
                     break;
                 case 2: //结案
                     finishCase();
                     break;
                 case 3: //不通过返工
-
+                    intent = new Intent(mContext, ReworkActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUEST_ACTIVITY_REWORK);
                     break;
                 case 4: //流程日志
                     intent = new Intent(mContext, ProcessRecordActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     break;
                 case 5: //延期记录
+                    intent = new Intent(mContext, DelayRecordActivity.class);
+                    bundle = new Bundle();
+                    bundle.putSerializable("case", caseInfo);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
             }
 
@@ -249,8 +291,8 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     /**
      * 结案
      */
-    private void finishCase(){
-        CommonDialog dialog = new CommonDialog(mContext, R.style.dialog_dimenable,new CommonDialog.OnClickDialogListener() {
+    private void finishCase() {
+        CommonDialog dialog = new CommonDialog(mContext, R.style.dialog_dimenable, new CommonDialog.OnClickDialogListener() {
             @Override
             public void onClickOkBtn() {
                 MunicipalRequest.requestCaseFinish(CaseFinishActivity.this, CaseFinishActivity.this, caseInfo.getId());
@@ -268,15 +310,23 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_POSTPONE_CODE){
-            int days = data.getIntExtra("days", 0);
-            tvTermtime.setText(caseInfo.getTermTime()+days+"天");
+        switch (requestCode){
+            case REQUEST_ACTIVITY_POSTPONE:
+                //TODO 刷新案件
+                break;
+            case REQUEST_ACTIVITY_ASSESS:
+                //TODO 刷新案件
+                break;
+            case REQUEST_ACTIVITY_REWORK:
+                setResult(1);
+                finish();
+                break;
         }
     }
 
     @Override
     public void success(String reqUrl, Object result) {
-        if(reqUrl.equals(Contants.CASE_FINISH)){
+        if (reqUrl.equals(Contants.CASE_FINISH)) {
             BaseBean baseBean = (BaseBean) result;
             baseBean.checkResult(this, finishCaseHandler);
         }
@@ -291,12 +341,13 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         @Override
         public void doSuccess(BaseBean baseBean, String message) {
             Toast.makeText(CaseFinishActivity.this, "结案成功!", Toast.LENGTH_LONG).show();
+            setResult(1);
             finish();
         }
 
         @Override
         public void doError(int result, String message) {
-            Toast.makeText(CaseFinishActivity.this, "结案失败:"+result+" | msg:"+message, Toast.LENGTH_LONG).show();
+            Toast.makeText(CaseFinishActivity.this, "结案失败:" + result + " | msg:" + message, Toast.LENGTH_LONG).show();
         }
     };
 }

@@ -59,22 +59,15 @@ public class ImagePublishAdapter extends BaseAdapter {
     @SuppressLint("ViewHolder")
     public View getView(int position, View convertView, ViewGroup parent) {
         //所有Item展示不满一页，就不进行ViewHolder重用了，避免了一个拍照以后添加图片按钮被覆盖的奇怪问题
-        ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = View
-                    .inflate(mContext,R.layout.item_publish, null);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+        convertView = View
+                .inflate(mContext, R.layout.item_publish, null);
+        ImageView itemGridImage = ButterKnife.findById(convertView,R.id.item_grid_image);
         if (isShowAddItem(position)) {
-            holder.itemGridImage.setImageResource(R.drawable.btn_add_pic);
-            holder.itemGridImage.setBackgroundResource(R.color.bg_gray);
+            itemGridImage.setImageResource(R.drawable.btn_add_pic);
+            itemGridImage.setBackgroundResource(R.color.bg_gray);
         } else {
             final String path = mDataList.get(position);
-            Glide.with(mContext).load(path).centerCrop().into(holder.itemGridImage);
+            Glide.with(mContext).load(path).centerCrop().into(itemGridImage);
         }
 
         return convertView;
@@ -92,13 +85,6 @@ public class ImagePublishAdapter extends BaseAdapter {
     public void setmDataList(List<String> mDataList) {
         this.mDataList = mDataList;
     }
-
-    static class ViewHolder {
-        @Bind(R.id.item_grid_image)
-        ImageView itemGridImage;
-
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
 }
+
+

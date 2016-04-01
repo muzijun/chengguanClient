@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.model.municipal.CaseInfo;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,15 +20,22 @@ import butterknife.ButterKnife;
 public class DelayRecordAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context mContext;
+    private CaseInfo caseInfo;
 
-    public DelayRecordAdapter(Context context) {
+    public DelayRecordAdapter(Context context, CaseInfo caseInfo) {
         mContext = context;
+        this.caseInfo = caseInfo;
         inflater = LayoutInflater.from(context);
+    }
+
+    public void setNotifyDataChanged(CaseInfo caseInfo){
+        this.caseInfo = caseInfo;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return caseInfo.getExceedLogList().size();
     }
 
     @Override
@@ -51,7 +59,10 @@ public class DelayRecordAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
+        CaseInfo.CaseExceedLog exceedLog = caseInfo.getExceedLogList().get(position);
+        holder.txDay.setText(exceedLog.getExceedDays()+"天");
+        holder.txDate.setText(exceedLog.getExceedDate());
+        holder.txContent.setText(exceedLog.getReason());
         return convertView;
     }
 

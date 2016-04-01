@@ -1,5 +1,7 @@
 package com.pactera.chengguan.util;
 
+import android.os.Environment;
+
 import com.google.gson.Gson;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.ChenguanOkHttpManager;
@@ -16,9 +18,11 @@ import com.pactera.chengguan.bean.municipal.CaseNotSecondReq;
 import com.pactera.chengguan.bean.municipal.LoginBean;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.RequestListener;
+import com.pactera.chengguan.model.RequestFile;
 import com.pactera.chengguan.model.RequestPair;
 import com.pactera.chengguan.model.RequestParam;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +77,7 @@ public class MunicipalRequest {
         j.setRequest(new BaseCallback(CaseListBean.class,mCallBackListener,context, Contants.CASE_LIST));
         j.setMethod(Contants.Post);
         j.setUrl(Contants.CASE_LIST);
+        j.setLoadingShow(true);
         j.setParams(params);
         ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
     }
@@ -97,6 +102,19 @@ public class MunicipalRequest {
     public static void requestCreateCase(BaseActivity context, RequestListener mCallBackListener
             , int type, String caseId, String description, int point, int termtime, String case_addree
             , double longitude, double latitude, int unit, int category, int month, List<String> pic){
+        ArrayList<RequestFile> params_files=new ArrayList<RequestFile>();
+        if(pic != null) {
+            for (String path : pic) {
+                String name = path.substring(path.lastIndexOf("/") + 1);
+                //压缩
+                ImgCompress compress = new ImgCompress(path, name);
+                File file = compress.resizeBitmap();
+                RequestFile rFile = new RequestFile();
+                rFile.setFile(file);
+                rFile.setName(name);
+                params_files.add(rFile);
+            }
+        }
         CaseCreateReq req = new CaseCreateReq();
         req.setData(type, caseId, description, point, termtime, case_addree, longitude, latitude
                 , unit, category, month, pic);
@@ -105,10 +123,11 @@ public class MunicipalRequest {
         RequestPair j= new RequestPair();
         j.setContext(context);
         j.setRequest(new BaseCallback(BaseBean.class,mCallBackListener,context, Contants.CASE_CREATE));
-        j.setMethod(Contants.Post);
+        j.setMethod(Contants.File);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_CREATE);
         j.setParams(params);
+        j.setParams_files(params_files);
         ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
     }
 

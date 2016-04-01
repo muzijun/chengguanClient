@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pactera.chengguan.R;
+import com.pactera.chengguan.activity.ContactSheetActivity;
 import com.pactera.chengguan.activity.ContactsActivity;
 import com.pactera.chengguan.base.BaseFragment;
 
@@ -27,6 +28,8 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener {
     ImageView backImg;
     @Bind(R.id.tx_contacts)
     TextView txContacts;
+    @Bind(R.id.tx_contactsheet)
+    TextView txContactsheet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener {
         ButterKnife.bind(this, view);
         title.setText(mRes.getString(R.string.title_more));
         backImg.setVisibility(View.GONE);
+        txContactsheet.setOnClickListener(this);
         txContacts.setOnClickListener(this);
     }
 
@@ -58,6 +62,11 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
+
+            case R.id.tx_contactsheet:
+                intent = new Intent(mContext, ContactSheetActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tx_contacts:
                 intent = new Intent(mContext, ContactsActivity.class);
                 startActivity(intent);

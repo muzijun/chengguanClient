@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Chengguan</string>
-    <string name="tip_double_click_exit">再次点击退出新区城管</string>
+    <string name="app_name">城管通</string>
+    <string name="tip_double_click_exit">再次点击退出城管通</string>
 
     <!--登陆-->
     <string name="login_account_hit">请输入登录名</string>

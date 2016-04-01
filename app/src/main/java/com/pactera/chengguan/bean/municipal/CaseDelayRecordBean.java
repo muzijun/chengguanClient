@@ -19,6 +19,7 @@ public class CaseDelayRecordBean extends BaseBean {
         public String delayTime;    //延期日期
         public int delayDay;        //延期天数
         public String username;     //经办人
+        public String reason;       //延期原因
 
     }
 
