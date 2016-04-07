@@ -16,6 +16,7 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.adapter.CaseListAdapter;
 import com.pactera.chengguan.adapter.GirdDropDownAdapter;
+import com.pactera.chengguan.adapter.ListDialogAdapter;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
@@ -24,6 +25,7 @@ import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.municipal.CaseInfo;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ChenguanSwipeToLoadLayout;
+import com.pactera.chengguan.view.dialog.ListDialog;
 import com.yyydjk.library.DropDownMenu;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by lijun on 2016/3/9.
  */
 public class CaseListActivity extends BaseActivity implements OnRefreshListener, OnLoadMoreListener
-        , AdapterView.OnItemClickListener, RequestListener {
+        , AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener,RequestListener {
     private static final String[] tab_one = {"待办", "处理中", "办结"};
     private static final String[] tab_two = {"月度", "季度", "年度", "日常"};
     private static final String[] tab_three = {"一月", "二月", "三月", "四月", "五月", "六月"
@@ -65,8 +67,9 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     private static final int PAGE_COUNT = 10;   //单页显示数量
 
     private int requestStatus;
-    private static final int STATUS_REFRESH = 1;    //刷新
-    private static final int STATUS_MORE = 2;       //获取更多
+    public static final int STATUS_INIT = 0;       //初始化获取数据
+    public static final int STATUS_REFRESH = 1;    //刷新
+    public static final int STATUS_MORE = 2;       //获取更多
     private ChenguanSwipeToLoadLayout swipeToLoadLayout;
 
     public static final int REQUEST_ACTIVITY_DETAIL = 1;
@@ -78,7 +81,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         setContentView(R.layout.activity_caselist);
         ButterKnife.bind(this);
         init();
-        requestCaseListData(STATUS_REFRESH);
+        requestCaseListData(STATUS_INIT);
     }
 
     private void init() {
@@ -160,6 +163,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         caseListAdapter = new CaseListAdapter(mContext, caseInfoList);
         swipeTarget.setAdapter(caseListAdapter);
         swipeTarget.setOnItemClickListener(this);
+        swipeTarget.setOnItemLongClickListener(this);
         swipeToLoadLayout.setOnRefreshListener(this);
         swipeToLoadLayout.setOnLoadMoreListener(this);
         return view;
@@ -211,13 +215,27 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         }
     }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        String content[]={"测试1","测试2","测试3"};
+        ListDialog listDialog=new ListDialog(mContext, R.style.dialog_dimenable,new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+        listDialog.show(new ListDialogAdapter(mContext,content));
+        return true;
+    }
+
+
     /**
      * 发送案件列表请求
      */
     private void requestCaseListData(int requestStatus){
         this.requestStatus = requestStatus;
         MunicipalRequest.requestCaseList(this, this, selectTabOneIndex+1, selectTabTwoIndex+1, selectTabThreeIndex+1
-                , selectTabFourIndex+1, PAGE_COUNT, getLastId(requestStatus));
+                , selectTabFourIndex+1, PAGE_COUNT, getLastId(requestStatus), requestStatus);
     }
 
     /**
@@ -235,7 +253,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
     public void success(String reqUrl, Object result) {
         if(requestStatus == STATUS_REFRESH){
             swipeToLoadLayout.setRefreshing(false);
-        }else{
+        }else if(requestStatus == STATUS_MORE){
             swipeToLoadLayout.setLoadingMore(false);
         }
         CaseListBean caseListBean = (CaseListBean)result;
@@ -244,6 +262,11 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
 
     @Override
     public void fail() {
+        if(requestStatus == STATUS_REFRESH){
+            swipeToLoadLayout.setRefreshing(false);
+        }else if(requestStatus == STATUS_MORE){
+            swipeToLoadLayout.setLoadingMore(false);
+        }
         Toast.makeText(this, "请求失败", Toast.LENGTH_LONG).show();
     }
 
@@ -252,7 +275,7 @@ public class CaseListActivity extends BaseActivity implements OnRefreshListener,
         public void doSuccess(BaseBean baseBean, String message) {
             CaseListBean caseListBean = (CaseListBean)baseBean;
             List<CaseInfo> list = caseListBean.transformCaseInfo();
-            if(requestStatus == STATUS_REFRESH){
+            if(requestStatus == STATUS_REFRESH || requestStatus == STATUS_INIT){
                 caseInfoList = list;
             }else{
                 caseInfoList.addAll(list);

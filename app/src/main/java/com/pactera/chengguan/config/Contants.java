@@ -37,6 +37,10 @@ public class Contants {
     /******************** 网络接口地址 *************************/
     //登陆
     public static final String USER_LOGIN = BuildConfig.BASE_URL + "login_mobile";
+    //获取筛选项动态数据
+    public static final String SELECT_SCREEN_ITEM = BuildConfig.BASE_URL + "select_screen_item.mobile";
+    //获取基础数据列表
+    public static final String BASIC_INFO = BuildConfig.BASE_URL + "getBasicinfo.mobile";
     //获取案件列表
     public static final String CASE_LIST = BuildConfig.BASE_URL + "case_list.mobile";
     //新建案件
@@ -53,7 +57,8 @@ public class Contants {
     public static final String CASE_CHECK = BuildConfig.BASE_URL + "caseCheck.mobile";
     //案件不通过返工
     public static final String CASE_NOT_SECOND = BuildConfig.BASE_URL + "caseNotSecond.mobile";
-
+    //获取单个案件详情
+    public static final String CASE_DETAIL = BuildConfig.BASE_URL + "showCase.mobile";
 
     /******************** 网络结果参数和错误码 *****************/
     //成功

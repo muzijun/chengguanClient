@@ -10,13 +10,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
+import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.BaseHandler;
+import com.pactera.chengguan.bean.municipal.StandardDataBean;
+import com.pactera.chengguan.config.Contants;
+import com.pactera.chengguan.config.MunicipalCache;
+import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.fragment.BasicDataFragment;
 import com.pactera.chengguan.fragment.MaintainManageFragment;
 import com.pactera.chengguan.fragment.MoreFragment;
 import com.pactera.chengguan.fragment.MonitorFragment;
+import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.DoubleClickExitHelper;
 
 import butterknife.Bind;
@@ -131,9 +139,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         // 第一次启动时选中第0个tab
         setTabSelection(0);
-
     }
-
 
     /**
      * 在这里获取到每个需要用到的控件的实例，并给它们设置好必要的点击事件。
@@ -293,4 +299,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

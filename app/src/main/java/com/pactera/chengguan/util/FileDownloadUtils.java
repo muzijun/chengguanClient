@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 import com.pactera.chengguan.BuildConfig;
+import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.config.Contants;
 
 import java.io.ByteArrayInputStream;
@@ -29,12 +30,13 @@ public class FileDownloadUtils {
 
     /**
      * 图片流下载
+     * @param mContext
      * @param mImageCycleViewListener
      * @param imageView
      * @param token
      * @param picData
      */
-    public static void downloadLauncher(final ImageCycleViewListener mImageCycleViewListener
+    public static void downloadLauncher(final BaseActivity mContext, final ImageCycleViewListener mImageCycleViewListener
             , final ImageView imageView, final String token, final PicData picData) {
         String localUrl = picData.getLocalUrl();
         if (localUrl != null && localUrl.length() > 0) {
@@ -52,6 +54,7 @@ public class FileDownloadUtils {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String tmpFileName = "";
                 try {
                     String postPath = BuildConfig.BASE_URL + picData.getUrl() + "&access_token=" + token;
                     URL url = new URL(postPath);
@@ -74,8 +77,9 @@ public class FileDownloadUtils {
                         outputStream.close();
                         is.close();
 
-                        String filePath = getImageDir() + picData.getName();
+                        final String filePath = getImageDir() + picData.getName();
                         String tmpFilePath = filePath + ".tmp";
+                        tmpFileName = picData.getName()+".tmp";
                         File file = new File(tmpFilePath);
                         FileOutputStream fos = new FileOutputStream(file);
                         fos.write(fileBytes);
@@ -84,14 +88,16 @@ public class FileDownloadUtils {
                         if(file.length() > 0) {
                             file.renameTo(new File(filePath));
                         }
-
-                        mImageCycleViewListener.displayImage(filePath, imageView);
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mImageCycleViewListener.displayImage(filePath, imageView);
+                            }
+                        });
                         picData.setLocalUrl(filePath);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }finally{
-                    deleteTmpImage();
                 }
             }
         }).start();
@@ -131,11 +137,11 @@ public class FileDownloadUtils {
     /**
      * 清除临时tmp文件
      */
-    public static void deleteTmpImage(){
+    public static void deleteTmpImage(String tmpFile){
         File dirFile = new File(getImageDir());
         File[] fileList = dirFile.listFiles();
         for(File file : fileList){
-            if(file.getName().endsWith(".tmp")){
+            if(file.getName().equals(tmpFile)){
                 file.delete();
             }
         }

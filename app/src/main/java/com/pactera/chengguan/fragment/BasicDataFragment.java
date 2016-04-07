@@ -1,33 +1,19 @@
 package com.pactera.chengguan.fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
-import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.BdataSearchActivity;
-import com.pactera.chengguan.adapter.CaseListAdapter;
-import com.pactera.chengguan.adapter.GirdDropDownAdapter;
-import com.pactera.chengguan.adapter.SearchAdapter;
 import com.pactera.chengguan.base.BaseFragment;
-import com.pactera.chengguan.view.ChenguanSwipeToLoadLayout;
 import com.pactera.chengguan.view.PopMenu;
-import com.yyydjk.library.DropDownMenu;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -35,27 +21,53 @@ import butterknife.ButterKnife;
  * 基础数据
  * Created by lijun on 2015/12/2.
  */
-public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemClickListener, View.OnClickListener, OnRefreshListener, OnLoadMoreListener, AdapterView.OnItemClickListener {
+public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemClickListener, View.OnClickListener {
     @Bind(R.id.left_lin)
     LinearLayout leftLin;
     @Bind(R.id.title)
     TextView title;
     @Bind(R.id.lin)
     LinearLayout lin;
-    @Bind(R.id.dropDownMenu)
-    DropDownMenu dropDownMenu;
-    @Bind(R.id.back_img)
-    ImageView backImg;
     private PopMenu popMenu;
-    private String headers[] = {"不限", "不限", "不限"};
-    private static final String[] tab_one = {"不限", "标准养护单位"};
-    private static final String[] tab_two = {"不限", "养护等级"};
-    private static final String[] tab_three = {"不限", "桥梁类别"};
-    private String[] option = {"道路", "泵站", "广场", "雨水管道", "河道栏杆", "街道设施"};
-    private GirdDropDownAdapter tab_one_Adapter;
-    private GirdDropDownAdapter tab_two_Adapter;
-    private GirdDropDownAdapter tab_three_Adapter;
-    private List<View> popupViews = new ArrayList<>();
+    private String[] option = {"桥梁", "道路", "泵站", "广场", "雨水管道", "河道栏杆", "街道设施"};
+
+    /**
+     * 用于桥梁的Fragment
+     */
+    private DataBridgeFragment dataBridgeFragment;
+    /**
+     * 用于道路的Fragment
+     */
+    private DataRoadFragment dataRoadFragment;
+
+    /**
+     * 用于泵站的Fragment
+     */
+    private DataPumpFragment dataPumpFragment;
+
+    /**
+     * 用于广场的Fragment
+     */
+    private DataSquareFragment dataSquareFragment;
+    /**
+     * 用于雨水管道的Fragment
+     */
+    private DataChannelFragment dataChannelFragment;
+    /**
+     * 用于河道栏杆的Fragment
+     */
+    private DataRiverFragment dataRiverFragment;
+
+    /**
+     * 用于街道设施的Fragment
+     */
+    private DataStreetFragment dataStreetFragment;
+
+    /**
+     * 用于对Fragment进行管理
+     */
+    private FragmentManager fragmentManager;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,70 +79,128 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
     public void initContentView(View view) {
         ButterKnife.bind(this, view);
         title.setText("桥梁");
-        backImg.setVisibility(View.GONE);
+        leftLin.setVisibility(View.GONE);
         popMenu = new PopMenu(mContext);
-        View popmenu_background = ButterKnife.findById(popMenu.getview(), R.id.popmenu_background);
-        popmenu_background.setBackgroundResource(R.drawable.drop_down_menuleft_normal);
         popMenu.addItems(option);
         popMenu.setOnItemClickListener(this);
-        addMenuView(leftLin);
-        addSearchView(lin);
-        final ListView one_View = new ListView(mContext);
-        tab_one_Adapter = new GirdDropDownAdapter(mContext, Arrays.asList(tab_one));
-        one_View.setDividerHeight(0);
-        one_View.setAdapter(tab_one_Adapter);
-        final ListView two_View = new ListView(mContext);
-        tab_two_Adapter = new GirdDropDownAdapter(mContext, Arrays.asList(tab_two));
-        two_View.setDividerHeight(0);
-        two_View.setAdapter(tab_two_Adapter);
-        final ListView three_View = new ListView(mContext);
-        tab_three_Adapter = new GirdDropDownAdapter(mContext, Arrays.asList(tab_three));
-        three_View.setDividerHeight(0);
-        three_View.setAdapter(tab_three_Adapter);
-        popupViews.add(one_View);
-        popupViews.add(two_View);
-        popupViews.add(three_View);
-        //init dropdownview
-        dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, createView());
-        //add item click event
-        one_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tab_one_Adapter.setCheckItem(position);
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_one[position]);
-                dropDownMenu.closeMenu();
-            }
-        });
-        two_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tab_two_Adapter.setCheckItem(position);
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_two[position]);
-                dropDownMenu.closeMenu();
-            }
-        });
-        three_View.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tab_three_Adapter.setCheckItem(position);
-                dropDownMenu.setTabText(position == 0 ? headers[0] : tab_three[position]);
-                dropDownMenu.closeMenu();
-            }
-        });
+        addMenuView(lin);
+        fragmentManager = getChildFragmentManager();
+        setSelection(0);
+
 
     }
 
-    private View createView() {
-        View view = LayoutInflater.from(mContext).inflate(
-                R.layout.basic_data_content, null);
-        ListView swipeTarget = ButterKnife.findById(view, R.id.swipe_target);
-        ChenguanSwipeToLoadLayout swipeToLoadLayout = ButterKnife.findById(view, R.id.swipeToLoadLayout);
-        SearchAdapter searchAdapter = new SearchAdapter(mContext);
-        swipeTarget.setAdapter(searchAdapter);
-        swipeTarget.setOnItemClickListener(this);
-        swipeToLoadLayout.setOnRefreshListener(this);
-        swipeToLoadLayout.setOnLoadMoreListener(this);
-        return view;
+
+    /**
+     * 根据传入的index参数来设置选中的tab页。
+     *
+     * @param index
+     */
+    private void setSelection(int index) {
+        // 开启一个Fragment事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        switch (index) {
+            case 0:
+                //桥梁
+                if (dataBridgeFragment == null) {
+                    dataBridgeFragment = new DataBridgeFragment();
+                    transaction.add(R.id.content, dataBridgeFragment);
+                } else {
+                    transaction.show(dataBridgeFragment);
+                }
+                break;
+            case 1:
+                //道路
+                if (dataRoadFragment == null) {
+                    dataRoadFragment = new DataRoadFragment();
+                    transaction.add(R.id.content, dataRoadFragment);
+                } else {
+                    transaction.show(dataRoadFragment);
+                }
+                break;
+            case 2:
+                //泵站
+                if (dataPumpFragment == null) {
+                    dataPumpFragment = new DataPumpFragment();
+                    transaction.add(R.id.content, dataPumpFragment);
+                } else {
+                    transaction.show(dataPumpFragment);
+                }
+                break;
+
+            case 3:
+                //广场
+                if (dataSquareFragment == null) {
+                    dataSquareFragment = new DataSquareFragment();
+                    transaction.add(R.id.content, dataSquareFragment);
+                } else {
+                    transaction.show(dataSquareFragment);
+                }
+                break;
+            case 4:
+                //雨水管道
+                if (dataChannelFragment == null) {
+                    dataChannelFragment = new DataChannelFragment();
+                    transaction.add(R.id.content, dataChannelFragment);
+                } else {
+                    transaction.show(dataChannelFragment);
+                }
+                break;
+            case 5:
+                //河道栏杆
+                if (dataRiverFragment == null) {
+                    dataRiverFragment = new DataRiverFragment();
+                    transaction.add(R.id.content, dataRiverFragment);
+                } else {
+                    transaction.show(dataRiverFragment);
+                }
+                break;
+            case 6:
+                //街道设施
+                if (dataStreetFragment == null) {
+                    dataStreetFragment = new DataStreetFragment();
+                    transaction.add(R.id.content, dataStreetFragment);
+                } else {
+                    transaction.show(dataStreetFragment);
+                }
+                break;
+
+        }
+
+        transaction.commit();
+    }
+
+
+    /**
+     * 将所有的Fragment都置为隐藏状态。
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (dataBridgeFragment != null) {
+            transaction.hide(dataBridgeFragment);
+        }
+        if (dataRoadFragment != null) {
+            transaction.hide(dataRoadFragment);
+        }
+        if (dataPumpFragment != null) {
+            transaction.hide(dataPumpFragment);
+        }
+        if (dataSquareFragment != null) {
+            transaction.hide(dataSquareFragment);
+        }
+        if (dataChannelFragment != null) {
+            transaction.hide(dataChannelFragment);
+        }
+        if (dataRiverFragment != null) {
+            transaction.hide(dataRiverFragment);
+        }
+        if (dataStreetFragment != null) {
+            transaction.hide(dataStreetFragment);
+        }
+
     }
 
     /**
@@ -145,23 +215,6 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
         imageView.setImageResource(R.mipmap.icon_menu);
-        imageView.setOnClickListener(this);
-        linearLayout.addView(imageView);
-
-    }
-
-    /**
-     * 添加搜索
-     *
-     * @param linearLayout
-     */
-    private void addSearchView(LinearLayout linearLayout) {
-        ImageView imageView = new ImageView(mContext);
-        imageView.setId(R.id.content);
-        imageView.setLayoutParams(new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT));
-        imageView.setImageResource(R.mipmap.icon_search);
         imageView.setOnClickListener(this);
         linearLayout.addView(imageView);
 
@@ -197,41 +250,36 @@ public class BasicDataFragment extends BaseFragment implements PopMenu.OnItemCli
         switch (index) {
             case 0:
                 title.setText(popMenu.getItemList().get(0));
+                setSelection(0);
                 break;
             case 1:
                 title.setText(popMenu.getItemList().get(1));
+                setSelection(1);
                 break;
             case 2:
                 title.setText(popMenu.getItemList().get(2));
+                setSelection(2);
                 break;
             case 3:
                 title.setText(popMenu.getItemList().get(3));
+                setSelection(3);
                 break;
             case 4:
                 title.setText(popMenu.getItemList().get(4));
+                setSelection(4);
                 break;
             case 5:
                 title.setText(popMenu.getItemList().get(5));
+                setSelection(5);
                 break;
-
+            case 6:
+                title.setText(popMenu.getItemList().get(6));
+                setSelection(6);
+                break;
 
         }
 
     }
 
-    //listview点击事件
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onLoadMore() {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
 }

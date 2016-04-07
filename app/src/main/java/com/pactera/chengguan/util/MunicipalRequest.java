@@ -3,24 +3,43 @@ package com.pactera.chengguan.util;
 import android.os.Environment;
 
 import com.google.gson.Gson;
+import com.pactera.chengguan.activity.CaseListActivity;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.ChenguanOkHttpManager;
 import com.pactera.chengguan.bean.BaseBean;
+import com.pactera.chengguan.bean.municipal.BasicBridgeInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicCrossingInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicInfoReq;
+import com.pactera.chengguan.bean.municipal.BasicPumpInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicRailingInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicRoadInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicSewerInfoBean;
+import com.pactera.chengguan.bean.municipal.BasicSquareInfoBean;
 import com.pactera.chengguan.bean.municipal.CaseCheckReq;
 import com.pactera.chengguan.bean.municipal.CaseCreateReq;
 import com.pactera.chengguan.bean.municipal.CaseDelayRecordBean;
 import com.pactera.chengguan.bean.municipal.CaseDelayReq;
+import com.pactera.chengguan.bean.municipal.CaseDetailBean;
 import com.pactera.chengguan.bean.municipal.CaseFlowBean;
 import com.pactera.chengguan.bean.municipal.CaseListBean;
 import com.pactera.chengguan.bean.municipal.CaseListReq;
 import com.pactera.chengguan.bean.municipal.CaseNormalReq;
 import com.pactera.chengguan.bean.municipal.CaseNotSecondReq;
 import com.pactera.chengguan.bean.municipal.LoginBean;
+import com.pactera.chengguan.bean.municipal.StandardDataBean;
 import com.pactera.chengguan.config.Contants;
+import com.pactera.chengguan.config.MunicipalContants;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.RequestFile;
 import com.pactera.chengguan.model.RequestPair;
 import com.pactera.chengguan.model.RequestParam;
+import com.pactera.chengguan.model.municipal.Bridge;
+import com.pactera.chengguan.model.municipal.Crossing;
+import com.pactera.chengguan.model.municipal.PumpStation;
+import com.pactera.chengguan.model.municipal.Railing;
+import com.pactera.chengguan.model.municipal.Road;
+import com.pactera.chengguan.model.municipal.Sewer;
+import com.pactera.chengguan.model.municipal.Square;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,6 +75,72 @@ public class MunicipalRequest {
     }
 
     /**
+     * 获取动态筛选项数据 CHECK_STANDARD_DATA
+     * @param context
+     * @param mCallBackListener
+     */
+    public static void requestCheckStandardData(BaseActivity context, RequestListener mCallBackListener){
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(StandardDataBean.class,mCallBackListener,context, Contants.SELECT_SCREEN_ITEM));
+        j.setMethod(Contants.Post);
+        j.setUrl(Contants.SELECT_SCREEN_ITEM);
+        j.setLoadingShow(true);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 获取基础数据列表 BASIC_INFO
+     * @param context
+     * @param mCallBackListener
+     * @param basicid
+     * @param screenitem1
+     * @param screenitem2
+     * @param screenitem3
+     * @param pagecount
+     * @param lastid
+     */
+    public static void requestBasicInfo(BaseActivity context, RequestListener mCallBackListener, int basicid
+            , int screenitem1, int screenitem2, int screenitem3, int pagecount, int lastid){
+        BasicInfoReq req = new BasicInfoReq();
+        req.setData(basicid, screenitem1, screenitem2, screenitem3, pagecount, lastid);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, BasicInfoReq.class)));
+        BaseCallback callback = null;
+        switch (basicid){
+            case MunicipalContants.BASIC_ROAD_ID:
+                callback = new BaseCallback(BasicRoadInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_BRIDGE_ID:
+                callback = new BaseCallback(BasicBridgeInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_SEWER_ID:
+                callback = new BaseCallback(BasicSewerInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_PUMPSTATION_ID:
+                callback = new BaseCallback(BasicPumpInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_SQUARE_ID:
+                callback = new BaseCallback(BasicSquareInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_RAILING_ID:
+                callback = new BaseCallback(BasicRailingInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+            case MunicipalContants.BASIC_CROSSING_ID:
+                callback = new BaseCallback(BasicCrossingInfoBean.class,mCallBackListener,context, Contants.BASIC_INFO);
+                break;
+        }
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(callback);
+        j.setMethod(Contants.Post);
+        j.setUrl(Contants.BASIC_INFO);
+        j.setLoadingShow(false);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
      * 获取案件列表
      * @param context
      * @param mCallBackListener
@@ -67,7 +152,7 @@ public class MunicipalRequest {
      * @param lastid    当前页最后一项id
      */
     public static void requestCaseList(BaseActivity context, RequestListener mCallBackListener
-            , int status, int category, int month, int sort, int pagecount, int lastid){
+            , int status, int category, int month, int sort, int pagecount, int lastid, int requestStatus){
         CaseListReq req = new CaseListReq();
         req.setData(status, category, month, sort, pagecount, lastid);
         ArrayList<RequestParam> params = new ArrayList<RequestParam>();
@@ -77,7 +162,11 @@ public class MunicipalRequest {
         j.setRequest(new BaseCallback(CaseListBean.class,mCallBackListener,context, Contants.CASE_LIST));
         j.setMethod(Contants.Post);
         j.setUrl(Contants.CASE_LIST);
-        j.setLoadingShow(true);
+        if(requestStatus == CaseListActivity.STATUS_INIT){
+            j.setLoadingShow(false);
+        }else {
+            j.setLoadingShow(true);
+        }
         j.setParams(params);
         ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
     }
@@ -265,6 +354,27 @@ public class MunicipalRequest {
         j.setMethod(Contants.Post);
         j.setLoadingShow(true);
         j.setUrl(Contants.CASE_NOT_SECOND);
+        j.setParams(params);
+        ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
+    }
+
+    /**
+     * 获取单个案件详情
+     * @param context
+     * @param mCallBackListener
+     * @param caseid
+     */
+    public static void requestCaseDetail(BaseActivity context, RequestListener mCallBackListener, int caseid){
+        CaseNormalReq req = new CaseNormalReq();
+        req.setData(caseid);
+        ArrayList<RequestParam> params = new ArrayList<RequestParam>();
+        params.add(new RequestParam("json", new Gson().toJson(req, CaseNormalReq.class)));
+        RequestPair j= new RequestPair();
+        j.setContext(context);
+        j.setRequest(new BaseCallback(CaseDetailBean.class,mCallBackListener,context, Contants.CASE_DETAIL));
+        j.setMethod(Contants.Post);
+        j.setLoadingShow(true);
+        j.setUrl(Contants.CASE_DETAIL);
         j.setParams(params);
         ChenguanOkHttpManager.requestIfNeedToken(j, true, Contants.SYSTEM_MUNICIPAL);
     }

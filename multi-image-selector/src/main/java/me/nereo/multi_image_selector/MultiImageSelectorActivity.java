@@ -1,6 +1,7 @@
 package me.nereo.multi_image_selector;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -136,6 +137,7 @@ public class MultiImageSelectorActivity extends FragmentActivity implements Mult
             resultList.add(imageFile.getAbsolutePath());
             data.putStringArrayListExtra(EXTRA_RESULT, resultList);
             setResult(RESULT_OK, data);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(imageFile)));// 刷新系统相册
             finish();
         }
     }

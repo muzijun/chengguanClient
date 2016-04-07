@@ -2,7 +2,10 @@ package com.pactera.chengguan.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +17,7 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
+import com.pactera.chengguan.bean.municipal.CaseDetailBean;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.ADInfo;
@@ -65,7 +69,7 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     private PopMenu popMenu;
     private ArrayList<ADInfo> beforeInfos = new ArrayList<ADInfo>();
     private ArrayList<ADInfo> afterInfos = new ArrayList<ADInfo>();
-//    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
+    //    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
 //            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
 //            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
 //            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
@@ -103,21 +107,6 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         Bundle bundle = getIntent().getExtras();
         caseInfo = (CaseInfo) bundle.get("case");
         state = bundle.getInt(STATE, 0);
-
-        List<PicData> beforeList = caseInfo.getBeforePic();
-        for(PicData pic : beforeList){
-            String localUrl = pic.getLocalUrl();
-            if(localUrl != null && localUrl.length() > 0){
-                beforeImageUrls.add(localUrl);
-            }
-        }
-        List<PicData> afterList = caseInfo.getAfterPic();
-        for(PicData pic : afterList){
-            String localUrl = pic.getLocalUrl();
-            if(localUrl != null && localUrl.length() > 0){
-                afterImageUrls.add(localUrl);
-            }
-        }
     }
 
     protected void init() {         // 初始化弹出菜单
@@ -126,6 +115,24 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         popMenu.setOnItemClickListener(this);
         addTitleView(lin);
         title.setText("考核案件");
+        refreshDataView();
+    }
+
+    private void refreshDataView(){
+        List<PicData> beforeList = caseInfo.getBeforePic();
+        for (PicData pic : beforeList) {
+            String localUrl = pic.getLocalUrl();
+            if (localUrl != null && localUrl.length() > 0) {
+                beforeImageUrls.add(localUrl);
+            }
+        }
+        List<PicData> afterList = caseInfo.getAfterPic();
+        for (PicData pic : afterList) {
+            String localUrl = pic.getLocalUrl();
+            if (localUrl != null && localUrl.length() > 0) {
+                afterImageUrls.add(localUrl);
+            }
+        }
         for (int i = 0; i < beforeImageUrls.size(); i++) {
             ADInfo info = new ADInfo();
             info.setUrl(beforeImageUrls.get(i));
@@ -143,10 +150,10 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         tvPoint.setText("" + caseInfo.getCheckPoint());
         tvDescription.setText(caseInfo.getDescription());
         tvLocation.setText(caseInfo.getLocation());
-        tvType.setText(type_data[caseInfo.getCategory() - 1] + File.separator + CaseInfo.MONTHS[caseInfo.getMonth()-1]);
+        tvType.setText(type_data[caseInfo.getCategory() - 1] + File.separator + CaseInfo.MONTHS[caseInfo.getMonth() - 1]);
         tvDate.setText(caseInfo.getDate());
         tvOperation.setText(caseInfo.getDescription());
-        timer.setText("倒计时: "+caseInfo.getTermTime()+"天");
+        timer.setText("倒计时: " + caseInfo.getTermTime() + "天");
     }
 
     /**
@@ -288,6 +295,9 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         }
     }
 
+
+
+
     /**
      * 结案
      */
@@ -310,12 +320,13 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_ACTIVITY_POSTPONE:
-                //TODO 刷新案件
+                MunicipalRequest.requestCaseDetail(this, this, caseInfo.getId());
                 break;
             case REQUEST_ACTIVITY_ASSESS:
-                //TODO 刷新案件
+                setResult(1);
+                finish();
                 break;
             case REQUEST_ACTIVITY_REWORK:
                 setResult(1);
@@ -329,6 +340,9 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         if (reqUrl.equals(Contants.CASE_FINISH)) {
             BaseBean baseBean = (BaseBean) result;
             baseBean.checkResult(this, finishCaseHandler);
+        }else if(reqUrl.equals(Contants.CASE_DETAIL)){
+            CaseDetailBean detailBean = (CaseDetailBean) result;
+            detailBean.checkResult(this, caseDetailHander);
         }
     }
 
@@ -348,6 +362,31 @@ public class CaseFinishActivity extends BaseActivity implements PopMenu.OnItemCl
         @Override
         public void doError(int result, String message) {
             Toast.makeText(CaseFinishActivity.this, "结案失败:" + result + " | msg:" + message, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    private BaseHandler caseDetailHander = new BaseHandler(){
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            CaseDetailBean detailBean = (CaseDetailBean) baseBean;
+            if(detailBean.data != null){
+                detailBean.data.transformData(caseInfo);
+                mHandler.sendEmptyMessage(0);
+                Toast.makeText(CaseFinishActivity.this, "获取案件详情成功!", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            String msg = "获取案件详情失败:" + result + " | msg:" + message;
+            Toast.makeText(CaseFinishActivity.this, msg, Toast.LENGTH_LONG).show();
+        }
+    };
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            refreshDataView();
         }
     };
 }

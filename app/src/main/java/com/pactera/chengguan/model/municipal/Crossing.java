@@ -14,4 +14,51 @@ public class Crossing {
     private String use;         //用途
     private String buildUnit;   //建设单位
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMaintainUnit() {
+        return maintainUnit;
+    }
+
+    public void setMaintainUnit(String maintainUnit) {
+        this.maintainUnit = maintainUnit;
+    }
+
+    public String getUse() {
+        return use;
+    }
+
+    public void setUse(String use) {
+        this.use = use;
+    }
+
+    public String getBuildUnit() {
+        return buildUnit;
+    }
+
+    public void setBuildUnit(String buildUnit) {
+        this.buildUnit = buildUnit;
+    }
 }

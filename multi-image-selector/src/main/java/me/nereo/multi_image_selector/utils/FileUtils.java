@@ -19,7 +19,11 @@ public class FileUtils {
         String state = Environment.getExternalStorageState();
         if(state.equals(Environment.MEDIA_MOUNTED)){
             // 已挂载
-            File pic = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File pic = null;
+            pic = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM+ "/Camera");
+            if (!pic.exists()) {
+                pic = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+            }
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
             String fileName = "multi_image_"+timeStamp+"";
             File tmpFile = new File(pic, fileName+".jpg");

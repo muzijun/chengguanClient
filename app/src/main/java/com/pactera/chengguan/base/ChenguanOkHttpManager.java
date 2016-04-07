@@ -99,7 +99,7 @@ public class ChenguanOkHttpManager {
         for (RequestFile param_file : request.getParams_files()) {
             builder.addFile("fileuploadList", param_file.getName(), param_file.getFile());
         }
-        RequestCall call = builder.build();
+        RequestCall call = builder.build().connTimeOut(1000*30);
         call.execute(request.getRequest());
         if (request.getLoadingShow()) {
             ProgressDlgUtil.showProgressDlg(request.getProgressTitle(), request.getContext(), call, request.isExit());

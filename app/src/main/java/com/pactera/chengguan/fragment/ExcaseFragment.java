@@ -32,6 +32,7 @@ import com.pactera.chengguan.model.RequestPair;
 import com.pactera.chengguan.model.SelectEvent;
 import com.pactera.chengguan.util.BaseCallback;
 import com.pactera.chengguan.util.MunicipalRequest;
+import com.pactera.chengguan.util.MunicipalUtils;
 import com.pactera.chengguan.view.NoScrollGridView;
 import com.pactera.chengguan.view.dialog.CommonDialog;
 import com.rey.material.app.Dialog;
@@ -95,7 +96,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     //月份
     private String STATE_MONTH = "STATE_MONTH";
 
-    private int selectUnitIndex, selectTypeIndex, selectMonthIndex;
+    private int selectSectionID, selectTypeIndex, selectMonthIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
     public void initContentView(View view) {
         ButterKnife.bind(this, view);
         addData();
-        unitText.setText(MunicipalCache.units.get(0));
+        unitText.setText(MunicipalCache.sectionList.get(0).getName());
         gridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImagePublishAdapter(mContext, mDataList);
         gridview.setAdapter(mAdapter);
@@ -126,8 +127,8 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
      * 填充数据
      */
     private void addData() {
-        for (int i = 0; i < MunicipalCache.units.size(); i++) {
-            String unit = MunicipalCache.units.get(i);
+        for (int i = 0; i < MunicipalCache.sectionList.size(); i++) {
+            String unit = MunicipalCache.sectionList.get(i).getName();
             mSelectData_unit.add(unit);
         }
         for (int i = 0; i < type_data.length; i++) {
@@ -196,7 +197,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
                 String msg = event.getmMsg();
-                selectUnitIndex = MunicipalCache.units.indexOf(msg);
+                selectSectionID = MunicipalUtils.getSectionIdByName(msg);
                 unitText.setText(msg);
             }
         }
@@ -286,7 +287,7 @@ public class ExcaseFragment extends BaseFragment implements AdapterView.OnItemCl
                     return;
                 }
                 MunicipalRequest.requestCreateCase(mContext, ExcaseFragment.this, 1, null, null, 0, 0, "震泽路18号", 0, 0
-                        , selectUnitIndex + 1, selectTypeIndex + 1, selectMonthIndex + 1, mDataList);
+                        , selectSectionID, selectTypeIndex + 1, selectMonthIndex + 1, mDataList);
             }
 
             @Override

@@ -2,6 +2,8 @@ package com.pactera.chengguan.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +16,8 @@ import com.pactera.chengguan.R;
 import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
+import com.pactera.chengguan.bean.municipal.CaseDetailBean;
+import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.config.RequestListener;
 import com.pactera.chengguan.model.ADInfo;
@@ -22,6 +26,7 @@ import com.pactera.chengguan.model.event.PointData;
 import com.pactera.chengguan.model.municipal.CaseInfo;
 import com.pactera.chengguan.model.municipal.PicData;
 import com.pactera.chengguan.util.MunicipalRequest;
+import com.pactera.chengguan.util.MunicipalUtils;
 import com.pactera.chengguan.view.ImageCycleView;
 import com.pactera.chengguan.view.PopMenu;
 
@@ -166,14 +171,18 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
      * 填充数据
      */
     private void addData() {
-        for (int i = 0; i < MunicipalCache.units.size(); i++) {
-            String unit = new String(MunicipalCache.units.get(i));
+        for (int i = 0; i < MunicipalCache.sectionList.size(); i++) {
+            String unit = new String(MunicipalCache.sectionList.get(i).getName());
             mSelectData_unit.add(unit);
         }
         for (int i = 0; i < type_data.length; i++) {
             String type = new String(type_data[i]);
             mSelectData_type.add(type);
         }
+        refreshDataView();
+    }
+
+    private void refreshDataView(){
         termTime = caseInfo.getTermTime();
         checkPoint = caseInfo.getCheckPoint();
         description = caseInfo.getDescription();
@@ -186,7 +195,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         txDescribe.setText(description);
         txAddress.setText(location);
         txType.setText(type_data[caseInfo.getCategory() - 1]);
-        txUnit.setText(MunicipalCache.units.get(0));
+        txUnit.setText(MunicipalUtils.getSectionNameById(unitId));
     }
 
     private ImageCycleView.ImageCycleViewListener mCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
@@ -271,12 +280,12 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         if (index == 0) { //下派
             requestStatus = STATUS_ISSUE;
             MunicipalRequest.requestCreateCase(this, this, STATUS_ISSUE, "" + caseInfo.getId(), description
-                    , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
+                    , checkPoint, termTime, location, 0, 0, unitId, category
                     , caseInfo.getMonth(), null);
         } else if (index == 1) { //保存
             requestStatus = STATUS_UPDATE;
             MunicipalRequest.requestCreateCase(this, this, STATUS_UPDATE, "" + caseInfo.getId(), description
-                    , checkPoint, termTime, location, 0, 0, caseInfo.getOperateUnitId(), category
+                    , checkPoint, termTime, location, 0, 0, unitId, category
                     , caseInfo.getMonth(), null);
         }
     }
@@ -292,7 +301,7 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             //作业单位
             else if (event.getType().equals(STATE_UNIT)) {
                 txUnit.setText(msg);
-                unitId = MunicipalCache.units.indexOf(msg);
+                unitId = MunicipalUtils.getSectionIdByName(msg);
             } else if (event.getType().equals(DESCRIPTION)) {
                 description = msg;
                 txDescribe.setText(msg);
@@ -335,15 +344,16 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
             String msg;
             if (requestStatus == STATUS_UPDATE) {
                 msg = "案件保存成功!";
-                //TODO 刷新界面
-                //临时代码
-                setResult(STATUS_ISSUE);
             } else {
                 msg = "案件下派成功!";
-                setResult(STATUS_ISSUE);
             }
             Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
-            finish();
+            if(requestStatus == STATUS_UPDATE){
+                MunicipalRequest.requestCaseDetail(CaseDetialsActivity.this, CaseDetialsActivity.this, caseInfo.getId());
+            }else{
+                setResult(STATUS_ISSUE);
+                finish();
+            }
         }
 
         @Override
@@ -358,14 +368,44 @@ public class CaseDetialsActivity extends BaseActivity implements PopMenu.OnItemC
         }
     };
 
+    private BaseHandler caseDetailHander = new BaseHandler() {
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            CaseDetailBean detailBean = (CaseDetailBean) baseBean;
+            if(detailBean.data != null){
+                detailBean.data.transformData(caseInfo);
+                mHandler.sendEmptyMessage(0);
+                Toast.makeText(CaseDetialsActivity.this, "获取案件详情成功!", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            String msg = "获取案件详情失败:" + result + " | msg:" + message;
+            Toast.makeText(CaseDetialsActivity.this, msg, Toast.LENGTH_LONG).show();
+        }
+    };
+
     @Override
     public void success(String reqUrl, Object result) {
-        BaseBean baseBean = (BaseBean) result;
-        baseBean.checkResult(this, updateHandler);
+        if(reqUrl.equals(Contants.CASE_CREATE)) {
+            BaseBean baseBean = (BaseBean) result;
+            baseBean.checkResult(this, updateHandler);
+        }else if(reqUrl.equals(Contants.CASE_DETAIL)){
+            CaseDetailBean detailBean = (CaseDetailBean) result;
+            detailBean.checkResult(this, caseDetailHander);
+        }
     }
 
     @Override
     public void fail() {
         Toast.makeText(this, "请求失败", Toast.LENGTH_LONG).show();
     }
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            refreshDataView();
+        }
+    };
 }

@@ -14,6 +14,7 @@ import com.pactera.chengguan.base.ChenguanOkHttpManager;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
 import com.pactera.chengguan.bean.municipal.LoginBean;
+import com.pactera.chengguan.bean.municipal.StandardDataBean;
 import com.pactera.chengguan.config.Contants;
 import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.config.RequestListener;
@@ -56,9 +57,15 @@ public class LoginActivity extends BaseActivity implements RequestListener {
         String token = (String)SPUtils.get(this, MunicipalCache.SP_TOKEN, "");
         if(token.length() > 0){
             ChengApplication.instance.access_token = token;
-            tempUnits();
-            loginToNext();
+            requestStandardData();
         }
+    }
+
+    /**
+     * 获取动态筛选项内容
+     */
+    private void requestStandardData(){
+        MunicipalRequest.requestCheckStandardData(this, this);
     }
 
     /**
@@ -113,8 +120,13 @@ public class LoginActivity extends BaseActivity implements RequestListener {
 
     @Override
     public void success(String reqUrl, Object result) {
-        LoginBean loginBean = (LoginBean) result;
-        loginBean.checkResult(this, loginHandler);
+        if(reqUrl.equals(Contants.USER_LOGIN)) {
+            LoginBean loginBean = (LoginBean) result;
+            loginBean.checkResult(this, loginHandler);
+        }else if(reqUrl.equals(Contants.SELECT_SCREEN_ITEM)){
+            StandardDataBean standardDataBean = (StandardDataBean) result;
+            standardDataBean.checkResult(this, standardDataHandler);
+        }
     }
 
     @Override
@@ -129,8 +141,7 @@ public class LoginActivity extends BaseActivity implements RequestListener {
             Toast.makeText(LoginActivity.this, "登录成功:"+message
                     +" | token:"+loginBean.access_token, Toast.LENGTH_LONG).show();
             saveTokenAndValue(loginBean.access_token, loginBean.value);
-            tempUnits();
-            loginToNext();
+            requestStandardData();
         }
 
         @Override
@@ -139,13 +150,23 @@ public class LoginActivity extends BaseActivity implements RequestListener {
         }
     };
 
-    /**
-     * 临时增加作业单位假数据
-     */
-    private void tempUnits(){
-        List<String> unitList = new ArrayList<>();
-        unitList.add("无锡市政公司");
-        MunicipalCache.units = unitList;
-    }
+    private BaseHandler standardDataHandler = new BaseHandler() {
+        @Override
+        public void doSuccess(BaseBean baseBean, String message) {
+            StandardDataBean standardDataBean = (StandardDataBean) baseBean;
+            if(standardDataBean.datas != null) {
+                MunicipalCache.sectionList = standardDataBean.datas.transformSection();
+                MunicipalCache.roadwayList = standardDataBean.datas.transformBasicData(standardDataBean.datas.roadwayList);
+                MunicipalCache.bridgeList = standardDataBean.datas.transformBasicData(standardDataBean.datas.bridgeList);
+                MunicipalCache.levelList = standardDataBean.datas.transformBasicData(standardDataBean.datas.levelList);
+                loginToNext();
+            }
+        }
+
+        @Override
+        public void doError(int result, String message) {
+            Toast.makeText(LoginActivity.this, "获取基本数据失败:"+message, Toast.LENGTH_LONG).show();
+        }
+    };
 
 }

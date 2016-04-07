@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.pactera.chengguan.BuildConfig;
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.activity.ImagePagerActivity;
+import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.base.ChengApplication;
 import com.pactera.chengguan.model.municipal.CaseInfo;
 import com.pactera.chengguan.model.municipal.PicData;
@@ -41,10 +42,10 @@ public class CaseListAdapter extends BaseAdapter {
 //            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
 //            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
     private LayoutInflater inflater;
-    private Context mContext;
+    private BaseActivity mContext;
     private List<CaseInfo> caseInfoList;
 
-    public CaseListAdapter(Context context, List<CaseInfo> caseInfoList) {
+    public CaseListAdapter(BaseActivity context, List<CaseInfo> caseInfoList) {
         mContext = context;
         inflater = LayoutInflater.from(context);
         this.caseInfoList = caseInfoList;
@@ -99,7 +100,8 @@ public class CaseListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         if(data.size() > 0) {
-            holder.imagecycle.setImageResources(data, mCycleViewListener, ChengApplication.instance.access_token);
+            holder.imagecycle.setImageResources(mContext, data, mCycleViewListener
+                    , ChengApplication.instance.access_token);
         }
         holder.date.setText(caseInfo.getDate());
         holder.description.setText(caseInfo.getDescription());

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.pactera.chengguan.R;
 import com.pactera.chengguan.adapter.CycleViewPager;
+import com.pactera.chengguan.base.BaseActivity;
 import com.pactera.chengguan.model.municipal.PicData;
 import com.pactera.chengguan.util.FileDownloadUtils;
 
@@ -118,7 +119,7 @@ public class ImageItemCycle extends LinearLayout {
     /**
      * 装填图片数据
      */
-    public void setImageResources(ArrayList<PicData> infoList, ImageCycleViewListener imageCycleViewListener
+    public void setImageResources(BaseActivity mContext, ArrayList<PicData> infoList, ImageCycleViewListener imageCycleViewListener
             , String token) {
         // 清除所有子视图
         mGroup.removeAllViews();
@@ -249,12 +250,12 @@ public class ImageItemCycle extends LinearLayout {
          */
         private ImageCycleViewListener mImageCycleViewListener;
 
-        private Context mContext;
+        private BaseActivity mContext;
         private String token;
         private String name;
         private String path;
 
-        public ImageCycleAdapter(Context context, ArrayList<PicData> adList, String token
+        public ImageCycleAdapter(BaseActivity context, ArrayList<PicData> adList, String token
                 , ImageCycleViewListener imageCycleViewListener) {
             mContext = context;
             mAdList = adList;
@@ -294,7 +295,7 @@ public class ImageItemCycle extends LinearLayout {
 //                }
 //            });
             container.addView(imageView);
-            FileDownloadUtils.downloadLauncher(mImageCycleViewListener, imageView, token, picData);
+            FileDownloadUtils.downloadLauncher(mContext, mImageCycleViewListener, imageView, token, picData);
 //            mImageCycleViewListener.displayImage(imageUrl, imageView);
             return imageView;
         }

@@ -8,12 +8,48 @@ package com.pactera.chengguan.model.municipal;
 public class Bridge {
 
     private int id;                 //id
-    private String number;          //编号
     private String name;            //名称
-    private int unit;               //标段养护单位
     private int level;              //养护等级
-    private int category;           //桥梁类别
-    private String duty;            //责任主体
-    private String position;        //所在路段
+    private String type;            //桥梁类别
+    private String position;        //所在地点
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }

@@ -18,7 +18,7 @@ public class CaseCreateReq {
     //考核扣分
     public int point;
     //期限时间
-    public int termtime;
+    public int taskTerm;
     //案件地址
     public String case_addree;
     //经度
@@ -36,13 +36,13 @@ public class CaseCreateReq {
 
     public CaseCreateReq(){}
 
-    public void setData(int type, String caseId, String description, int point, int termtime, String case_addree
+    public void setData(int type, String caseId, String description, int point, int taskTerm, String case_addree
             , double longitude, double latitude, int unit, int category, int month, List<String> pic){
         this.type = type;
         this.caseId = caseId;
         this.description = description;
         this.point = point;
-        this.termtime = termtime;
+        this.taskTerm = taskTerm;
         this.case_addree = case_addree;
         this.longitude = longitude;
         this.latitude = latitude;
