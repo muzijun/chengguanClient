@@ -18,12 +18,10 @@ import com.pactera.chengguan.adapter.GirdDropDownAdapter;
 import com.pactera.chengguan.base.BaseFragment;
 import com.pactera.chengguan.bean.BaseBean;
 import com.pactera.chengguan.bean.BaseHandler;
-import com.pactera.chengguan.bean.municipal.BasicBridgeInfoBean;
 import com.pactera.chengguan.bean.municipal.BasicSewerInfoBean;
 import com.pactera.chengguan.config.MunicipalCache;
 import com.pactera.chengguan.config.MunicipalContants;
 import com.pactera.chengguan.config.RequestListener;
-import com.pactera.chengguan.model.municipal.Bridge;
 import com.pactera.chengguan.model.municipal.Sewer;
 import com.pactera.chengguan.util.MunicipalRequest;
 import com.pactera.chengguan.view.ChenguanSwipeToLoadLayout;
@@ -41,8 +39,6 @@ import butterknife.ButterKnife;
  */
 public class DataChannelFragment extends BaseFragment implements OnRefreshListener, OnLoadMoreListener,RequestListener {
     private List<String> tab_one = new ArrayList<String>();
-    private List<String> tab_two = new ArrayList<String>();
-    private List<String> tab_three = new ArrayList<String>();
     @Bind(R.id.dropDownMenu)
     DropDownMenu dropDownMenu;
     private List<String> headers = new ArrayList<String>();
@@ -118,7 +114,7 @@ public class DataChannelFragment extends BaseFragment implements OnRefreshListen
     /**
      * 道路列表请求
      */
-    private void requestBridgeListData() {
+    private void requestChannelListData() {
         MunicipalRequest.requestBasicInfo(mContext, this, MunicipalContants.BASIC_SEWER_ID, selectTabOneIndex, 0, 0, PAGE_COUNT, getLastId());
     }
 
@@ -157,12 +153,12 @@ public class DataChannelFragment extends BaseFragment implements OnRefreshListen
 
     @Override
     public void onRefresh() {
-        requestBridgeListData();
+        requestChannelListData();
     }
 
     @Override
     public void onLoadMore() {
-        requestBridgeListData();
+        requestChannelListData();
     }
 
     private BaseHandler dataSewerHandler = new BaseHandler() {

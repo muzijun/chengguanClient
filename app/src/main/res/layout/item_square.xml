@@ -14,15 +14,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_data_pump" />
+            android:src="@mipmap/icon_data_square" />
+
         <TextView
-            android:id="@+id/tv_number"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AJDO63456"
-            android:textColor="@color/colorBule"
-            android:textSize="@dimen/text_size_medium" />
-
+            android:layout_gravity="center"
+            android:text=""
+            android:textColor="@color/colorBule" />
     </LinearLayout>
 
     <LinearLayout
@@ -33,24 +33,29 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_pump"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="名称"
-            android:textSize="@dimen/text_size_medium" />
-
-        <TextView
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="地点:新区" />
+            android:text="地点"
+            android:textSize="@dimen/text_size_medium" />
 
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="建设年代:2005" />
+            android:text="面积:1000" />
+        <TextView
+            android:id="@+id/tv_duty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="责任主体:" />
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="建设单位:" />
     </LinearLayout>
 </LinearLayout>

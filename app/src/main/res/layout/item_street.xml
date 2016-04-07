@@ -14,14 +14,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_data_pump" />
-        <TextView
-            android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AJDO63456"
-            android:textColor="@color/colorBule"
-            android:textSize="@dimen/text_size_medium" />
+            android:src="@mipmap/icon_data_street" />
 
     </LinearLayout>
 
@@ -33,24 +26,29 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_pump"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="名称"
+            android:text=""
             android:textSize="@dimen/text_size_medium" />
 
         <TextView
-            android:id="@+id/tv_position"
+            android:id="@+id/tv_maintainUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="地点:新区" />
-
+            android:text="养护单位：" />
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_use"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:text="建设年代:2005" />
+            android:text="用途:" />
+        <TextView
+            android:id="@+id/tv_buildUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="建设单位:" />
     </LinearLayout>
 </LinearLayout>
