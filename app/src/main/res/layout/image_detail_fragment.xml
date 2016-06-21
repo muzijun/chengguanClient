@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.alexvasilkov.gestures.views.GestureImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:scaleType="centerCrop" />
+        android:contentDescription="@string/app_name" />
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/loading"
@@ -20,6 +20,6 @@
         app:pv_autostart="true"
         app:pv_circular="true"
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
-        app:pv_progressMode="indeterminate"/>
+        app:pv_progressMode="indeterminate" />
 
 </FrameLayout>

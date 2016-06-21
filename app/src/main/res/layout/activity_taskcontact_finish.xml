@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <include layout="@layout/include_site_pic_content" />
+
+                <View style="@style/horizontal_line" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_next"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/task_check_next_unit"
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/task_next_unit" />
+
+                    <TextView
+                        android:id="@+id/nextunitname"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/task_check_next_unit"
+                        android:text="区城管" />
+
+                    <TextView
+                        android:id="@+id/worktime"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:text="2016-02-28" />
+                </RelativeLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/workunit"
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/task_work_unit" />
+
+                    <TextView
+                        android:id="@+id/workunitname"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/workunit"
+                        android:text="CCCC有限公司" />
+
+                </RelativeLayout>
+
+                <View
+                    style="@style/horizontal_line"
+                    android:layout_marginLeft="@dimen/chek_task_textview_margin_left" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/res"
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/task_res" />
+
+                    <TextView
+                        android:id="@+id/resname"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/res"
+                        android:text="CCCC有限公司" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/horizontal_line"
+                    android:layout_marginLeft="@dimen/chek_task_textview_margin_left" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/task_duration"
+                        android:textColor="@color/color_red" />
+
+                    <TextView
+                        android:id="@+id/next_protime"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/color_red" />
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <TextView
+                    android:id="@+id/tv_ownerDescription"
+                    style="@style/check_task_textview_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="本工程预计三个月，实施改造，关在规定的时间内完成" />
+
+                <View style="@style/horizontal_line" />
+
+            </LinearLayout>
+
+            <include layout="@layout/include_finish_pic" />
+
+            <include layout="@layout/include_finish_content"></include>
+
+            <include layout="@layout/include_site_rework"></include>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

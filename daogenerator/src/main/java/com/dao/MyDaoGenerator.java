@@ -19,10 +19,12 @@ public class MyDaoGenerator {
         // schema2.enableKeepSectionsByDefault();
 
         // 一旦你拥有了一个 Schema 对象后，你便可以使用它添加实体（Entities）了。
-        addNote(schema);
+//        addNote(schema);
+        addCheckLibClassify(schema);
+        addCheckLibContent(schema);
         // 最后我们将使用 DAOGenerator 类的 generateAll() 方法自动生成代码，此处你需要根据自己的情况更改输出目录（既之前创建的 java-gen)。
         // 其实，输出目录的路径可以在 build.gradle 中设置，有兴趣的朋友可以自行搜索，这里就不再详解。
-        new DaoGenerator().generateAll(schema, "../Chengguan_App/app/src/main/java-gen");
+        new DaoGenerator().generateAll(schema, "app/src/main/java-gen");
 //
     }
 
@@ -44,6 +46,32 @@ public class MyDaoGenerator {
         note.addStringProperty("comment");
         note.addStringProperty("name");
         note.addDateProperty("date");
+    }
+
+    /**
+     * 考核库分类
+     *
+     * @param schema
+     */
+    private static void addCheckLibClassify(Schema schema) {
+        Entity checkclassify = schema.addEntity("checkclassify");
+        checkclassify.addIdProperty().autoincrement();
+        checkclassify.addIntProperty("classifyid");
+        checkclassify.addStringProperty("classifyname");
+    }
+
+    /**
+     * 考核库内容
+     *
+     * @param schema
+     */
+    private static void addCheckLibContent(Schema schema) {
+        Entity checkContent = schema.addEntity("checkcontent");
+        checkContent.addIdProperty().autoincrement();
+        checkContent.addIntProperty("standardid");
+        checkContent.addStringProperty("standard");
+        checkContent.addStringProperty("point");
+        checkContent.addIntProperty("classifyid");
     }
 
 }

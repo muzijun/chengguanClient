@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <View style="@style/horizontal_line" />
 
     <LinearLayout
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
@@ -17,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.pactera.chengguan.view.ImageItemCycle
+            <com.pactera.chengguan.municipal.view.ImageItemCycle
                 android:id="@+id/imagecycle"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -28,6 +31,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -64,15 +68,17 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="道路有坑，所表达的萨达是卡的哈萨克的会撒娇的三款" />
+
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:singleLine="true"
-                android:text="震泽路-临湖大道交叉口"/>
+                android:text="震泽路-临湖大道交叉口" />
         </LinearLayout>
     </LinearLayout>
+
     <View style="@style/horizontal_line" />
 
 </LinearLayout>

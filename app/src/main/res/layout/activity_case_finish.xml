@@ -33,7 +33,7 @@
                     android:padding="10dp"
                     android:text="现场照片" />
 
-                <com.pactera.chengguan.view.ImageCycleView
+                <com.pactera.chengguan.municipal.view.ImageItemCycle
                     android:id="@+id/imagecycle"
                     android:layout_width="fill_parent"
                     android:layout_height="170dp" />
@@ -94,6 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@color/colorD7d7d7" />
 
                 <TextView
@@ -217,7 +218,7 @@
                 android:padding="10dp"
                 android:text="作业后照片" />
 
-            <com.pactera.chengguan.view.ImageCycleView
+            <com.pactera.chengguan.municipal.view.ImageItemCycle
                 android:id="@+id/imagecycle_end"
                 android:layout_width="fill_parent"
                 android:layout_height="170dp" />

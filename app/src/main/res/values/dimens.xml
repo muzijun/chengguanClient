@@ -33,4 +33,22 @@
     <dimen name="tv_padding_value">4dp</dimen>
     <dimen name="item_search_padding">10dp</dimen>
     <dimen name="item_search_underline_padding">20dp</dimen>
+
+    <!-- 下拉选择字体大小 -->
+    <dimen name="dd_text_size_small">14sp</dimen>
+    <dimen name="dd_text_size_medium">18sp</dimen>
+
+    <!-- 基础数据中的 item 边距  -->
+    <dimen name="basedata_item_margin_top">5dp</dimen>
+    <dimen name="basedata_item_title_margin_top">1dp</dimen>
+    <dimen name="basedata_itme_title_text_size_medium">16sp</dimen>
+    <dimen name="basedata_itme_title_text_size_large">20sp</dimen>
+    <dimen name="dd_menu_text_size">13sp</dimen>
+
+    <!-- 任务联系单 检查  -->
+    <dimen name="chek_task_textview_margin_top_bottom">8dp</dimen>
+    <dimen name="chek_task_textview_margin_top_bottom_large">10dp</dimen>
+    <dimen name="chek_task_textview_margin_left">25dp</dimen>
+    <dimen name="chek_task_textview_margin_left_small">10dp</dimen>
+    <dimen name="chek_task_textview_text_size_medium">16sp</dimen>
 </resources>

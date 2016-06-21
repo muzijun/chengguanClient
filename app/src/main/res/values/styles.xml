@@ -55,6 +55,12 @@
         <item name="spn_popupItemAnimOffset">120</item>
 
     </style>
+    <!--启动透明-->
+    <style name="Theme.AppStartLoadTranslucent" parent="@android:style/Theme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <!-- dialog背景变暗 -->
     <style name="dialog_dimenable" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
@@ -64,7 +70,56 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- 基础数据中的item  -->
+    <style name="item_text_title_blue">
+        <item name="android:textColor">@color/colorBule</item>
+        <item name="android:textSize">@dimen/basedata_itme_title_text_size_large</item>
+        <item name="android:layout_marginTop">@dimen/basedata_item_margin_top</item>
+    </style>
+
+    <style name="item_text_title_gray">
+        <item name="android:textColor">@color/colorDarkGray</item>
+        <item name="android:textSize">@dimen/basedata_itme_title_text_size_large</item>
+    </style>
+
+    <style name="item_text_title_light_gray">
+        <item name="android:textColor">@color/colorLightGray</item>
+        <item name="android:layout_marginTop">@dimen/basedata_item_title_margin_top</item>
+        <item name="android:textSize">@dimen/basedata_itme_title_text_size_medium</item>
+    </style>
+
+    <!-- 任务联系单 检查 -->
+    <style name="check_task_textview">
+        <item name="android:layout_marginBottom">@dimen/chek_task_textview_margin_top_bottom</item>
+        <item name="android:layout_marginTop">@dimen/chek_task_textview_margin_top_bottom</item>
+        <item name="android:textSize">@dimen/chek_task_textview_text_size_medium</item>
+        <item name="android:textColor">@color/colorLightGray</item>
+        <item name="android:layout_marginLeft">@dimen/chek_task_textview_margin_left</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="check_task_textview_bold">
+        <item name="android:layout_marginBottom">@dimen/chek_task_textview_margin_top_bottom_large
+        </item>
+        <item name="android:layout_marginTop">@dimen/chek_task_textview_margin_top_bottom_large
+        </item>
+        <item name="android:textSize">@dimen/chek_task_textview_text_size_medium</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">@dimen/chek_task_textview_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/chek_task_textview_margin_left</item>
+    </style>
+
+    <style name="check_task_textview_none_left">
+        <item name="android:layout_marginBottom">@dimen/chek_task_textview_margin_top_bottom</item>
+        <item name="android:layout_marginTop">@dimen/chek_task_textview_margin_top_bottom</item>
+        <item name="android:textSize">@dimen/chek_task_textview_text_size_medium</item>
+        <item name="android:textColor">@color/colorLightGray</item>
+        <item name="android:layout_marginLeft">@dimen/chek_task_textview_margin_left_small</item>
+        <item name="android:singleLine">true</item>
+    </style>
 </resources>

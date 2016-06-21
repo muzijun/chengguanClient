@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <View style="@style/horizontal_line" />
+
+                <TextView
+                    style="@style/check_task_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/task_site_pic" />
+
+                <View style="@style/horizontal_line" />
+
+                <com.pactera.chengguan.municipal.view.ImageItemCycle
+                    android:id="@+id/imagecycle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="170dp" />
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/task_duration"
+                        android:textColor="@color/color_red" />
+
+                    <TextView
+                        android:id="@+id/protime"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="2016-02-15"
+                        android:textColor="@color/color_red" />
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+                <TextView
+                    android:id="@+id/tast_site_content"
+                    style="@style/check_task_textview_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="请对新昌路积水进行分析，实施改造，关在规定的时间内完成" />
+
+                <View style="@style/horizontal_line" />
+
+                <com.pactera.chengguan.municipal.view.NoScrollListView
+                    android:id="@+id/noscrolllistview_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.pactera.chengguan.municipal.view.NoScrollListView>
+
+
+                <View style="@style/horizontal_line" />
+
+
+                <TextView
+                    android:id="@+id/reportingunitname"
+                    style="@style/check_task_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="无锡市政公司" />
+
+
+                <View style="@style/horizontal_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/res"
+                        style="@style/check_task_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/task_res" />
+
+                    <TextView
+                        android:id="@+id/resname"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        style="@style/check_task_textview_none_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:singleLine="true"
+                        android:text="2016-02-28" />
+                </LinearLayout>
+
+                <View style="@style/horizontal_line" />
+
+            </LinearLayout>
+
+            <include layout="@layout/include_finish_pic" />
+
+            <include layout="@layout/include_finish_content"></include>
+
+            <include layout="@layout/include_site_rework"></include>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

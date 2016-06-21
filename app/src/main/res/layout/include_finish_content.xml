@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/finish_pic_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorWhite">
+
+        <View style="@style/horizontal_line" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_finish_content"
+            style="@style/check_task_textview" />
+
+        <View
+            style="@style/horizontal_line"
+            android:layout_marginLeft="@dimen/chek_task_textview_margin_left" />
+
+        <TextView
+            android:id="@+id/task_finish_cotent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="已经按照要求，进行改造"
+            style="@style/check_task_textview_bold" />
+
+        <View style="@style/horizontal_line" />
+    </LinearLayout>
+
+</merge>

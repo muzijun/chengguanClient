@@ -16,30 +16,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="207dp"
             android:orientation="vertical">
+
             <LinearLayout
-            android:layout_gravity="center"
-            android:background="@drawable/shape_login"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ico_account"
-                android:layout_marginLeft="12dp"
-                android:layout_gravity="center"/>
-            <EditText
-                android:id="@+id/et_account"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_login"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/login_account_hit"
-                android:singleLine="true"
-                android:background="@null"
-                android:textColorHint="@color/colorWhite"/>
-        </LinearLayout>
+                android:layout_height="47dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ico_account"
+                    android:layout_marginLeft="12dp"
+                    android:layout_gravity="center" />
+
+                <EditText
+                    android:id="@+id/et_account"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/login_account_hit"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:textColorHint="@color/color_gray"
+                    android:textSize="@dimen/text_size_small" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
@@ -49,12 +54,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ico_password"
                     android:layout_marginLeft="12dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
+
                 <EditText
                     android:id="@+id/et_password"
                     android:layout_marginLeft="10dp"
@@ -64,24 +71,27 @@
                     android:hint="@string/login_password_hit"
                     android:password="true"
                     android:background="@null"
-                    android:textColorHint="@color/colorWhite"/>
+                    android:textColorHint="@color/color_gray"
+                    android:textSize="@dimen/text_size_small" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_medium"
+                android:textSize="@dimen/text_size_small"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/color_gray"
                 android:layout_marginRight="30dp"
                 android:layout_gravity="right"
-                android:text="@string/login_upassword"/>
+                android:text="@string/login_upassword" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_login"
                 android:layout_marginTop="50dp"
                 android:onClick="login"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

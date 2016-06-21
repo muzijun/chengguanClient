@@ -13,7 +13,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,16 +27,17 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="现场照片"/>
+                    android:text="现场照片" />
 
-                <com.pactera.chengguan.view.ImageCycleView
+                <com.pactera.chengguan.municipal.view.ImageItemCycle
                     android:id="@+id/imagecycle"
                     android:layout_width="fill_parent"
-                    android:layout_height="170dp"/>
+                    android:layout_height="170dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -44,53 +46,56 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
-                    android:text="描述"/>
+                    android:text="描述" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
 
                 <TextView
                     android:id="@+id/tx_describe"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:singleLine="true"
                     android:drawableRight="@mipmap/arraw_right"
                     android:gravity="center_vertical"
                     android:paddingRight="30dp"
-                    android:text="道路有坑"/>
+                    android:text="道路有坑" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
 
                 <TextView
                     android:id="@+id/tx_address"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:singleLine="true"
                     android:drawableRight="@mipmap/arraw_right"
                     android:gravity="center_vertical"
                     android:paddingRight="30dp"
-                    android:text="震泽路菱湖大道交叉口"/>
+                    android:text="震泽路菱湖大道交叉口" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
 
             </LinearLayout>
 
@@ -104,7 +109,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -128,13 +133,13 @@
                         android:drawableRight="@mipmap/arraw_right"
                         android:gravity="center_vertical"
                         android:paddingRight="30dp"
-                        android:text="月度"/>
+                        android:text="月度" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,7 +152,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
+
                 <LinearLayout
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
@@ -168,17 +174,18 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
+                        android:singleLine="true"
                         android:drawableRight="@mipmap/arraw_right"
                         android:gravity="center_vertical"
                         android:paddingRight="30dp"
-                        android:text="无锡市政府"/>
+                        android:text="无锡市政府" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
             </LinearLayout>
 
             <LinearLayout
@@ -191,7 +198,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
+
                 <LinearLayout
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
@@ -212,18 +220,20 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="5dp"
+                        android:singleLine="true"
                         android:drawableRight="@mipmap/arraw_right"
                         android:gravity="center_vertical"
                         android:paddingRight="30dp"
-                        android:text="3天"/>
+                        android:text="3天" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_marginTop="3dp"
                 android:layout_width="match_parent"
@@ -234,39 +244,42 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/colorD7d7d7"/>
+                    android:background="@color/colorD7d7d7" />
+
                 <LinearLayout
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical"
                         android:text="扣分:" />
 
                     <TextView
                         android:id="@+id/tx_deduct"
                         android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:singleLine="true"
                         android:drawableRight="@mipmap/arraw_right"
                         android:gravity="center_vertical"
                         android:paddingRight="30dp"
-                        android:text="5"/>
+                        android:text="5" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorD7d7d7"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorD7d7d7" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/include_titlebar" />
@@ -89,14 +90,13 @@
                 android:text="单位:"
                 android:textSize="@dimen/text_size_small" />
 
-            <EditText
-                android:id="@+id/edit_unit"
+            <TextView
+                android:id="@+id/tv_unit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="25dp"
-                android:background="@null"
-                android:hint="请输入"
+                android:drawableRight="@mipmap/arraw_right"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_small" />
         </LinearLayout>

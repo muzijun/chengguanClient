@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/lin_rework_opinion"
+    android:layout_marginTop="3dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <View style="@style/horizontal_line" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:paddingRight="30dp"
+        android:text="返工意见"
+        android:textColor="@color/colorBule" />
+
+    <View
+        style="@style/horizontal_line"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.pactera.chengguan.municipal.view.NoScrollListView
+            android:id="@+id/noscrolllistview_rework"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

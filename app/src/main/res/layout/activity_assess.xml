@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.pactera.chengguan.activity.AssessActivity">
 
-    <include layout="@layout/include_titlebar"/>
+    <include layout="@layout/include_titlebar" />
 
 
     <LinearLayout
@@ -21,7 +21,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorD7d7d7"/>
+            android:background="@color/colorD7d7d7" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="*"
-                android:textColor="@color/colorFF0000"/>
+                android:textColor="@color/colorFF0000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:paddingRight="30dp"
-                android:text="分类:"/>
+                android:text="分类:" />
 
             <TextView
                 android:id="@+id/tv_content"
@@ -52,7 +52,7 @@
                 android:drawablePadding="20dp"
                 android:drawableRight="@mipmap/arraw_right"
                 android:gravity="right"
-                android:paddingRight="30dp"/>
+                android:paddingRight="30dp" />
 
         </LinearLayout>
 
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="20dp"
-            android:background="@color/colorD7d7d7"/>
+            android:background="@color/colorD7d7d7" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,23 +74,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="*"
-                android:textColor="@color/colorFF0000"/>
+                android:textColor="@color/colorFF0000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:paddingRight="30dp"
-                android:text="扣分:"/>
+                android:text="扣分:" />
 
             <EditText
                 android:id="@+id/et_point"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
+                android:digits="0123456789."
                 android:background="@null"
-                android:hint="请输入扣分信息"
-                android:textSize="15sp"/>
+                android:hint="请输入扣分分数"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -98,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="20dp"
-            android:background="@color/colorD7d7d7"/>
+            android:background="@color/colorD7d7d7" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,14 +113,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="*"
-                android:textColor="@color/colorFF0000"/>
+                android:textColor="@color/colorFF0000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:paddingRight="30dp"
-                android:text="月份:"/>
+                android:text="月份:" />
 
 
             <TextView
@@ -131,19 +132,20 @@
                 android:drawableRight="@mipmap/arraw_right"
                 android:gravity="right"
                 android:paddingRight="30dp"
-                android:text="二月"/>
+                android:text="点击选择月份" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorD7d7d7"/>
+            android:background="@color/colorD7d7d7" />
 
     </LinearLayout>
 
 
     <com.rey.material.widget.Button
+        android:id="@+id/commit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -151,8 +153,7 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/btn_background_save"
         android:text="保存"
-        android:textColor="@color/colorWhite"
-        android:onClick="onClick"/>
+        android:textColor="@color/colorWhite" />
 
 
 </LinearLayout>

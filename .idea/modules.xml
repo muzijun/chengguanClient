@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/afilechooser/afilechooser.iml" filepath="$PROJECT_DIR$/afilechooser/afilechooser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chengguanClient.iml" filepath="$PROJECT_DIR$/chengguanClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chengugandao/chengugandao.iml" filepath="$PROJECT_DIR$/chengugandao/chengugandao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/daogenerator/daogenerator.iml" filepath="$PROJECT_DIR$/daogenerator/daogenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/green/green.iml" filepath="$PROJECT_DIR$/green/green.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" filepath="$PROJECT_DIR$/multi-image-selector/multi-image-selector.iml" />
+    </modules>
+  </component>
+</project>

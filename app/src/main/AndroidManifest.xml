@@ -1,90 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.pactera.chengguan"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pactera.chengguan">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 自定义权限 -->
+    <uses-permission android:name="getui.permission.GetuiService.com.pactera.chengguan" />
 
-
+    <permission
+        android:name="getui.permission.GetuiService.com.pactera.chengguan"
+        android:protectionLevel="normal"></permission>
     <application
-        android:name=".base.ChengApplication"
+        android:name=".app.base.ChengApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".app.activity.StartActivity"
+            android:theme="@style/Theme.AppStartLoadTranslucent"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.CaseListActivity">
+            android:name=".municipal.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".municipal.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".municipal.activity.CaseListActivity">
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.CaseDetialsActivity"
-            android:screenOrientation="portrait"/>
+            android:name=".municipal.activity.CaseDetialsActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CaseFinishActivity"
-            android:screenOrientation="portrait"/>
+            android:name=".municipal.activity.CaseFinishActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ProcessRecordActivity"
+            android:name=".municipal.activity.ProcessRecordActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.AssessActivity"
+            android:name=".municipal.activity.AssessActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.PostPoneActivity"
+            android:name=".municipal.activity.PostPoneActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.SelectActivity"
+            android:name=".municipal.activity.SelectActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.InputActivity"
+            android:name=".municipal.activity.InputActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.BdataSearchActivity"
+            android:name=".municipal.activity.BdataSearchActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.PointsActivity"
+            android:name=".municipal.activity.PointsActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.ContactsActivity"
+            android:name=".municipal.activity.ContactsActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.TimeActivity"
+            android:name=".municipal.activity.TimeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-        android:name=".activity.AddContactActivity"
-        android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.DelayRecordActivity"
+            android:name=".municipal.activity.AddContactActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.ReworkActivity"
+            android:name=".municipal.activity.DelayRecordActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.ContactSheetActivity"
+            android:name=".municipal.activity.ReworkActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.PictureCompareActivity"
+            android:name=".municipal.activity.ContactSheetActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.PictureCompareActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.PointsModifyActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".municipal.activity.MaintainListAcivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.MaintainDetialActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.NoticeListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.NewNoticeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.FileActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.NoticeDetialsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.AddTaskActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TaskFinishActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TaskContactIssuedActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TaskContactFinishActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TaskProcessRecordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TcProcessRecordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.UserActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.TaskContactPassActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".municipal.activity.SelectNoticeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name=".activity.ImageZoomActivity"/>
-        <activity android:name=".activity.ImagePagerActivity"/>
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".municipal.activity.ImageZoomActivity" />
+        <activity android:name=".municipal.activity.ImagePagerActivity" />
+        <activity
+            android:name=".municipal.activity.MapActivity"
+            android:screenOrientation="portrait"></activity>
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${PUSH_APPID_VALUE}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${PUSH_APPKEY_VALUE}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${PUSH_APPSECRET_VALUE}" />
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name=".municipal.receiver.PushReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.${PUSH_APPID_VALUE}" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice"></service>
+        <service
+            android:name="com.igexin.sdk.PushServiceUser"
+            android:exported="true"
+            android:label="NotificationCenterUser"></service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+
+        <receiver android:name="com.igexin.download.DownloadReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:exported="true"
+            android:authorities="downloads.com.pactera.chengguan"
+            android:process=":pushservice" />
+
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <action android:name="com.igexin.sdk.action.${PUSH_APPID_VALUE}" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+
+        <!-- 个推SDK配置结束 -->
+
+        <!-- 广播注册 -->
+        <receiver android:name=".municipal.receiver.NotificationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.chengguan.notifications.intent.action.Click" />
+            </intent-filter>
+        </receiver>
+
+        <!-- umsdk usage. 友盟 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY_VALUE}" >
+        </meta-data>
+
+        <!-- umsdk usage. 友盟 -->
+
+        <!--                      绿化                  -->
+
+
+
+        <!--                     绿化                   -->
 
     </application>
 

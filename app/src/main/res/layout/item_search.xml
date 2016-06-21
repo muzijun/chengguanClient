@@ -64,11 +64,12 @@
     <View
         style="@style/horizontal_line"
         android:layout_margin="5dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dip"
         android:text="地址:县山区"
-        android:gravity="right"/>
+        android:gravity="right" />
 
 </LinearLayout>

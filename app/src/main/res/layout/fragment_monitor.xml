@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/include_titlebar" />
@@ -15,9 +16,9 @@
         app:ddmaskColor="@color/mask_color"
         app:ddmenuBackgroundColor="@color/white"
         app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
-        app:ddmenuTextSize="13sp"
+        app:ddmenuTextSize="14sp"
         app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon"
-        app:ddtextSelectedColor="@color/drop_down_selected"
+        app:ddtextSelectedColor="@color/color_drop_down_select"
         app:ddtextUnselectedColor="@color/drop_down_unselected"
         app:ddunderlineColor="@color/gray" />
 </LinearLayout>

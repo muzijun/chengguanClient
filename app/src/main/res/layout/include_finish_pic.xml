@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/finish_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorWhite">
+
+        <View style="@style/horizontal_line" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_finish_pic"
+            style="@style/check_task_textview" />
+
+        <View style="@style/horizontal_line" />
+
+        <com.pactera.chengguan.municipal.view.ImageItemCycle
+            android:id="@+id/imagecycle_end"
+            android:layout_width="fill_parent"
+            android:layout_height="170dp" />
+
+        <View style="@style/horizontal_line" />
+    </LinearLayout>
+
+</merge>

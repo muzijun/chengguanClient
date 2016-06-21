@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.pactera.chengguan.view.footer.ClassicLoadMoreFooterView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pactera.chengguan.municipal.view.footer.ClassicLoadMoreFooterView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -34,6 +33,6 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="LoadMore"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="@color/colorBule" />
     </RelativeLayout>
-</com.pactera.chengguan.view.footer.ClassicLoadMoreFooterView>
+</com.pactera.chengguan.municipal.view.footer.ClassicLoadMoreFooterView>

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -23,7 +24,7 @@
             android:src="@mipmap/ico_back" />
 
 
-        <com.pactera.chengguan.view.ClearEditText
+        <com.pactera.chengguan.municipal.view.ClearEditText
             android:id="@+id/search_edit"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
@@ -34,6 +35,7 @@
             android:hint="请输入关键字"
             android:singleLine="true"
             android:textSize="@dimen/text_size_micro" />
+
         <TextView
             android:id="@+id/tx_search"
             android:layout_width="wrap_content"
@@ -42,13 +44,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/colorBule"
-            android:textSize="@dimen/text_size_small"/>
+            android:textSize="@dimen/text_size_small" />
 
 
     </LinearLayout>
+
     <View style="@style/horizontal_line" />
-    <com.pactera.chengguan.view.ChenguanSwipeToLoadLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <com.pactera.chengguan.municipal.view.ChenguanSwipeToLoadLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,5 +71,5 @@
         <include
             android:id="@id/swipe_load_more_footer"
             layout="@layout/layout_classic_footer" />
-    </com.pactera.chengguan.view.ChenguanSwipeToLoadLayout>
+    </com.pactera.chengguan.municipal.view.ChenguanSwipeToLoadLayout>
 </LinearLayout>

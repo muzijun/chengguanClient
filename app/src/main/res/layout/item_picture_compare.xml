@@ -10,6 +10,7 @@
         android:id="@+id/image_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/tx_state"
         android:gravity="center"

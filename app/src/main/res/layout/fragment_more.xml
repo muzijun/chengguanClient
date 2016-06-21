@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,17 +10,16 @@
         android:background="@color/bg_color_f7f9f9"
         android:orientation="vertical">
 
-        <include layout="@layout/include_titlebar"/>
+        <include layout="@layout/include_titlebar" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="27dp"
-            android:background="@color/bg_line"/>
-
+            android:background="@color/bg_line" />
 
         <TextView
-            android:id="@+id/tx_contactsheet"
+            android:id="@+id/tv_contactsheet"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorWhite"
@@ -30,45 +30,46 @@
             android:paddingLeft="20dp"
             android:paddingRight="30dp"
             android:text="工作联系单"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="@dimen/text_size_medium" />
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.4dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:background="@color/bg_line" />-->
+
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@color/colorWhite"-->
+            <!--android:drawableLeft="@mipmap/kaohe"-->
+            <!--android:drawablePadding="20dp"-->
+            <!--android:drawableRight="@mipmap/arraw_right2"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:paddingRight="30dp"-->
+            <!--android:text="@string/item_assess"-->
+            <!--android:textSize="@dimen/text_size_medium" />-->
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/bg_line"/>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@mipmap/kaohe"
-            android:drawablePadding="20dp"
-            android:drawableRight="@mipmap/arraw_right2"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="30dp"
-            android:text="@string/item_assess"
-            android:textSize="@dimen/text_size_medium"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.4dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="17dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <TextView
+            android:id="@+id/tv_notice"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorWhite"
@@ -79,7 +80,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="30dp"
             android:text="通知"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="@dimen/text_size_medium" />
 
 
         <View
@@ -88,10 +89,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <TextView
+            android:id="@+id/tv_user"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -103,7 +105,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="30dp"
             android:text="我的信息"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="@dimen/text_size_medium" />
 
         <View
             android:layout_width="match_parent"
@@ -111,11 +113,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <TextView
-            android:id="@+id/tx_contacts"
+            android:id="@+id/tv_contacts"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -127,22 +129,23 @@
             android:paddingLeft="20dp"
             android:paddingRight="30dp"
             android:text="通讯录"
-            android:textSize="@dimen/text_size_medium"/>
+            android:textSize="@dimen/text_size_medium" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="17dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
 
         <TextView
+            android:id="@+id/tv_maintenance"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -153,22 +156,45 @@
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:paddingRight="30dp"
-            android:text="破损问题"
-            android:textSize="@dimen/text_size_medium"/>
+            android:text="养护日志"
+            android:textSize="@dimen/text_size_medium" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="17dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
+
+        <TextView
+            android:id="@+id/tv_clearcache"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:background="@color/colorWhite"
+            android:drawableLeft="@mipmap/icon_clearcache"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
+            android:text="清除缓存"
+            android:textSize="@dimen/text_size_medium" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/bg_line" />
 
         <RelativeLayout
+            android:id="@+id/layout_update_version"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorWhite">
@@ -179,26 +205,38 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@mipmap/version_new"
                 android:drawablePadding="20dp"
-                android:drawableRight="@mipmap/arraw_right2"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="30dp"
                 android:text="软件更新"
-                android:textSize="@dimen/text_size_medium"/>
+                android:textSize="@dimen/text_size_medium" />
 
             <ImageView
+                android:id="@+id/logo_new_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="70dp"
-                android:src="@mipmap/state_new"/>
+                android:src="@mipmap/state_new" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
-            android:background="@color/bg_line"/>
+            android:background="@color/bg_line" />
+
+        <Button
+            android:id="@+id/logoff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/btn_background_save"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:text="@string/btn_logoff"/>
 
     </LinearLayout>
 </ScrollView>

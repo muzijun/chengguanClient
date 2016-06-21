@@ -27,6 +27,7 @@
     <string name="item_approval">审批</string>
     <string name="item_assess">考核</string>
     <string name="item_myinfo">我的信息</string>
+    <string name="btn_logoff">注销</string>
 
 
     <string name="viewpager_indicator">%1$d/%2$d</string>
@@ -35,5 +36,17 @@
     <string name="account_null_error">用户名不能为空</string>
     <string name="password_null_error">密码不能为空</string>
     <string name="session_error">登录过期，请重新登录</string>
+
+    <!-- 任务单  -->
+    <string name="task_down_pdf"><u>PDF文件下载</u></string>
+    <string name="task_finish_pic">作业后照片</string>
+    <string name="task_finish_content">作业内容</string>
+    <string name="task_site_pic">现场照片</string>
+    <string name="task_duration">工期:</string>
+    <string name="task_report_unit">上报单位:</string>
+    <string name="task_next_unit">下发单位:</string>
+    <string name="task_pm">项目经理:</string>
+    <string name="task_work_unit">作业单位:</string>
+    <string name="task_res">资金来源:</string>
 
 </resources>

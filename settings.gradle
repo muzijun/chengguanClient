@@ -1,1 +1,1 @@
-include ':app', ':chengugandao', ':daogenerator', ':multi-image-selector'
+include ':app', ':chengugandao', ':daogenerator', ':multi-image-selector', ':afilechooser', ':green'

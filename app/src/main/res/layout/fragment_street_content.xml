@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.pactera.chengguan.view.ChenguanSwipeToLoadLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.pactera.chengguan.municipal.view.ChenguanSwipeToLoadLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,5 +25,5 @@
         <include
             android:id="@id/swipe_load_more_footer"
             layout="@layout/layout_classic_footer" />
-    </com.pactera.chengguan.view.ChenguanSwipeToLoadLayout>
+    </com.pactera.chengguan.municipal.view.ChenguanSwipeToLoadLayout>
 </LinearLayout>

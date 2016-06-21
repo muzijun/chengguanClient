@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/name"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="好帅"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/job"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="软件工程师"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/telephone"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="13052116682"
         android:textColor="@color/colorFF0000"
         android:layout_width="match_parent"

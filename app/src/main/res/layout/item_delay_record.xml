@@ -19,17 +19,11 @@
             android:text="3天"
             android:textColor="@color/colorEBBA06" />
 
-        <TextView
-            android:id="@+id/tx_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="2016-02-17" />
     </LinearLayout>
 
     <View
-        android:layout_marginLeft="10dp"
-        style="@style/horizontal_line" />
+        style="@style/horizontal_line"
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:id="@+id/tx_content"
@@ -41,4 +35,15 @@
         android:textSize="@dimen/text_size_small" />
 
     <View style="@style/horizontal_line" />
+
+    <TextView
+        android:id="@+id/tx_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="10dp"
+        android:text="2016-02-17" />
+
+    <View style="@style/horizontal_line" />
+
 </LinearLayout>

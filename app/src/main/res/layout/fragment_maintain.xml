@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.astuetz.PagerSlidingTabStrip
+    <com.pactera.chengguan.municipal.view.PagerSlidingTabStrip
         android:id="@+id/tabs"
         app:pstsIndicatorColor="@color/color21b6ec"
+        app:selectedTabTextColor="@android:color/holo_blue_light"
         app:pstsShouldExpand="true"
         android:layout_width="match_parent"
         android:layout_height="48dip"

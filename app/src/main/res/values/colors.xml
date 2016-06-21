@@ -11,6 +11,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorD7d7d7">#d7d7d7</color>
     <color name="colorBule">#018dc8</color>
+    <color name="colorDarkGray">#686263</color>
+    <color name="colorLightGray">#AEA2A7</color>
 
 
     <!--rey.material颜色-->
@@ -46,5 +48,18 @@
 
     <color name="drop_down_selected">#7B1FA2</color>
     <color name="drop_down_unselected">#111111</color>
+
+    <!-- 输入文本框提示颜色 -->
+    <color name="color_gray">#C0C1C3</color>
+    <!-- 下拉框背景色  -->
+    <color name="color_lighter_gray">#F9F9F9</color>
+    <color name="color_drop_down_select">#21b6ec</color>
+
+    <color name="color_red">#ff0000</color>
+
+    <!-- From: file:/C:/Users/Andreas/workspace/PagerSlidingTabStrip/library/res/values/colors.xml -->
+
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <!-- From: file:/C:/Users/Andreas/workspace/PagerSlidingTabStrip/library/res/values/attrs.xml -->
 
 </resources>
