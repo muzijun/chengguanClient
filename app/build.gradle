@@ -23,18 +23,18 @@ android {
                                     PUSH_APPSECRET_VALUE: project.GETUI_PUSH_APPSECRET_BETA]
         }
 
-        release {
-
-            //接口URL
-            buildConfigField "String", "BASE_URL", project.BASE_URL_PRODUCTION
-            manifestPlaceholders = [
-                    UMENG_APPKEY_VALUE: project.UMENG_APPKEY_VALUE_PRODUCTION,
-                           PUSH_APPID_VALUE    : project.GETUI_PUSH_APPID_PRODUCTION,
-                                    PUSH_APPKEY_VALUE   : project.GETUI_PUSH_APPKEY_PRODUCTION,
-                                    PUSH_APPSECRET_VALUE: project.GETUI_PUSH_APPSECRET_PRODUCTION]
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+//        release {
+//
+//            //接口URL
+//            buildConfigField "String", "BASE_URL", project.BASE_URL_PRODUCTION
+//            manifestPlaceholders = [
+//                    UMENG_APPKEY_VALUE: project.UMENG_APPKEY_VALUE_PRODUCTION,
+//                           PUSH_APPID_VALUE    : project.GETUI_PUSH_APPID_PRODUCTION,
+//                                    PUSH_APPKEY_VALUE   : project.GETUI_PUSH_APPKEY_PRODUCTION,
+//                                    PUSH_APPSECRET_VALUE: project.GETUI_PUSH_APPSECRET_PRODUCTION]
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
     }
 
 
